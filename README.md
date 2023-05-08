@@ -13,7 +13,7 @@
 
 ### 获取帮助和支持
 + 开发者微信号
-   ![开发者微信号](./ProjectIntroductionImages/contact.png)
+   ![开发者微信号](./Images/contact.png)
 
 # 项目结构
 ## 项目文件夹结构

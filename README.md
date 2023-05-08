@@ -13,16 +13,15 @@
 
 ### 获取帮助和支持
 + 开发者微信号
-   ![开发者微信号](/wechat.png)
+   ![开发者微信号](./ProjectIntroductionImages/wechat.png)
 
 # 项目结构
 ## 项目文件夹结构
-
-|— HuiAdminNetPro
-|—— wwwroot
-|—— Controllers 
-|—— Models
-|—— Views
+|— HuiAdminNetPro  
+|—— wwwroot  
+|—— Controllers    
+|—— Models  
+|—— Views  
 
 ## 项目文件夹结构描述
 + `wwwroot` : 静态资源
@@ -31,9 +30,7 @@
 + `Views` : 视图
 
 #项目进度
-
-[项目进度](./SCHEDULE.md)
-
++ [SCHEDULE.md](./SCHEDULE.md)
 
 # 项目使用图片版权说明
 + 本项目使用的图片来源网络，版权归原作者所有

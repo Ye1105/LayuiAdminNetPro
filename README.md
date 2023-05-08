@@ -12,9 +12,7 @@
 + 通过扩展过滤器实现异常处理和日志记录 
 
 ### 获取帮助和支持
-+ 开发者微信号
-   ![开发者微信号](./Images/contact.png)
-
+![开发者微信号](./Images/contact.png)
 # 项目结构
 ## 项目文件夹结构
 |— HuiAdminNetPro  

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiAdminPro", "HuiAdminPro\HuiAdminPro.csproj", "{AC9A83A6-9875-46C9-8F0C-2D3159DBD8AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiAdminNetPro", "HuiAdminNetPro\HuiAdminNetPro.csproj", "{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AC9A83A6-9875-46C9-8F0C-2D3159DBD8AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC9A83A6-9875-46C9-8F0C-2D3159DBD8AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC9A83A6-9875-46C9-8F0C-2D3159DBD8AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC9A83A6-9875-46C9-8F0C-2D3159DBD8AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9741EF05-78B8-4648-ADC1-E35753C834A7}
+		SolutionGuid = {B5C0D0D3-FC24-4314-B17C-5B8972CF9ED6}
 	EndGlobalSection
 EndGlobal

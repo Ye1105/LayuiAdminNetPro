@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiAdminNetPro", "HuiAdminNetPro\HuiAdminNetPro.csproj", "{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuiAdminNetPro", "HuiAdminNetPro\HuiAdminNetPro.csproj", "{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuiAdminNetServer", "Manager.Server\HuiAdminNetServer.csproj", "{3C1C9BDC-9FDB-4364-A4D8-02E3AC2B5427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HuiAdminNetServer", "HuiAdminNetServer\HuiAdminNetServer.csproj", "{DD59F4DC-E9F2-4BBE-9F36-A4DD4E8402B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2C3A5E7-EAE0-46A0-95F0-7994BB7B8707}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C1C9BDC-9FDB-4364-A4D8-02E3AC2B5427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C1C9BDC-9FDB-4364-A4D8-02E3AC2B5427}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C1C9BDC-9FDB-4364-A4D8-02E3AC2B5427}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C1C9BDC-9FDB-4364-A4D8-02E3AC2B5427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD59F4DC-E9F2-4BBE-9F36-A4DD4E8402B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD59F4DC-E9F2-4BBE-9F36-A4DD4E8402B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD59F4DC-E9F2-4BBE-9F36-A4DD4E8402B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD59F4DC-E9F2-4BBE-9F36-A4DD4E8402B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

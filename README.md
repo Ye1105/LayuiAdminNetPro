@@ -13,7 +13,7 @@
 
 ### 获取帮助和支持
 + 开发者微信号
-   ![开发者微信号](./ProjectIntroductionImages/wechat.png)
+   ![开发者微信号](./ProjectIntroductionImages/contact.png)
 
 # 项目结构
 ## 项目文件夹结构
@@ -29,7 +29,7 @@
 + `Models` : 模型
 + `Views` : 视图
 
-#项目进度
+# 项目进度
 + [SCHEDULE.md](./SCHEDULE.md)
 
 # 项目使用图片版权说明

@@ -15,7 +15,7 @@ namespace HuiAdminNetInfrastructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region 后台
+            #region 映射
 
             modelBuilder.Entity<AdminRolePermission>()
             .HasOne(per => per.AdminModuleInfo)
@@ -37,7 +37,7 @@ namespace HuiAdminNetInfrastructure.Database
             .WithOne(t => t.AdminSystemLog)
             .HasForeignKey<AdminSystemLog>(x => x.UId);
 
-            #endregion 后台
+            #endregion 映射
 
             base.OnModelCreating(modelBuilder);
         }
@@ -46,7 +46,7 @@ namespace HuiAdminNetInfrastructure.Database
         {
         }
 
-        #region 后台
+        #region 映射
 
         public virtual DbSet<AdminAccount> Admin_Account { get; set; }
         public virtual DbSet<AdminAccountRole> Admin_Account_Role { get; set; }
@@ -56,6 +56,6 @@ namespace HuiAdminNetInfrastructure.Database
         public virtual DbSet<AdminModuleInfo> Admin_Module_Info { get; set; }
         public virtual DbSet<AdminSystemLog> Admin_System_Log { get; set; }
 
-        #endregion 后台
+        #endregion 映射
     }
 }

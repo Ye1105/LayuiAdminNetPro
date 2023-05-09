@@ -6,14 +6,14 @@ namespace HuiAdminNetCore.Pages
 {
     public static class QueryableExtensions
     {
-        public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string orderBy)
+        public static IQueryable<T> ApplySort<T>(this IQueryable<T> source, string? orderBy = null)
         {
             if (source == null)
             {
                 throw new ArgumentNullException(nameof(source));
             }
 
-            if (string.IsNullOrEmpty(orderBy))
+            if (string.IsNullOrWhiteSpace(orderBy))
             {
                 return source;
             }

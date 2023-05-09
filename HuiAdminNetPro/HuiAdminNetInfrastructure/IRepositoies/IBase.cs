@@ -1,6 +1,5 @@
 ﻿using HuiAdminNetCore.Enums;
 using HuiAdminNetCore.Pages;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MySqlConnector;
 using System.Linq.Expressions;
 
@@ -152,7 +151,6 @@ namespace HuiAdminNetInfrastructure.IRepositoies
         /// <returns></returns>
         public Task<int> AddAsync<T>(T model) where T : class;
 
-
         /// <summary>
         /// 新增集合Async
         /// </summary>
@@ -272,8 +270,6 @@ namespace HuiAdminNetInfrastructure.IRepositoies
         /// <param name="orderBy">排序</param>
         /// <returns></returns>
         public Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>> whereLambda, int pageIndex = 1, int pageSize = 10, int offset = 0, bool isTrack = true, string orderBy = "") where T : class;
-
-
 
         /// <summary>
         /// 执行增加,删除,修改操作(或调用存储过程)

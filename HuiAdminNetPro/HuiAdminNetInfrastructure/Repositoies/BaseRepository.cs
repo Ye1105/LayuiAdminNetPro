@@ -11,7 +11,6 @@ namespace HuiAdminNetInfrastructure.Repositoies
 {
     public class BaseRepository : IBase
     {
-
         private readonly HuiAdminContext _db;
 
         public BaseRepository(HuiAdminContext db)
@@ -31,7 +30,6 @@ namespace HuiAdminNetInfrastructure.Repositoies
             return await _db.SaveChangesAsync();
         }
 
-
         public async Task<int> AddRangeAsync<T>(IEnumerable<T> collection) where T : class
         {
             _db.AddRange(collection);
@@ -44,7 +42,6 @@ namespace HuiAdminNetInfrastructure.Repositoies
                 return 0;
 
             using var transaction = _db.Database.BeginTransaction();
-
 
             var createRange = keyValuePairs.Where(x => x.Value == CrudType.CREATE);
             if (createRange is not null && createRange.Any())
@@ -85,7 +82,6 @@ namespace HuiAdminNetInfrastructure.Repositoies
                 return 0;
 
             using var transaction = _db.Database.BeginTransaction();
-
 
             var createRange = keyValuePairs.Where(x => x.Value == CrudType.CREATE);
             if (createRange is not null && createRange.Any())
@@ -149,15 +145,8 @@ namespace HuiAdminNetInfrastructure.Repositoies
         public async Task<int> DelAsync<T>(Expression<Func<T, bool>> delWhere) where T : class
         {
             var data = Query(delWhere, isTrack: true);
-            if (data is not null && data.Any())
-            {
-                _db.RemoveRange(data);
-                return await _db.SaveChangesAsync();
-            }
-            else
-            {
-                return 0;
-            }
+            _db.RemoveRange(data);
+            return await _db.SaveChangesAsync();
         }
 
         public async Task<int> DelRangeAsync<T>(IEnumerable<T> collection) where T : class

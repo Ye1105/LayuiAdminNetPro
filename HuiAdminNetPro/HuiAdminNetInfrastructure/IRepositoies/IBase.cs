@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MySqlConnector;
 using System.Linq.Expressions;
 
-namespace Manager.Infrastructure.IRepositoies
+namespace HuiAdminNetInfrastructure.IRepositoies
 {
     public interface IBase
     {
@@ -75,7 +75,7 @@ namespace Manager.Infrastructure.IRepositoies
         /// <param name="whereLambda"></param>
         /// <param name="isTrack"></param>
         /// <returns></returns>
-        public T FirstOrDefault<T>(Expression<Func<T, bool>> whereLambda, bool isTrack = true) where T : class;
+        public T? FirstOrDefault<T>(Expression<Func<T, bool>> whereLambda, bool isTrack = true) where T : class;
 
         /// <summary>
         /// 根据条件查询
@@ -96,12 +96,6 @@ namespace Manager.Infrastructure.IRepositoies
         /// <param name="orderBy"></param>
         /// <returns></returns>
         public List<T> Query<T>(Expression<Func<T, bool>> whereLambda, bool isAsc = true, bool isTrack = true, string orderBy = "") where T : class;
-
-        /// <summary>
-        /// 事务批量处理
-        /// </summary>
-        /// <returns></returns>
-        public int SaveChange();
 
         /// <summary>
         /// 执行添加,删除,修改操作(或调用存储过程)
@@ -136,6 +130,14 @@ namespace Manager.Infrastructure.IRepositoies
         /// <returns></returns>
         public IQueryable<T> ExecuteQuery<T>(string sql, Expression<Func<T, bool>> whereLambda, bool isTrack = true, params MySqlParameter[] pars) where T : class;
 
+        /// <summary>
+        /// 批量执行【事务】
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        int BatchTransaction(Dictionary<object, CrudType> keyValuePairs);
+
         #endregion
 
         /****************************************下面进行方法的封装（异步）***********************************************/
@@ -149,6 +151,7 @@ namespace Manager.Infrastructure.IRepositoies
         /// <param name="model"></param>
         /// <returns></returns>
         public Task<int> AddAsync<T>(T model) where T : class;
+
 
         /// <summary>
         /// 新增集合Async
@@ -171,7 +174,6 @@ namespace Manager.Infrastructure.IRepositoies
         /// <param name="delWhere">传入Lambda表达式(生成表达式目录树)</param>
         /// <returns></returns>
         public Task<int> DelAsync<T>(Expression<Func<T, bool>> delWhere) where T : class;
-
 
         /// <summary>
         /// 删除集合
@@ -212,7 +214,7 @@ namespace Manager.Infrastructure.IRepositoies
         /// <param name="whereLambda"></param>
         /// <param name="isTrack"></param>
         /// <returns></returns>
-        public Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> whereLambda, bool isTrack = true) where T : class;
+        public Task<T?> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> whereLambda, bool isTrack = true) where T : class;
 
         /// <summary>
         /// 查询单个是否存在
@@ -223,7 +225,7 @@ namespace Manager.Infrastructure.IRepositoies
         /// <param name="isTrack"></param>
         /// <returns></returns>
 
-        public Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> whereLambda, string orderBy = "", bool isTrack = true) where T : class;
+        public Task<T?> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> whereLambda, string orderBy = "", bool isTrack = true) where T : class;
 
         /// <summary>
         /// 根据条件查询
@@ -247,7 +249,6 @@ namespace Manager.Infrastructure.IRepositoies
         /// <returns></returns>
         public Task<List<T>> QueryAsync<T>(Expression<Func<T, bool>> whereLambda, int pageIndex = 1, int pageSize = 10, int offset = 0, bool isTrack = true, string orderBy = "") where T : class;
 
-
         /// <summary>
         /// 根据条件排序和查询
         /// </summary>
@@ -270,20 +271,7 @@ namespace Manager.Infrastructure.IRepositoies
         /// <param name="isTrack">跟踪</param>
         /// <param name="orderBy">排序</param>
         /// <returns></returns>
-        public Task<PagedList<T>> GetPagedListAsync<T>(Expression<Func<T, bool>> whereLambda, int pageIndex = 1, int pageSize = 10, int offset = 0, bool isTrack = true, string orderBy = "") where T : class;
-
-
-        /// <summary>
-        /// 事务批量处理
-        /// </summary>
-        /// <returns></returns>
-        public Task<int> SaveChangeAsync();
-
-        /// <summary>
-        /// 添加 
-        /// </summary>
-        /// <param name="model">需要新增的实体</param>
-        public Task<EntityEntry<T>> AddNoAsync<T>(T model) where T : class;
+        public Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>> whereLambda, int pageIndex = 1, int pageSize = 10, int offset = 0, bool isTrack = true, string orderBy = "") where T : class;
 
 
 
@@ -301,15 +289,7 @@ namespace Manager.Infrastructure.IRepositoies
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
         /// <returns></returns>
-        Task<bool> BatchTransactionAsync(Dictionary<object, CrudType> keyValuePairs);
-
-        /// <summary>
-        /// 批量执行【事务】
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        bool BatchTransactionSync(Dictionary<object, CrudType> keyValuePairs);
+        Task<int> BatchTransactionAsync(Dictionary<object, CrudType> keyValuePairs);
 
         #endregion
     }

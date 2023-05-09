@@ -1,7 +1,7 @@
 ﻿using HuiAdminNetCore.AdminModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace Manager.Infrastructure.Database
+namespace HuiAdminNetInfrastructure.Database
 {
     public partial class HuiAdminContext : DbContext
     {

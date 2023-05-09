@@ -35,7 +35,7 @@
 
 > 项目正在重构中，请勿克隆，可以 :star: 关注一下，:pray:谢谢。
 
-+ [README_SCHEDULE](./README_SCHEDULE.md)
++ 具体进度查阅 [README_SCHEDULE](./README_SCHEDULE.md)
 
 ## :rainbow:免责说明
 

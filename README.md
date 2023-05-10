@@ -1,8 +1,10 @@
-<h1 align="center" >🐌 HuiAdminNetPro </h1>  
+<h1 align="center" >🐌 LayuiAdminNetPro </h1>  
 
 <div align="center"> 
-<p> HuiAdminNetPro 是一个后台管理系统，基于  <a target="_blank" href="http://h-ui.net/H-ui.admin.shtml" >H-ui.admin</a> 和 .NET , 支持 .NET 6.0 + 。</p>
+<p> LayuiAdminNetPro 是一个 iframe 版后台管理系统，基于  <a target="_blank" href="http://layui.org.cn/layuiadmin/index.html#get" >Layui</a> 和 .NET , 支持 .NET 6.0 + 。</p>
 </div>
+
+
 
 
 <div align="center" style="color:gray"> 
@@ -24,11 +26,11 @@
 > 项目正在重构中，目录暂不完整。
 
 ```C#
-|— HuiAdminNetPro    
-|—— wwwroot   
-|—— Controllers    
-|—— Models  
-|—— Views
+|—LayuiAdminNetPro    
+|——wwwroot   
+|——Controllers    
+|——Models  
+|——Views
 ```
 
 ## :construction_worker:项目进度

@@ -9,13 +9,13 @@
     中文 
 </div>
 ## :zap: 功能特性
-+ :boom: 实现自定义用户权限配置
-+ :palm_tree: 实现 [RESTful API](https://restfulapi.cn/) 自定义路由配置
-+ :sparkles: 实现 [JSON Web Tokens](https://jwt.io/) 认证
-+ :whale: 实现 [ASP.NET Authorization](https://learn.microsoft.com/zh-cn/aspnet/core/security/authorization/policies?view=aspnetcore-6.0) 自定义策略
-+ :pencil: 实现过滤器捕捉异常和日志记录
-+ :beers: 基于 [Pomelo.EntityFrameworkCore.MySql](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql) 
-+ :newspaper: 基于 [Mysql](https://www.mysql.com/cn/) 数据库 ，以后会支持 `SqlServer`  等数据库
++ :boom: 实现自定义用户权限配置  
++ :palm_tree: 实现 [RESTful API](https://restfulapi.cn/) 自定义路由配置  
++ :sparkles: 实现 [JSON Web Tokens](https://jwt.io/) 认证  
++ :whale: 实现 [ASP.NET Authorization](https://learn.microsoft.com/zh-cn/aspnet/core/security/authorization/policies?view=aspnetcore-6.0) 自定义策略  
++ :pencil: 实现过滤器捕捉异常和日志记录  
++ :beers: 基于 [Pomelo.EntityFrameworkCore.MySql](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql)   
++ :newspaper: 基于 [Mysql](https://www.mysql.com/cn/) 数据库 ，以后会支持 `SqlServer`  等数据库  
 
 ## :page_facing_up: ​项目结构
 

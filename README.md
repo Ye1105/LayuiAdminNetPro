@@ -49,7 +49,7 @@ Project
     │    └─Services                         	//逻辑业务实现
     └─LayuiAdminNetInfrastructure           //仓储层
          ├─Database                             //EF上下文
-         ├─IRepositoies                         //数据交互接口
+         ├─IRepositoies                         //EF数据交互接口
          └─Repositoies                          //EF数据交互实现
 ```
 

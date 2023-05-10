@@ -1,17 +1,12 @@
 <h1 align="center" >🐌 LayuiAdminNetPro </h1>  
 
 <div align="center"> 
-<p> LayuiAdminNetPro 是一个 iframe 版后台管理系统，基于  <a target="_blank" href="http://layui.org.cn/layuiadmin/index.html#get" >Layui</a> 和 .NET , 支持 .NET 6.0 + 。</p>
+<p> LayuiAdminNetPro 是一个 iframe 版后台管理系统，基于  <a target="_blank" href="http://layui.org.cn/layuiadmin/index.html#get" >Layuiadmin</a> 和 .NET , 支持 .NET 6.0 + 。</p>
 </div>
-
-
-
 
 <div align="center" style="color:gray"> 
     中文 
 </div>
-
-
 ## :zap: 功能特性
 + :boom: 实现自定义用户权限配置
 + :palm_tree: 实现 [RESTful API](https://restfulapi.cn/) 自定义路由配置
@@ -26,11 +21,27 @@
 > 项目正在重构中，目录暂不完整。
 
 ```C#
-|—LayuiAdminNetPro    
-|——wwwroot   
-|——Controllers    
-|——Models  
-|——Views
+|__ LayuiAdminNetPro   
+|   	|__ wwwroot
+|   	|__ Controllers     
+|   	|__ Models
+|   	|__ Views  
+|   
+|-- LayuiAdminNetCore
+    |—- AdminModels  
+    |—- AdminPages  
+    |—- Appsettings  
+    |—- AuthorizationModels  
+    |—- Enums  
+    |—- Constants 
+    |—- Pages    
+|-- LayuiAdminNetGate
+    |—- Handler  
+    |—- IServices  
+    |—- Services  
+|-- LayuiAdminNetServer
+    |—-   
+|--LayuiAdminNetInfrastructure
 ```
 
 ## :construction_worker:项目进度

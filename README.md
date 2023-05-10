@@ -30,10 +30,10 @@ Project
     │    ├─Controllers                       	//控制器
     │    ├─Models                            	//视图模型
     │    ├─Utilities                         	//公用类
-    │    │	└─Autofac								//Autofac 依赖注入
+    │    │	└─Autofac                              //Autofac 依赖注入
     │    └─Views                             	//视图
     ├─LayuiAdminNetCore                      //实体类库
-    │    ├─AdminModels							//数据库映射实体类
+    │    ├─AdminModels                        	//数据库映射实体类
     │    ├─AdminPages                        	//接口参数类
     │    ├─Appsettings                       	//项目配置映射实体类
     │    ├─AuthorizationModels               	//权限相关类
@@ -41,15 +41,15 @@ Project
     │    ├─Enums                                //枚举
     │    └─Pages                                //分页
     ├─LayuiAdminNetGate                     //用户权限校验【鉴权、授权、自定义策略扩展】
-    │    ├─Handler								//权限校验
+    │    ├─Handler                              //权限校验
     │    ├─IServices                            //权限业务接口
     │    └─Services                             //权限业务实现
     ├─LayuiAdminNetServer                   //逻辑业务层
     │    ├─IServices                        	//逻辑业务接口
     │    └─Services                         	//逻辑业务实现
     └─LayuiAdminNetInfrastructure           //仓储层
-         ├─Database								//EF上下文
-         ├─IRepositoies							//EF数据交互接口
+         ├─Database                             //EF上下文
+         ├─IRepositoies                         //数据交互接口
          └─Repositoies                          //EF数据交互实现
 ```
 

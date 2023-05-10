@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetPro", "LayuiAdminNetPro\LayuiAdminNetPro.csproj", "{26B14F6A-3279-420B-9114-66036A548C1A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0F337B40-2243-4585-8125-8F1D95049C46} = {0F337B40-2243-4585-8125-8F1D95049C46}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeHelper.Common", "..\..\CodeHelper.Common\CodeHelper.Common\CodeHelper.Common\CodeHelper.Common.csproj", "{7D68FC10-05C5-490C-9D9C-642371C42695}"
 EndProject
@@ -12,6 +15,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetInfrastructure", "LayuiAdminNetInfrastructure\LayuiAdminNetInfrastructure.csproj", "{2CBA7439-0E7C-40A3-809D-6D3AF7C41FF2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetServer", "LayuiAdminNetServer\LayuiAdminNetServer.csproj", "{3BA73F66-78A1-44A2-8FDD-D8CDFE07ABAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LayuiAdminNetGate", "LayuiAdminNetGate\LayuiAdminNetGate.csproj", "{0F337B40-2243-4585-8125-8F1D95049C46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +44,10 @@ Global
 		{3BA73F66-78A1-44A2-8FDD-D8CDFE07ABAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BA73F66-78A1-44A2-8FDD-D8CDFE07ABAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BA73F66-78A1-44A2-8FDD-D8CDFE07ABAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F337B40-2243-4585-8125-8F1D95049C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F337B40-2243-4585-8125-8F1D95049C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F337B40-2243-4585-8125-8F1D95049C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F337B40-2243-4585-8125-8F1D95049C46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

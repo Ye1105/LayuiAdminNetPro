@@ -173,7 +173,6 @@ app.UseCors("CorsPolicy");
 //    name: "default",
 //    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-//路由相关文档：https://www.huoxiaoqiang.com/csharp/aspnetcoremvc/14310.html
 app.MapControllers();
 
 app.Run();

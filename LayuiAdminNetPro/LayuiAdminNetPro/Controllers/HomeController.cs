@@ -7,7 +7,7 @@ namespace LayuiAdminNetPro.Controllers
     public class HomeController : Controller
     {
         /// <summary>
-        /// 主界面
+        /// 框架主界面
         /// </summary>
         /// <returns></returns>
         [Route("/")]
@@ -18,7 +18,7 @@ namespace LayuiAdminNetPro.Controllers
         }
 
         /// <summary>
-        /// 欢迎界面
+        /// 欢迎界面【公告、项目版本等展示】
         /// </summary>
         /// <returns></returns>
         [HttpGet("welcome")]

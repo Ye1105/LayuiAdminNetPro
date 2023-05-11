@@ -20,7 +20,7 @@
 + :beers: 基于 [Pomelo.EntityFrameworkCore.MySql](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql)   
 + :newspaper: 基于 [Mysql](https://www.mysql.com/cn/) 数据库 ，项目后期解耦仓储层会支持 `SqlServer`  等数据库  
 
-## :page_facing_up: ​项目结构
+## 🔖 项目结构
 
 > 项目结构目录，后续随着项目重构可能会增加。
 
@@ -31,7 +31,8 @@ Project
     │    ├─Controllers                       	//控制器
     │    ├─Models                            	//视图模型
     │    ├─Utilities                         	//公用类
-    │    │	└─Autofac                              //Autofac 依赖注入
+    │    │	 ├─Middlewares                          //中间件
+    │    │	 └─Autofac                              //Autofac 依赖注入
     │    └─Views                             	//视图
     ├─LayuiAdminNetCore                      //实体类库
     │    ├─AdminModels                        	//数据库映射实体类
@@ -41,7 +42,7 @@ Project
     │    ├─Constants                         	//常量
     │    ├─Enums                                //枚举
     │    └─Pages                                //分页
-    ├─LayuiAdminNetGate                     //用户权限校验【鉴权、授权、自定义策略扩展】
+    ├─LayuiAdminNetGate                     //权限系统【鉴权、授权、自定义策略扩展】
     │    ├─Handler                              //权限校验
     │    ├─IServices                            //权限业务接口
     │    └─Services                             //权限业务实现
@@ -54,13 +55,19 @@ Project
          └─Repositoies                          //EF数据交互实现【数据持久化】
 ```
 
-## :construction_worker:项目进度
+## 💻项目进度
 
 > 项目正在重构中，请勿克隆，可以 :star: 关注一下，:pray:谢谢。
 
-+ 具体进度查阅 [README_SCHEDULE](./README_SCHEDULE.md)
++  [项目进度](./README_SCHEDULE.md)
+
+## 📄项目规范
+
+> 暂未开放。
+
++  [API 文档](./README_API.md)
++ [页面模板](./README_STANDARD.md)
 
 ## :rainbow:免责说明
 
 + `Layuiadmin`  相关代码版权归 [Layui](https://www.ilayuis.com/) 官方所有；除此之外，其他代码来自开源项目或作者原创；请尊重版权、开源和原创。
-

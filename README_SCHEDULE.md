@@ -1,13 +1,25 @@
-+ :tada:  项目创建
-  + 基础的 [README](./README.md) 项目说明和相关项目的初始化配置
-  + <span style="font-size:14px;color:gray"> 2023-05-08</span>
-+ :tada: 仓储模块重构
-  + `LayuiAdminNetInfrastructure`  模块基本完成
-  +  <span style="font-size:14px;color:gray"> 2023-05-09</span>
+<h1 align="center" >🐌 LayuiAdminNetPro </h1>  
 
-+ :tada: 项目结构
 
-  +   完成项目结构目录描述
-  +  <span style="font-size:14px;color:gray">2023-05-10</span>
 
+## 更新日志
+
+### V 0.0.1
+
++ :tada:  ` 2023-05-10 `
+
+  + 项目基础架构完成
+  
++ :tada:  `2023-05-09`
+
+  + 仓储层完成
+  
++ :tada:  `2023-05-08`
+
+  + 基础的 [README](./README.md) 项目说明和初始化配置
+  
+  
+  
+
+  
   

@@ -21,7 +21,7 @@
 
 ## :page_facing_up: ​项目结构
 
-> 项目结构目录，后续随着项目重构可能会有所改变。
+> 项目结构目录，后续随着项目重构可能会增加。
 
 ```C#
 Project 
@@ -50,7 +50,7 @@ Project
     └─LayuiAdminNetInfrastructure           //仓储层
          ├─Database                             //EF上下文
          ├─IRepositoies                         //EF数据交互接口
-         └─Repositoies                          //EF数据交互实现
+         └─Repositoies                          //EF数据交互实现【数据持久化】
 ```
 
 ## :construction_worker:项目进度
@@ -62,3 +62,4 @@ Project
 ## :rainbow:免责说明
 
 + `Layuiadmin`  相关代码版权归 [Layui](https://www.ilayuis.com/) 官方所有；除此之外，其他代码来自开源项目或作者原创；请尊重版权、开源和原创。
+

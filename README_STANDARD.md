@@ -1,7 +1,7 @@
 <h1 align="center" >🐌 LayuiAdminNetPro </h1>  
 
 <div align="center"> 
-<p> 使用规范</p>
+<p> 使用规范 </p>
 </div>
 
 ## :zap: 模板

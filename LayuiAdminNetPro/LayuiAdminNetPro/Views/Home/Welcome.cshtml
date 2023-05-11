@@ -12,7 +12,9 @@
 </head>
 <body >
     <div class="layui-fluid">
-        <div class="layui-row layui-col-space15"> 
+
+        <div class="layui-row layui-col-space15">
+            <!--公告模块-->
             <div class="layui-col-md8">
                 <div class="layui-card">
                     <div class="layui-card-header">公告</div>
@@ -30,13 +32,14 @@
                 </div>
             </div>
 
+            <!--版本信息模块-->
             <div class="layui-col-md4">
                 <div class="layui-card">
                     <div class="layui-card-header">版本信息</div>
                     <div class="layui-card-body layui-text">
                         <table class="layui-table">
                             <colgroup>
-                                <col width="100">
+                                <col width="90">
                                 <col>
                             </colgroup>
                             <tbody>
@@ -61,7 +64,7 @@
                                     <td>项目框架</td>
                                     <td>
                                         <script type="text/html" template>
-                                            .net iframe
+                                            layuiadmin + jwt +.net 6 + pomelo.ef + mysql
                                         </script>
                                     </td>
                                 </tr>
@@ -82,7 +85,7 @@
             base: '../layuiadmin/' //静态资源所在路径
         }).extend({
             index: 'lib/index' //主入口模块
-        }).use('index','welcome');
+        }).use('index');
     </script>
 </body>
 </html>

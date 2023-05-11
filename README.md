@@ -1,7 +1,7 @@
 <h1 align="center" >🐌 LayuiAdminNetPro </h1>  
 
 <div align="center"> 
-<p> LayuiAdminNetPro iframe  是一个完整的后台管理解决方案，基于 <a target="_blank" href="http://layui.org.cn/layuiadmin/index.html#get" >Layuiadmin</a> 和 .NET , 支持 .NET 6.0 + 。</p>
+<p> LayuiAdminNetPro  是一个 Iframe  版的 Web 后台解决方案，基于 <a target="_blank" href="http://layui.org.cn/layuiadmin/index.html#get" >Layuiadmin</a> 和 .NET , 支持 .NET 6.0 + 。</p>
 </div>
 
 

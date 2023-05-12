@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using CodeHelper.Common;
 
 namespace LayuiAdminNetPro.Utilities.Middlewares
 {

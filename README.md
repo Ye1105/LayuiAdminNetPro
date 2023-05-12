@@ -16,7 +16,7 @@
 + :palm_tree: 实现 [RESTful API](https://restfulapi.cn/) 自定义路由配置  
 + :sparkles: 实现 [JSON Web Tokens](https://jwt.io/) 认证  
 + :whale: 实现 [ASP.NET Authorization](https://learn.microsoft.com/zh-cn/aspnet/core/security/authorization/policies?view=aspnetcore-6.0) 自定义策略  
-+ :pencil: 实现过滤器捕捉异常和日志记录  
++ :pencil: 实现 AOP 捕捉异常和日志记录  
 + :beers: 基于 [Pomelo.EntityFrameworkCore.MySql](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql)   
 + :newspaper: 基于 [Mysql](https://www.mysql.com/cn/) 数据库 ，项目后期解耦仓储层会支持 `SqlServer`  等数据库  
 
@@ -32,6 +32,7 @@ Project
     │    ├─Models                            	//视图模型
     │    ├─Utilities                         	//公用类
     │    │	 ├─Middlewares                          //中间件
+    │    │	 ├─Filters                              //过滤器   
     │    │	 └─Autofac                              //Autofac 依赖注入
     │    └─Views                             	//视图
     ├─LayuiAdminNetCore                      //实体类库
@@ -63,10 +64,9 @@ Project
 
 ## 📄项目规范
 
-> 暂未开放。
+> 可以在 `apifox` 中查看和调试接口
 
-+  [API 文档](./README_API.md)
-+ [页面模板](./README_STANDARD.md)
++  [Apifox API 文档](https://apifox.com/apidoc/shared-a1ef2dce-1084-4da5-8bdb-18aaec8dd93a)
 
 ## :rainbow:免责说明
 

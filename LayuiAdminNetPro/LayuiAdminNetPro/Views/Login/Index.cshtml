@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>登录界面</title>
+    <link rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="~/layuiadmin/style/login.css" media="all">
+</head>
+<body>
+    <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login">
+
+        <div class="layadmin-user-login-main">
+            <div class="layadmin-user-login-box layadmin-user-login-header">
+                <h2>LayuiAdminNetPro</h2>
+                <p>后台管理模板系统</p>
+            </div>
+            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
+                    <input type="text" name="name" id="LAY-user-login-username" lay-verify="required|username" placeholder="账号" class="layui-input" lay-affix="clear">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                    <input type="password" name="password" id="LAY-user-login-password" lay-verify="required|password" placeholder="密码" class="layui-input" lay-affix="eye">
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                        <div class="layui-col-xs7">
+                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
+                            <input type="text" name="code" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5">
+                            <div style="margin-left: 10px;">
+                                <img src="https://www.oschina.net/action/user/captcha" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item" style="margin-top: 20px;">
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
+                </div>
+                <div class="layui-trans layui-form-item layadmin-user-login-other">
+                    <label>社交账号登入</label>
+                    <a href="javascript:;" lay-on="social-login"><i class="layui-icon layui-icon-login-qq"></i></a>
+                    <a href="javascript:;" lay-on="social-login"><i class="layui-icon layui-icon-login-wechat"></i></a>
+                    <a href="javascript:;" lay-on="social-login"><i class="layui-icon layui-icon-login-weibo"></i></a>
+
+                    <a href="/reg" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+                </div>
+            </div>
+        </div>
+
+      @*<div class="layui-trans layadmin-user-login-footer">
+        </div>*@
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(function () {
+
+        let $ = layui.$,
+            user = layui.user,
+            util = layui.util,
+            form = layui.form,
+            layer = layui.layer
+
+        //自定义事件 -- 社交账号登录统一不开放
+        util.on("lay-on", {
+            "social-login": function () {
+                layer.tips("暂未开放", this, { tips: [1, '#16b777'] })
+            }
+        })
+
+        //自定义校验
+        form.verify({
+            //账号
+            username: function (value, item) {
+                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                    return '用户名不能有特殊字符';
+                }
+                if (/(^_)|(__)|(_+$)/.test(value)) return '用户名首尾不能出现 _ 下划线';
+                if (/^\d+$/.test(value)) return '用户名不能全为数字';
+            },
+            //密码
+            password: [/^[\S]{6,12}$/, '密码必须为6到12位的非空字符']
+        })
+
+
+        //表单提交
+        form.on('submit(LAY-user-login-submit)', function (data) {
+            let field = data.field; // 获取表单全部字段值
+
+            // 显示填写结果，仅作演示用
+            layer.alert(JSON.stringify(field), {
+                title: '当前填写的字段值'
+            });
+
+            //请求接口
+            $.ajax({
+                url: `login/${field.name}/${field.password}`,
+                type: "Get",
+                success: function (result) {
+                    if (result.status == 200) {
+                        //写入cookie
+
+
+                        //重定向到主页面
+                        window.location.href = "/";
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    console.log(XMLHttpRequest.status, XMLHttpRequest.responseText)
+                }
+            });
+
+            return false; // 阻止默认 form 跳转
+        })
+    })
+</script>

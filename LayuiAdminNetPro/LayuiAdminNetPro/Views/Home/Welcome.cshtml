@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +11,6 @@
 </head>
 <body >
     <div class="layui-fluid">
-
         <div class="layui-row layui-col-space15">
             <!--公告模块-->
             <div class="layui-col-md8">
@@ -79,13 +77,13 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
-    <script type="text/javascript">
-        layui.config({
-            base: '../layuiadmin/' //静态资源所在路径
-        }).extend({
-            index: 'lib/index' //主入口模块
-        }).use('index');
-    </script>
 </body>
 </html>
+<script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use("index")
+</script>

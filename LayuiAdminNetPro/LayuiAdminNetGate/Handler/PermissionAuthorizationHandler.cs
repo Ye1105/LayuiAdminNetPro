@@ -29,7 +29,10 @@ namespace LayuiAdminNetGate.Handler
 
                 var path = httpContext?.Request.Path;
 
-                context?.Succeed(requirement);
+                //context?.Succeed(requirement);
+
+                context?.Fail();
+
                 return;
             }
             catch

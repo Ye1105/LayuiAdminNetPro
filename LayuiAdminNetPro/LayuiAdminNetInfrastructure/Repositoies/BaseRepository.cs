@@ -11,11 +11,16 @@ namespace LayuiAdminNetInfrastructure.Repositoies
 {
     public class BaseRepository : IBase
     {
-        private readonly LayuiAdminContext _db;
+        private readonly LayuiAdminContext? _db;
 
         public BaseRepository(LayuiAdminContext db)
         {
             _db = db;
+        }
+
+        public BaseRepository()
+        {
+
         }
 
         #region IQueryable

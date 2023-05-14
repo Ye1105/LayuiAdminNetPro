@@ -10,6 +10,8 @@ namespace LayuiAdminNetServer.Services
     public class AdminAccountService : IAdminAccountService
     {
         private readonly IBase _base;
+
+
         public AdminAccountService(IBase baseSevice)
         {
             _base = baseSevice;

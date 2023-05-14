@@ -1,4 +1,4 @@
-﻿using LayuiAdminNetInfrastructure.Database;
+﻿using LayuiAdminNetCore.Database.EF;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;

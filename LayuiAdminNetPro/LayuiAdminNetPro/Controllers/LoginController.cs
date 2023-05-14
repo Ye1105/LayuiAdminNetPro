@@ -15,7 +15,7 @@ namespace LayuiAdminNetPro.Controllers
     /// </summary>
     [Route("login")]
     [ApiController]
-    [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
+    //[TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
     public class LoginController : Controller
     {
         private readonly IAdminAccountService _admin;
@@ -43,14 +43,14 @@ namespace LayuiAdminNetPro.Controllers
         /// <param name="password"></param>
         /// <returns></returns>
         [HttpGet("{name}/{password}")]
-        public IActionResult SignIn(string name, string password)
+        public async Task<IActionResult> SignIn(string name, string password)
         {
             /*
              * 1.参数校验    
              * 2.验证码 短信校验  demo中不做具体实现
              * 3.账号校验
              * 4.JWT AccessToken
-             * 5.将 accessToken 保存至 cookie 中
+             * 5.返回 accessToken 
              */
 
             #region 参数校验
@@ -94,7 +94,7 @@ namespace LayuiAdminNetPro.Controllers
 
             #region 账号校验
 
-            var account = _admin.FirstOrDefaultAsync(name, password);
+            var account = await _admin.FirstOrDefaultAsync(name, password);
 
 
 

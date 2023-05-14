@@ -14,9 +14,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\CodeHelper.Common\CodeHelper.Common\CodeHelper.Common\CodeHelper.Common.csproj" />
 		<ProjectReference Include="..\LayuiAdminNetCore\LayuiAdminNetCore.csproj" />
 		<ProjectReference Include="..\LayuiAdminNetGate\LayuiAdminNetGate.csproj" />
-		<ProjectReference Include="..\LayuiAdminNetInfrastructure\LayuiAdminNetInfrastructure.csproj" />
 		<ProjectReference Include="..\LayuiAdminNetServer\LayuiAdminNetServer.csproj" />
 	</ItemGroup>
 

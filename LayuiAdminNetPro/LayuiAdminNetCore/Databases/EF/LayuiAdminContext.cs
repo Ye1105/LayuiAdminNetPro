@@ -1,8 +1,7 @@
 ﻿using LayuiAdminNetCore.AdminModels;
-using LayuiAdminNetCore.Appsettings;
 using Microsoft.EntityFrameworkCore;
 
-namespace LayuiAdminNetInfrastructure.Database
+namespace LayuiAdminNetCore.Database.EF
 {
     public partial class LayuiAdminContext : DbContext
     {
@@ -45,7 +44,6 @@ namespace LayuiAdminNetInfrastructure.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql(Configurations.AppSettings["ConnectionString"], new MySqlServerVersion(new Version(8, 0, 27)));
         }
 
         #region 映射

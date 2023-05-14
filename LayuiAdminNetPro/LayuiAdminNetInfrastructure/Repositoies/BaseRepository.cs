@@ -1,6 +1,6 @@
-﻿using LayuiAdminNetCore.Enums;
+﻿using LayuiAdminNetCore.Database.EF;
+using LayuiAdminNetCore.Enums;
 using LayuiAdminNetCore.Pages;
-using LayuiAdminNetInfrastructure.Database;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
@@ -11,16 +11,15 @@ namespace LayuiAdminNetInfrastructure.Repositoies
 {
     public class BaseRepository : IBase
     {
-        private readonly LayuiAdminContext? _db;
+        private readonly LayuiAdminContext _db;
 
         public BaseRepository(LayuiAdminContext db)
         {
-            _db = db;
+            _db ??= db;
         }
 
         public BaseRepository()
         {
-
         }
 
         #region IQueryable

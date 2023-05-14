@@ -28,6 +28,7 @@ namespace LayuiAdminNetCore.Appsettings
         /// POP3/SMPT 授权码
         /// </summary>
         public string? AuthorizatioCode { get; set; }
+
         /// <summary>
         /// 发送邮件的账号主体
         /// </summary>
@@ -38,7 +39,6 @@ namespace LayuiAdminNetCore.Appsettings
         public string? Host { get; set; }
     }
 
-
     public class SmsConfig
     {
         /// <summary>
@@ -47,10 +47,8 @@ namespace LayuiAdminNetCore.Appsettings
         public int DayLimit { get; set; }
     }
 
-
     public class TencentSmsConfig
     {
-
         [JsonProperty("secretId")]
         public string? SecretId { get; set; }
 
@@ -65,7 +63,6 @@ namespace LayuiAdminNetCore.Appsettings
 
         [JsonProperty("templateId")]
         public string? TemplateId { get; set; }
-
     }
 
     public class JwtConfig
@@ -75,6 +72,7 @@ namespace LayuiAdminNetCore.Appsettings
         /// </summary>
         [JsonProperty("securityKey")]
         public string SecurityKey { get; set; } = "";
+
         /// <summary>
         /// RefreshToken密钥
         /// </summary>
@@ -98,6 +96,5 @@ namespace LayuiAdminNetCore.Appsettings
 
         [JsonProperty("refreshExpiration")]
         public int RefreshExpiration { get; set; }
-
     }
 }

@@ -41,8 +41,8 @@ Project
     │    ├─Appsettings                       	//项目配置映射实体类
     │    ├─AuthorizationModels               	//权限相关类
     │    ├─Constants                         	//常量
-    │    ├─Databases
-    │    │	 └─EF                               //EF上下文
+    │    ├─Databases                            //ORM
+    │    │	 └─EF                                   //EF上下文
     │    ├─Enums                                //枚举
     │    └─Pages                                //分页
     ├─LayuiAdminNetGate                     //权限系统【鉴权、授权、自定义策略扩展】

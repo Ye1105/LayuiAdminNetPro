@@ -31,9 +31,9 @@ Project
     │    ├─Controllers                       	//控制器
     │    ├─Models                            	//视图模型
     │    ├─Utilities                         	//公用类
-    │    │	 ├─Middlewares                          //中间件
-    │    │	 ├─Filters                              //过滤器   
-    │    │	 └─Autofac                              //Autofac 依赖注入
+    │    │    ├─Middlewares                          //中间件
+    │    │    ├─Filters                              //过滤器   
+    │    │    └─Autofac                              //Autofac 依赖注入
     │    └─Views                             	//视图
     ├─LayuiAdminNetCore                      //实体类库
     │    ├─AdminModels                        	//数据库映射实体类
@@ -42,7 +42,7 @@ Project
     │    ├─AuthorizationModels               	//权限相关类
     │    ├─Constants                         	//常量
     │    ├─Databases                            //ORM
-    │    │	 └─EF                                   //EF上下文
+    │    │    └─EF                                   //EF上下文
     │    ├─Enums                                //枚举
     │    └─Pages                                //分页
     ├─LayuiAdminNetGate                     //权限系统【鉴权、授权、自定义策略扩展】

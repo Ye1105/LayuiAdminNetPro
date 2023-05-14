@@ -10,10 +10,8 @@ namespace LayuiAdminNetPro.Utilities.Filters
     [AttributeUsage(AttributeTargets.All)]
     public class CustomLogAsyncActionFilterAttribute : Attribute, IAsyncActionFilter
     {
-
         public CustomLogAsyncActionFilterAttribute()
         {
-
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

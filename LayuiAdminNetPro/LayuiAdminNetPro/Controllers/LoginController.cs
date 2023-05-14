@@ -1,12 +1,14 @@
-﻿using LayuiAdminNetPro.Utilities.Filters;
+﻿using CodeHelper.Common;
 using CodeHelper.Common.Validator;
-using Microsoft.AspNetCore.Mvc;
-using CodeHelper.Common;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
-using System.Numerics;
-using System.Text.RegularExpressions;
-using System.Reflection.Metadata.Ecma335;
+using LayuiAdminNetCore.Appsettings;
+using LayuiAdminNetCore.AuthorizationModels;
+using LayuiAdminNetCore.Enums;
+using LayuiAdminNetGate.IServices;
+using LayuiAdminNetPro.Utilities.Common;
 using LayuiAdminNetServer.IServices;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System.Text.RegularExpressions;
 
 namespace LayuiAdminNetPro.Controllers
 {
@@ -15,21 +17,24 @@ namespace LayuiAdminNetPro.Controllers
     /// </summary>
     [Route("login")]
     [ApiController]
-    //[TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
-    public class LoginController : Controller
+    public class LoginController : ControllBase
     {
         private readonly IAdminAccountService _admin;
+        private readonly IAuthenticateService _auth;
+        private readonly IOptions<AppSettings> _appSettings;
 
-        public LoginController(IAdminAccountService adminAccountService)
+        public LoginController(IAdminAccountService adminAccountService, IAuthenticateService authenticateService, IOptions<AppSettings> appSettings)
         {
             _admin = adminAccountService;
+            _auth = authenticateService;
+            _appSettings = appSettings;
         }
 
         /// <summary>
         /// 登录界面视图渲染
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("view")]
         public IActionResult Index()
         {
             //DeleteCookies(".AspNetCore.Token");
@@ -39,42 +44,68 @@ namespace LayuiAdminNetPro.Controllers
         /// <summary>
         /// 用户登录接口
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="phone"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        [HttpGet("{name}/{password}")]
-        public async Task<IActionResult> SignIn(string name, string password)
+        [HttpGet]
+        public async Task<IActionResult> Signing([FromQuery] string phone, [FromQuery] string password)
         {
             /*
-             * 1.参数校验    
+             * 1.参数校验
              * 2.验证码 短信校验  demo中不做具体实现
              * 3.账号校验
              * 4.JWT AccessToken
-             * 5.返回 accessToken 
+             * 5.返回加密信息
              */
 
             #region 参数校验
 
-            var namePatterns = new[] { Rgx.RGX_SPECIAL_CHARACTER, Rgx.RGX_UNDERLING, Rgx.RGX_NUMBER };
-            //账号校验
-            var nameVerify = name.RegexVerify(namePatterns, () =>
-              {
-                  foreach (var pattern in namePatterns)
-                  {
-                      if (Regex.IsMatch(name, pattern.Item1))
-                      {
-                          if (pattern == Rgx.RGX_SPECIAL_CHARACTER)
-                              continue;
-                          return (false, pattern.Item2);
-                      }
-                      else
-                      {
-                          if (pattern == Rgx.RGX_SPECIAL_CHARACTER)
-                              return (false, pattern.Item2);
-                      }
-                  }
-                  return (true, "");
-              });
+            #region 账号校验
+
+            //var namePatterns = new[] { Rgx.RGX_SPECIAL_CHARACTER, Rgx.RGX_UNDERLING, Rgx.RGX_NUMBER };
+            ////账号校验
+            //var nameVerify = name.RegexVerify(namePatterns, () =>
+            //  {
+            //      foreach (var pattern in namePatterns)
+            //      {
+            //          if (Regex.IsMatch(name, pattern.Item1))
+            //          {
+            //              if (pattern == Rgx.RGX_SPECIAL_CHARACTER)
+            //                  continue;
+            //              return (false, pattern.Item2);
+            //          }
+            //          else
+            //          {
+            //              if (pattern == Rgx.RGX_SPECIAL_CHARACTER)
+            //                  return (false, pattern.Item2);
+            //          }
+            //      }
+            //      return (true, "");
+            //  });
+            //if (!nameVerify.Item1)
+            //{
+            //    return Ok(Fail(nameVerify.Item2));
+            //}
+
+            #endregion 账号校验
+
+            //手机号校验
+            var phonePatterns = new[] { Rgx.RGX_PHONE };
+            var phoneVerify = phone.RegexVerify(phonePatterns, () =>
+            {
+                foreach (var pattern in phonePatterns)
+                {
+                    if (Regex.IsMatch(phone, pattern.Item1))
+                        return (true, "");
+                    else
+                        return (false, pattern.Item2);
+                }
+                return (true, "");
+            });
+            if (!phoneVerify.Item1)
+            {
+                return Ok(Fail(phoneVerify.Item2));
+            }
 
             //密码校验
             var passwordPatterns = new[] { Rgx.RGX_PASSWORD_LENGTH };
@@ -90,18 +121,42 @@ namespace LayuiAdminNetPro.Controllers
                 return (true, "");
             });
 
-            #endregion
+            if (!passwordVerify.Item1)
+            {
+                return Ok(Fail(passwordVerify.Item2));
+            }
+
+            #endregion 参数校验
 
             #region 账号校验
 
-            var account = await _admin.FirstOrDefaultAsync(name, password);
+            var account = await _admin.FirstOrDefaultAsync(phone, password);
+            if (account == null)
+            {
+                return Ok(Fail("手机号或者密码错误"));
+            }
 
+            /* 3.账号状态 */
+            if (account.Status != (sbyte)Status.ENABLE)
+            {
+                return Ok(Fail($"账号状态:{EnumDescriptionAttribute.GetEnumDescription((Status)account.Status)}"));
+            }
 
+            #endregion 账号校验
 
-            #endregion
+            //4.AccessToken
+            if (!_auth.IsAuthenticated(new Authenticate() { UId = account.UId, Phone = account.Phone }, out string AccessToken))
+            {
+                return Ok(Fail("账号认证失败"));
+            }
 
-
-            return Ok();
+            //5.返回加密信息
+            return Ok(
+                Success(new
+                {
+                    ExpireTime = _appSettings?.Value?.JwtBearer?.AccessExpiration * 24 * 60 * 60,  // 单位：秒
+                    AccessToken
+                }));
         }
     }
 }

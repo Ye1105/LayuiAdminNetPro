@@ -17,12 +17,12 @@ namespace LayuiAdminNetServer.Services
             _base = baseSevice;
         }
 
-        public async Task<AdminAccount?> FirstOrDefaultAsync(string name, string password, bool isTrack = true)
+        public async Task<AdminAccount?> FirstOrDefaultAsync(string phone, string password, bool isTrack = true)
         {
 
             password = Md5Helper.MD5(password);
 
-            var account = await _base.FirstOrDefaultAsync<AdminAccount>((x => x.Password == password && x.Name == name), isTrack);
+            var account = await _base.FirstOrDefaultAsync<AdminAccount>((x => x.Password == password && x.Phone == phone), isTrack);
 
             return account;
         }

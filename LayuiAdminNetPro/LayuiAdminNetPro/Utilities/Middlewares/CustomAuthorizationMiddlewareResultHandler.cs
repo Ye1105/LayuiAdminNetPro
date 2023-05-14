@@ -1,4 +1,5 @@
 ﻿using CodeHelper.Common;
+using LayuiAdminNetPro.Utilities.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -7,8 +8,8 @@ namespace LayuiAdminNetPro.Utilities.Middlewares
 {
     public class CustomAuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResultHandler
     {
-
         private readonly AuthorizationMiddlewareResultHandler _defaultHandler = new();
+
         public async Task HandleAsync(RequestDelegate next, HttpContext context, AuthorizationPolicy policy, PolicyAuthorizationResult authorizeResult)
         {
             // If the authorization was forbidden and the resource had a specific requirement,
@@ -18,9 +19,8 @@ namespace LayuiAdminNetPro.Utilities.Middlewares
 
             if (!authorizeResult.Succeeded)
             {
-                if (context.Request.IsAjaxRequest())
+                if (ControllBase.IsAjaxRequest(context.Request))
                 {
-
                     context.Response.StatusCode = (int)HttpStatus.OK;
                     await context.Response.WriteAsJsonAsync(new { Status = HttpStatus.FORBIDDEN });
                     //await context.ForbidAsync();
@@ -29,9 +29,7 @@ namespace LayuiAdminNetPro.Utilities.Middlewares
                 }
                 else
                 {
-
-
-                    context.Response.Redirect($"/login");
+                    context.Response.Redirect($"/login/view");
 
                     //context.Response.Redirect($"/errors?status={HttpStatus.FORBIDDEN}");
                     return;

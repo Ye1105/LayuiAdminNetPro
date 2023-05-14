@@ -15,6 +15,5 @@ namespace LayuiAdminNetCore.AuthorizationModels
 
         [JsonProperty("vip")]
         public sbyte Vip { get; set; }
-
     }
 }

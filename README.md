@@ -41,6 +41,8 @@ Project
     │    ├─Appsettings                       	//项目配置映射实体类
     │    ├─AuthorizationModels               	//权限相关类
     │    ├─Constants                         	//常量
+    │    ├─Databases
+    │    │	 └─EF                               //EF上下文
     │    ├─Enums                                //枚举
     │    └─Pages                                //分页
     ├─LayuiAdminNetGate                     //权限系统【鉴权、授权、自定义策略扩展】
@@ -51,7 +53,6 @@ Project
     │    ├─IServices                        	//逻辑业务接口
     │    └─Services                         	//逻辑业务实现
     └─LayuiAdminNetInfrastructure           //仓储层
-         ├─Database                             //EF上下文
          ├─IRepositoies                         //EF数据交互接口
          └─Repositoies                          //EF数据交互实现【数据持久化】
 ```

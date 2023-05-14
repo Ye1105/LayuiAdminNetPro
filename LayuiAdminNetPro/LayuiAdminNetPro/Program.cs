@@ -2,10 +2,12 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using LayuiAdminNetCore.Appsettings;
 using LayuiAdminNetCore.AuthorizationModels;
+using LayuiAdminNetCore.Database.EF;
 using LayuiAdminNetPro.Utilities.Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.WebEncoders;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +36,15 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddMemoryCache();
 
 #endregion MemoryCache
+
+
+#region mysql 
+
+builder.Services.AddDbContext<LayuiAdminContext>(options =>
+{
+    options.UseMySql(Configurations.AppSettings["ConnectionString"], new MySqlServerVersion(new Version(8, 0, 27)));
+});
+#endregion
 
 #region Cors
 

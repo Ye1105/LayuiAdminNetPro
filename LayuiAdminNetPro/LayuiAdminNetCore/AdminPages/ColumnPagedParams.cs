@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace LayuiAdminNetCore.AdminPages
 {
-    public class ColumnPagedParams : PagedParams
+    public class ColumnPagedParams : IPagedParams
     {
         //public override int PageSize { get; set; } = 5;
 

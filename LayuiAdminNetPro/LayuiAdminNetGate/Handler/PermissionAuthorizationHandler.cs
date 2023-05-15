@@ -87,6 +87,7 @@ namespace LayuiAdminNetGate.Handler
                             }
 
                             context?.Succeed(requirement);
+                            return;
                         }
                         else
                         {
@@ -100,6 +101,7 @@ namespace LayuiAdminNetGate.Handler
                              */
 
                             context?.Succeed(requirement);
+                            return;
                         }
                     }
                 }
@@ -109,6 +111,7 @@ namespace LayuiAdminNetGate.Handler
             }
             catch
             {
+                context?.Fail();
                 return;
             }
         }

@@ -37,7 +37,7 @@ namespace LayuiAdminNetPro.Controllers
         [HttpGet("view")]
         public IActionResult Index()
         {
-            //DeleteCookies(".AspNetCore.Token");
+            DeleteCookies(".AspNetCore.Token");
             return View();
         }
 

@@ -29,12 +29,5 @@ namespace LayuiAdminNetPro.Controllers
         {
             return View();
         }
-
-        [HttpGet("server")]
-        [Authorize(Policy = Policys.Admin)]
-        public IActionResult Server()
-        {
-            return View();
-        }
     }
 }

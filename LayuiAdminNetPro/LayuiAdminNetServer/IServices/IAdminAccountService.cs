@@ -1,5 +1,7 @@
 ﻿using LayuiAdminNetCore.AdminModels;
+using LayuiAdminNetCore.AdminPages;
 using System.Linq.Expressions;
+using X.PagedList;
 
 namespace LayuiAdminNetServer.IServices
 {
@@ -23,5 +25,12 @@ namespace LayuiAdminNetServer.IServices
         /// <returns></returns>
         Task<AdminAccount?> FirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isIncludeAccountRoles = false, bool isTrack = true);
 
+        /// <summary>
+        /// GetPageList
+        /// </summary>
+        /// <param name="pagedParams"></param>
+        /// <param name="isTrack"></param>
+        /// <returns></returns>
+        IPagedList<AdminAccount> GetPageList(IPagedParams pagedParams, bool isTrack = true);
     }
 }

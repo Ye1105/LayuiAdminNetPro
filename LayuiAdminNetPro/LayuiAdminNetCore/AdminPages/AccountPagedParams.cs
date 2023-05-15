@@ -2,7 +2,7 @@
 
 namespace LayuiAdminNetCore.AdminPages
 {
-    public class AccountPagedParams : PagedParams
+    public class AccountPagedParams : IPagedParams
     {
         /// <summary>
         /// 查询keys

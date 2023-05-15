@@ -1,14 +1,22 @@
 ﻿using LayuiAdminNetCore.AdminModels;
 using LayuiAdminNetGate.IServices;
+using LayuiAdminNetInfrastructure.IRepositoies;
 using System.Linq.Expressions;
 
 namespace LayuiAdminNetGate.Services
 {
     public class RoleModulePermissionService : IRoleModulePermissionService
     {
-        public Task<AdminAccount> AccountFirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true)
+        private readonly IBase _base;
+        public RoleModulePermissionService(IBase baseService)
         {
-            throw new NotImplementedException();
+            _base = baseService;
+        }
+
+        public async Task<AdminAccount?> AccountFirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true)
+        {
+            var account = await _base.FirstOrDefaultAsync(expression, isTrack);
+            return account;
         }
 
         public Task<List<AdminAccountRole>> GetAccountRolesAsync(Expression<Func<AdminAccountRole, bool>> express, bool isTrack = true)
@@ -21,9 +29,9 @@ namespace LayuiAdminNetGate.Services
             throw new NotImplementedException();
         }
 
-        public Task<bool> ModifyAccountAsync(AdminAccount account)
+        public async Task<bool> ModifyAccountAsync(AdminAccount account)
         {
-            throw new NotImplementedException();
+            return await _base.UpdateAsync(account) > 0;
         }
     }
 }

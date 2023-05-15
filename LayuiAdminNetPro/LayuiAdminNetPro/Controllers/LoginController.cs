@@ -37,7 +37,6 @@ namespace LayuiAdminNetPro.Controllers
         [HttpGet("view")]
         public IActionResult Index()
         {
-            //DeleteCookies(".AspNetCore.Token");
             return View();
         }
 
@@ -154,7 +153,6 @@ namespace LayuiAdminNetPro.Controllers
             return Ok(
                 Success(new
                 {
-                    ExpireTime = _appSettings?.Value?.JwtBearer?.AccessExpiration * 24 * 60 * 60,  // 单位：秒
                     AccessToken
                 }));
         }

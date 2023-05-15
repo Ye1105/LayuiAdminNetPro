@@ -37,7 +37,6 @@ builder.Services.AddMemoryCache();
 
 #endregion MemoryCache
 
-
 #region mysql 
 
 builder.Services.AddDbContext<LayuiAdminContext>(options =>

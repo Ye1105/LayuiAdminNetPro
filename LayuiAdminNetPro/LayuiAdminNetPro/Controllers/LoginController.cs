@@ -37,6 +37,7 @@ namespace LayuiAdminNetPro.Controllers
         [HttpGet("view")]
         public IActionResult Index()
         {
+            //DeleteCookies(".AspNetCore.Token");
             return View();
         }
 
@@ -54,7 +55,7 @@ namespace LayuiAdminNetPro.Controllers
              * 2.验证码 短信校验  demo中不做具体实现
              * 3.账号校验
              * 4.JWT AccessToken
-             * 5.返回加密信息
+             * 5.设置Cookie
              */
 
             #region 参数校验
@@ -149,12 +150,12 @@ namespace LayuiAdminNetPro.Controllers
                 return Ok(Fail("账号认证失败"));
             }
 
-            //5.返回加密信息
-            return Ok(
-                Success(new
-                {
-                    AccessToken
-                }));
+
+            //5.初始化并设置Cookie
+            DeleteCookies(".AspNetCore.Token");
+            SetCookies(".AspNetCore.Token", AccessToken, _appSettings!.Value!.JwtBearer!.AccessExpiration);
+
+            return Ok(Success());
         }
     }
 }

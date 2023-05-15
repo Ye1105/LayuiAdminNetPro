@@ -25,7 +25,7 @@ namespace LayuiAdminNetGate.IServices
         /// <param name="expression"></param>
         /// <param name="isTrack"></param>
         /// <returns></returns>
-        Task<AdminAccount> AccountFirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true);
+        Task<AdminAccount?> AccountFirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true);
 
         /// <summary>
         /// 更新用户账号

@@ -63,9 +63,6 @@
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
 <script type="text/javascript">
 
-    //初始化cookie
-    //document.cookie = `.AspNetCore.Token=`
-
     layui.config({
         base: '../layuiadmin/' //静态资源所在路径
     }).extend({
@@ -105,11 +102,9 @@
             let field = data.field; // 获取表单全部字段值
 
             // 显示填写结果，仅作演示用
-            layer.alert(JSON.stringify(field), {
-                title: '当前填写的字段值'
-            });
-
-
+            //layer.alert(JSON.stringify(field), {
+            //    title: '当前填写的字段值'
+            //});
 
             //请求接口
             $.ajax({
@@ -117,18 +112,11 @@
                 type: "Get",
                 success: function (result) {
                     if (result.status == 200) {
-                        //写入cookie
-                        //console.log(result.data.accessToken)
-                        document.cookie = `.AspNetCore.Token=${result.data.accessToken}`
-
-                        layer.msg('登入成功', {
-                            offset: '15px'
-                            , icon: 1
-                            , time: 1500
-                        }, function () {
+                        let loadIndex = layer.load(0);
+                        // 模拟关闭
+                        setTimeout(function () {
                             window.location.href = "/";
-                        });
-
+                        }, 1500);
                     } else {
                         layer.msg(result.uimsg);
                     }
@@ -137,8 +125,7 @@
                     console.log(XMLHttpRequest.status, XMLHttpRequest.responseText)
                 }
             });
-
-            //return false; // 阻止默认 form 跳转
+            return false; // 阻止默认 form 跳转
         })
     })
 </script>

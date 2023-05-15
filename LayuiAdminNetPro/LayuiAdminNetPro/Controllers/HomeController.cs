@@ -1,10 +1,12 @@
 ﻿using LayuiAdminNetCore.AuthorizationModels;
+using LayuiAdminNetPro.Utilities.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Controllers
 {
-    public class HomeController : Controller
+    [ApiController]
+    public class HomeController : ControllBase
     {
         /// <summary>
         /// 框架主界面
@@ -27,7 +29,6 @@ namespace LayuiAdminNetPro.Controllers
         {
             return View();
         }
-
 
         [HttpGet("server")]
         [Authorize(Policy = Policys.Admin)]

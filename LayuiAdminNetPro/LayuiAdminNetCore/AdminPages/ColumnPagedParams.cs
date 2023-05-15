@@ -17,6 +17,6 @@ namespace LayuiAdminNetCore.AdminPages
         /// 状态
         /// </summary>
         [JsonProperty("status")]
-        public ActionStatus? Status { get; set; }
+        public Status? Status { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace LayuiAdminNetCore.AuthorizationModels
         [JsonProperty("uId")]
         public Guid UId { get; set; }
 
-        [JsonProperty("phone")]
+        [JsonProperty("name")]
         public string? Phone { get; set; }
 
         [JsonProperty("vip")]

@@ -8,11 +8,11 @@ namespace LayuiAdminNetServer.IServices
         /// <summary>
         /// 查询账号信息
         /// </summary>
-        /// <param name="name">账号</param>
+        /// <param name="phone">账号[手机号]</param>
         /// <param name="password">密码</param>
         /// <param name="isTrack"></param>
         /// <returns></returns>
-        Task<AdminAccount?> FirstOrDefaultAsync(string name, string password, bool isTrack = true);
+        Task<AdminAccount?> FirstOrDefaultAsync(string phone, string password, bool isTrack = true);
 
         /// <summary>
         /// 查询账号信息

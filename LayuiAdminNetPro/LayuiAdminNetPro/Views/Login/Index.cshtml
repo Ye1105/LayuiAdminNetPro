@@ -20,8 +20,8 @@
             </div>
             <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
                 <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
-                    <input type="text" name="name" id="LAY-user-login-username" lay-verify="required|username" placeholder="账号" class="layui-input" lay-affix="clear">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="LAY-user-login-username"></label>
+                    <input type="text" name="phone" id="LAY-user-login-username" lay-verify="required|phone" placeholder="手机号" class="layui-input" lay-affix="clear">
                 </div>
                 <div class="layui-form-item">
                     <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
@@ -84,13 +84,13 @@
         //自定义校验
         form.verify({
             //账号
-            username: function (value, item) {
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '用户名不能有特殊字符';
-                }
-                if (/(^_)|(__)|(_+$)/.test(value)) return '用户名首尾不能出现 _ 下划线';
-                if (/^\d+$/.test(value)) return '用户名不能全为数字';
-            },
+            //username: function (value, item) {
+            //    if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+            //        return '用户名不能有特殊字符';
+            //    }
+            //    if (/(^_)|(__)|(_+$)/.test(value)) return '用户名首尾不能出现 _ 下划线';
+            //    if (/^\d+$/.test(value)) return '用户名不能全为数字';
+            //},
             //密码
             password: [/^[\S]{6,12}$/, '密码必须为6到12位的非空字符']
         })
@@ -107,7 +107,7 @@
 
             //请求接口
             $.ajax({
-                url: `login/${field.name}/${field.password}`,
+                url: `login?phone=${field.phone}&password=${field.password}`,
                 type: "Get",
                 success: function (result) {
                     if (result.status == 200) {

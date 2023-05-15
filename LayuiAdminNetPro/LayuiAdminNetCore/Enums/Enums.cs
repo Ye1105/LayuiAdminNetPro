@@ -35,7 +35,7 @@ namespace LayuiAdminNetCore.Enums
     /// <summary>
     /// 行为状态
     /// </summary>
-    public enum ActionStatus
+    public enum Status
     {
         /// <summary>
         /// 启用

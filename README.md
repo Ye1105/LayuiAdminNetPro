@@ -32,7 +32,8 @@ Project
     │    ├─Models                            	//视图模型
     │    ├─Utilities                         	//公用类
     │    │    ├─Middlewares                          //中间件
-    │    │    ├─Filters                              //过滤器   
+    │    │    ├─Filters                              //过滤器
+    │    │    ├─Common                               //帮助类
     │    │    └─Autofac                              //Autofac 依赖注入
     │    └─Views                             	//视图
     ├─LayuiAdminNetCore                      //实体类库

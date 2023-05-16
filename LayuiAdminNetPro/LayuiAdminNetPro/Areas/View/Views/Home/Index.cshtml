@@ -87,8 +87,8 @@
                                 <cite>设置</cite>
                             </a>
                             <dl class="layui-nav-child">                           
-                                <dd><a lay-href="/account/view">管理列表</a></dd>
-                                <dd><a lay-href="set/system/email.html">邮件服务</a></dd>                           
+                                <dd><a lay-href="/account">管理列表</a></dd>
+                                <dd><a lay-href="/email">邮件服务</a></dd>                           
                             </dl>
                         </li>
                     </ul>
@@ -123,7 +123,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="welcome" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe  src="/welcome" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
 
@@ -152,7 +152,7 @@
                     btn: ["确定","关闭"]
                 }, function () {
                     console.log('logout')
-                     window.location.href = "/login/view"
+                     window.location.href = "/login"
                 })
 
             }

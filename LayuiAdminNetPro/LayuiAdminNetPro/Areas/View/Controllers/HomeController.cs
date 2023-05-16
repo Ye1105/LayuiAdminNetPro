@@ -1,12 +1,12 @@
 ﻿using LayuiAdminNetCore.AuthorizationModels;
-using LayuiAdminNetPro.Utilities.Common;
+using LayuiAdminNetPro.Utilities.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LayuiAdminNetPro.Controllers
+namespace LayuiAdminNetPro.Areas.View.Controllers
 {
-    [ApiController]
-    public class HomeController : ControllBase
+    [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
+    public class HomeController : Controller
     {
         /// <summary>
         /// 框架主界面
@@ -23,6 +23,7 @@ namespace LayuiAdminNetPro.Controllers
         /// 欢迎界面【公告、项目版本等展示】
         /// </summary>
         /// <returns></returns>
+        //[Route(nameof(Areas.View))]
         [HttpGet("welcome")]
         [Authorize(Policy = Policys.Admin)]
         public IActionResult Welcome()

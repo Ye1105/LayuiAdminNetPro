@@ -108,7 +108,7 @@
 
             //请求接口
             $.ajax({
-                url: `/login?phone=${field.phone}&password=${field.password}`,
+                url: `/api/login?phone=${field.phone}&password=${field.password}`,
                 type: "Get",
                 success: function (result) {
                     if (result.status == 200) {

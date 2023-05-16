@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
 
-namespace LayuiAdminNetPro.Controllers
+namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
     /// <summary>
     /// 登录管理
     /// </summary>
-    [Route("login")]
+    [Route($"{nameof(Areas.Api)}/[controller]")]
     [ApiController]
     public class LoginController : ControllBase
     {
@@ -28,17 +28,6 @@ namespace LayuiAdminNetPro.Controllers
             _admin = adminAccountService;
             _auth = authenticateService;
             _appSettings = appSettings;
-        }
-
-        /// <summary>
-        /// 登录界面视图渲染
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("view")]
-        public IActionResult Index()
-        {
-            DeleteCookies(".AspNetCore.Token");
-            return View();
         }
 
         /// <summary>
@@ -149,7 +138,6 @@ namespace LayuiAdminNetPro.Controllers
             {
                 return Ok(Fail("账号认证失败"));
             }
-
 
             //5.初始化并设置Cookie
             DeleteCookies(".AspNetCore.Token");

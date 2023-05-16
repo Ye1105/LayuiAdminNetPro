@@ -4,9 +4,11 @@ using LayuiAdminNetCore.Appsettings;
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.Database.EF;
 using LayuiAdminNetPro.Utilities.Autofac;
+using LayuiAdminNetPro.Utilities.Expansions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.WebEncoders;
@@ -30,6 +32,13 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     //小驼峰
     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 });
+
+#region 配置模版视图路径
+builder.Services.Configure<RazorViewEngineOptions>(options =>
+{
+    options.ViewLocationExpanders.Add(new CustomViewLocationExpander());
+});
+#endregion
 
 #region MemoryCache
 

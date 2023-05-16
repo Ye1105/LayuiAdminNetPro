@@ -2,7 +2,7 @@
 
 namespace LayuiAdminNetCore.AdminPages
 {
-    public class PagedParams
+    public abstract class IPagedParams
     {
         /// <summary>
         /// 自动加载 0 关闭  1 开启

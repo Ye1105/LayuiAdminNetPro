@@ -5,7 +5,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>welcome</title>
+    <title>LayuiadminNetPro</title>
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
 </head>
@@ -46,9 +46,9 @@
                             <cite>layui</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="">基本资料</a></dd>
-                            <dd><a lay-href="">修改密码</a></dd>                 
-                            <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+@*                          <dd><a lay-href="">基本资料</a></dd>
+                            <dd><a lay-href="">修改密码</a></dd>*@
+                            <dd style="text-align:center;"><a href="javascript:;" lay-on="logout">退出</a></dd>
                         </dl>
                     </li>
                     <!--全屏-->
@@ -70,13 +70,13 @@
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
                         lay-filter="layadmin-system-side-menu">
                         <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="主页" lay-direction="2">
+                            <a href="javascript:;" lay-tips="主页" lay-direction="1">
                                 <i class="layui-icon layui-icon-home"></i>
                                 <cite>主页</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd data-name="server">
-                                    <a lay-href="server">配置界面</a>
+                                    <a lay-href="/welcome">主页信息</a>
                                 </dd>
                             </dl>
                         </li>
@@ -86,21 +86,9 @@
                                 <i class="layui-icon layui-icon-set"></i>
                                 <cite>设置</cite>
                             </a>
-                            <dl class="layui-nav-child">
-                                <dd class="layui-nav-itemed">
-                                    <a href="javascript:;">系统设置</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/system/website.html">网站设置</a></dd>
-                                        <dd><a lay-href="set/system/email.html">邮件服务</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd class="layui-nav-itemed">
-                                    <a href="javascript:;">我的设置</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-                                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                                    </dl>
-                                </dd>
+                            <dl class="layui-nav-child">                           
+                                <dd><a lay-href="/account">管理列表</a></dd>
+                                <dd><a lay-href="/email">邮件服务</a></dd>                           
                             </dl>
                         </li>
                     </ul>
@@ -135,7 +123,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="welcome" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe  src="/welcome" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
 
@@ -151,5 +139,23 @@
         base: '../layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use("index")
+    }).use(["index", "util", "layer"], function () {
+
+        let util = layui.util,
+            layer = layui.layer;
+
+        util.on("lay-on", {
+            //退出网站
+            'logout': function () {   
+                layer.confirm('确定登出吗?', {
+                    title:false,
+                    btn: ["确定","关闭"]
+                }, function () {
+                    console.log('logout')
+                     window.location.href = "/login"
+                })
+
+            }
+        })
+    })
 </script>

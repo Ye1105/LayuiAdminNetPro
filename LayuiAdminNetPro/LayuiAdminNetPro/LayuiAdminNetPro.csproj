@@ -7,6 +7,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Remove="Controllers\**" />
+		<Compile Remove="Models\**" />
+		<Content Remove="Controllers\**" />
+		<Content Remove="Models\**" />
+		<EmbeddedResource Remove="Controllers\**" />
+		<EmbeddedResource Remove="Models\**" />
+		<None Remove="Controllers\**" />
+		<None Remove="Models\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Autofac" Version="7.0.1" />
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
@@ -21,7 +32,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Models\" />
 		<Folder Include="wwwroot\common\" />
 	</ItemGroup>
 

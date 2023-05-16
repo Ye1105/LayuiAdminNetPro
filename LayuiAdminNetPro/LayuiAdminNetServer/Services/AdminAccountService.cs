@@ -1,9 +1,11 @@
 ﻿using CodeHelper.Common;
 using LayuiAdminNetCore.AdminModels;
+using LayuiAdminNetCore.AdminPages;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using LayuiAdminNetServer.IServices;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using X.PagedList;
 
 namespace LayuiAdminNetServer.Services
 {
@@ -44,6 +46,34 @@ namespace LayuiAdminNetServer.Services
 
                 return isTrack ? await query.FirstOrDefaultAsync() : await query.AsNoTracking().FirstOrDefaultAsync();
             }
+        }
+
+        public IPagedList<AdminAccount> GetPageList(IPagedParams para, bool isTrack = true)
+        {
+            var pagedParams = para as AccountPagedParams;
+
+            var query = isTrack ? _base.Entities<AdminAccount>() : _base.EntitiesNoTrack<AdminAccount>();
+
+            if (pagedParams.STime != null)
+            {
+                query = query.Where(x => x.Created >= pagedParams.STime.Value);
+            }
+
+            if (pagedParams.ETime != null)
+            {
+                query = query.Where(x => x.Created < pagedParams.ETime.Value.AddDays(1));
+            }
+
+            if (!string.IsNullOrWhiteSpace(pagedParams.Query))
+            {
+                query = query.Where(x => x.Name.StartsWith(pagedParams.Query) || x.Name.EndsWith(pagedParams.Query) || x.Name.Contains(pagedParams.Query));
+            }
+
+            query = query.OrderByDescending(x => x.Created);
+
+            var data = query.ToPagedList(pagedParams.PageIndex, pagedParams.PageSize);
+
+            return data;
         }
     }
 }

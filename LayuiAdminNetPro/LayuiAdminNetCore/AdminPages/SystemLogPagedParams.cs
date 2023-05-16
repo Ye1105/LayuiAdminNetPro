@@ -2,7 +2,7 @@
 
 namespace LayuiAdminNetCore.AdminPages
 {
-    public class SystemLogPagedParams : PagedParams
+    public class SystemLogPagedParams : IPagedParams
     {
         /// <summary>
         /// 用户Ip

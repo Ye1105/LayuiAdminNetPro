@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Controllers;
 
-namespace LayuiAdminNetPro.Utilities.Middlewares
+namespace LayuiAdminNetPro.Utilities.Expansions
 {
-    public class CustomAuthorizationMiddlewareResultHandler : IAuthorizationMiddlewareResultHandler
+    public class CustomAuthorizationHandler : IAuthorizationMiddlewareResultHandler
     {
         private readonly AuthorizationMiddlewareResultHandler _defaultHandler = new();
 
@@ -29,7 +29,7 @@ namespace LayuiAdminNetPro.Utilities.Middlewares
                 }
                 else
                 {
-                    context.Response.Redirect($"/login/view");
+                    context.Response.Redirect($"login");
 
                     //context.Response.Redirect($"/errors?status={HttpStatus.FORBIDDEN}");
                     return;

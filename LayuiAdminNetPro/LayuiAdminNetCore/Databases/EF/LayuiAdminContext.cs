@@ -1,5 +1,7 @@
 ﻿using LayuiAdminNetCore.AdminModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace LayuiAdminNetCore.Database.EF
 {
@@ -42,9 +44,13 @@ namespace LayuiAdminNetCore.Database.EF
             base.OnModelCreating(modelBuilder);
         }
 
+        //未生效
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
+        //    optionsBuilder.LogTo(Console.Write, (eventId, logLevel) => logLevel >= LogLevel.Error || eventId == RelationalEventId.ConnectionOpened
+        //                           || eventId == RelationalEventId.ConnectionClosed);
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-        }
+        { }
 
         #region 映射
 

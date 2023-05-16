@@ -21,14 +21,6 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         [HttpGet]
         public IActionResult Index([FromQuery] AccountPagedParams req)
         {
-            //req.IsAutoLoading = 1;
-
-            //var pagedList = req.IsAutoLoading > 0 ? _acc.GetPageList(req, isTrack: false) : null;
-
-            //(AccountPagedParams pagedParams, IPagedList<AdminAccount>? pagedList) data = (req, pagedList);
-
-            //return View(data);
-
             return View();
         }
     }

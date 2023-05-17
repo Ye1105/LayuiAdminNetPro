@@ -18,10 +18,6 @@ namespace LayuiAdminNetInfrastructure.Repositoies
             _db ??= db;
         }
 
-        public BaseRepository()
-        {
-        }
-
         #region IQueryable
 
         public IQueryable<T> Entities<T>() where T : class

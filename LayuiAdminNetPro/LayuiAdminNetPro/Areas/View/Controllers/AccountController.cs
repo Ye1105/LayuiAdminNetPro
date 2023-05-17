@@ -1,6 +1,4 @@
-﻿using LayuiAdminNetCore.AdminPages;
-using LayuiAdminNetCore.AuthorizationModels;
-using LayuiAdminNetServer.IServices;
+﻿using LayuiAdminNetCore.AuthorizationModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,15 +9,8 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
     [Authorize(Policy = Policys.Admin)]
     public class AccountController : Controller
     {
-        private readonly IAdminAccountService _acc;
-
-        public AccountController(IAdminAccountService accountService)
-        {
-            _acc = accountService;
-        }
-
         [HttpGet]
-        public IActionResult Index([FromQuery] AccountPagedParams req)
+        public IActionResult Index()
         {
             return View();
         }

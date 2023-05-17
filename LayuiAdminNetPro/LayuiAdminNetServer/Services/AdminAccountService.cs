@@ -54,24 +54,24 @@ namespace LayuiAdminNetServer.Services
 
             var query = isTrack ? _base.Entities<AdminAccount>() : _base.EntitiesNoTrack<AdminAccount>();
 
-            if (pagedParams.STime != null)
+            if (pagedParams?.STime != null)
             {
                 query = query.Where(x => x.Created >= pagedParams.STime.Value);
             }
 
-            if (pagedParams.ETime != null)
+            if (pagedParams?.ETime != null)
             {
                 query = query.Where(x => x.Created < pagedParams.ETime.Value.AddDays(1));
             }
 
-            if (!string.IsNullOrWhiteSpace(pagedParams.Query))
+            if (!string.IsNullOrWhiteSpace(pagedParams?.Query))
             {
-                query = query.Where(x => x.Name.StartsWith(pagedParams.Query) || x.Name.EndsWith(pagedParams.Query) || x.Name.Contains(pagedParams.Query));
+                query = query.Where(x => x.Name!.StartsWith(pagedParams.Query) || x.Name.EndsWith(pagedParams.Query) || x.Name.Contains(pagedParams.Query));
             }
 
             query = query.OrderByDescending(x => x.Created);
 
-            var data = query.ToPagedList(pagedParams.PageIndex, pagedParams.PageSize);
+            var data = query.ToPagedList(pagedParams!.PageIndex, pagedParams.PageSize);
 
             return data;
         }

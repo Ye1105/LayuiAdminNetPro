@@ -5,6 +5,7 @@ using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetGate.IServices;
 using LayuiAdminNetPro.Utilities.Common;
+using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetServer.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,6 +18,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     /// </summary>
     [Route($"{nameof(Areas.Api)}/[controller]")]
     [ApiController]
+    [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
     public class LoginController : ControllBase
     {
         private readonly IAdminAccountService _admin;
@@ -44,7 +46,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
              * 2.验证码 短信校验  demo中不做具体实现
              * 3.账号校验
              * 4.JWT AccessToken
-             * 5.设置Cookie
+             * 5.返回 AccessToken
              */
 
             #region 参数校验
@@ -139,11 +141,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 return Ok(Fail("账号认证失败"));
             }
 
-            //5.初始化并设置Cookie
-            DeleteCookies(".AspNetCore.Token");
-            SetCookies(".AspNetCore.Token", AccessToken, _appSettings!.Value!.JwtBearer!.AccessExpiration);
-
-            return Ok(Success());
+            return Ok(Success(new { AccessToken }));
         }
     }
 }

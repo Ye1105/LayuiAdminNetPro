@@ -1,11 +1,10 @@
 ﻿using LayuiAdminNetCore.AuthorizationModels;
-using LayuiAdminNetPro.Utilities.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
-    [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
+    [Authorize(Policy = Policys.Admin)]
     public class HomeController : Controller
     {
         /// <summary>
@@ -13,7 +12,6 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("/")]
-        [Authorize(Policy = Policys.Admin)]
         public IActionResult Index()
         {
             return View();
@@ -25,7 +23,6 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         /// <returns></returns>
         //[Route(nameof(Areas.View))]
         [HttpGet("welcome")]
-        [Authorize(Policy = Policys.Admin)]
         public IActionResult Welcome()
         {
             return View();

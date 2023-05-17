@@ -43,7 +43,7 @@
     |   └── Program.cs                          //项目入口    
     ├── LayuiAdminNetCore                    //实体类库
     |   ├── AdminModels                         //数据库映射实体类
-    |   ├── AdminPages                        	//接口参数实体类
+    |   ├── RequstModels                        //接口参数实体类
     |   ├── Appsettings                       	//项目配置映射实体类
     |   ├── AuthorizationModels               	//权限相关实体类
     |   ├── Constants                         	//常量

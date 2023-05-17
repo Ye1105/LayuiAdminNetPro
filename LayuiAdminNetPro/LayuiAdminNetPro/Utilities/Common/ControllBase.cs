@@ -118,34 +118,6 @@ namespace LayuiAdminNetPro.Utilities.Common
         }
 
         #endregion Reponse
-
-        #region Cookie
-
-        /// <summary>
-        /// Append Cookie
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <param name="days"></param>
-        protected void SetCookies(string key, string value, int days = 7)
-        {
-            HttpContext.Response.Cookies.Append(key, value, new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(days),
-                IsEssential = true
-            });
-        }
-
-        /// <summary>
-        /// Delete Cookie
-        /// </summary>
-        /// <param name="key"></param>
-        protected void DeleteCookies(string key)
-        {
-            HttpContext.Response.Cookies.Delete(key);
-        }
-
-        #endregion Cookie
     }
 
     /// <summary>

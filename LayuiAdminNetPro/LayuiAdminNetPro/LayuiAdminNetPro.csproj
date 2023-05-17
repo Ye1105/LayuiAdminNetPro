@@ -31,8 +31,4 @@
 		<ProjectReference Include="..\LayuiAdminNetServer\LayuiAdminNetServer.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="wwwroot\common\" />
-	</ItemGroup>
-
 </Project>

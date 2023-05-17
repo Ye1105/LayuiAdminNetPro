@@ -1,11 +1,13 @@
 ﻿using CodeHelper.Common;
 using LayuiAdminNetCore.AdminModels;
-using LayuiAdminNetCore.AdminPages;
+using LayuiAdminNetCore.Pages;
+using LayuiAdminNetCore.RequstModels;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using LayuiAdminNetServer.IServices;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using X.PagedList;
+using System.Reflection;
 
 namespace LayuiAdminNetServer.Services
 {
@@ -48,32 +50,41 @@ namespace LayuiAdminNetServer.Services
             }
         }
 
-        public IPagedList<AdminAccount> GetPageList(IPagedParams para, bool isTrack = true)
+        public async Task<PagedList<AdminAccount>> QueryPagedAsync(AccountPagedRequest req)
         {
-            var pagedParams = para as AccountPagedParams;
+            Expression<Func<AdminAccount, bool>> whereLambda = x => true;
 
-            var query = isTrack ? _base.Entities<AdminAccount>() : _base.EntitiesNoTrack<AdminAccount>();
-
-            if (pagedParams.STime != null)
+            if (req.StartTime != null)
             {
-                query = query.Where(x => x.Created >= pagedParams.STime.Value);
+                whereLambda = whereLambda.And(x => x.Created >= req.StartTime);
             }
 
-            if (pagedParams.ETime != null)
+            if (req.EndTime != null)
             {
-                query = query.Where(x => x.Created < pagedParams.ETime.Value.AddDays(1));
+                whereLambda = whereLambda.And(x => x.Created < req.EndTime);
             }
 
-            if (!string.IsNullOrWhiteSpace(pagedParams.Query))
+            if (req.UId != null)
             {
-                query = query.Where(x => x.Name.StartsWith(pagedParams.Query) || x.Name.EndsWith(pagedParams.Query) || x.Name.Contains(pagedParams.Query));
+                whereLambda = whereLambda.And(x => x.UId == req.UId);
             }
 
-            query = query.OrderByDescending(x => x.Created);
+            if (req.Name != null)
+            {
+                whereLambda = whereLambda.And(x => x.Name == req.Name);
+            }
 
-            var data = query.ToPagedList(pagedParams.PageIndex, pagedParams.PageSize);
+            if (req.Phone != null)
+            {
+                whereLambda = whereLambda.And(x => x.Phone == req.Phone);
+            }
 
-            return data;
+            if (req.Sex != null)
+            {
+                whereLambda = whereLambda.And(x => x.Sex == req.Sex);
+            }
+
+            return await _base.QueryPagedAsync(whereLambda, req.PageIndex, req.PageSize, req.OffSet, isTrack: false, req.OrderBy);
         }
     }
 }

@@ -18,10 +18,6 @@ namespace LayuiAdminNetInfrastructure.Repositoies
             _db ??= db;
         }
 
-        public BaseRepository()
-        {
-        }
-
         #region IQueryable
 
         public IQueryable<T> Entities<T>() where T : class
@@ -251,14 +247,15 @@ namespace LayuiAdminNetInfrastructure.Repositoies
             return await PagedList<T>.CreateAsync(query, pageIndex, pageSize, offset);
         }
 
-        public async Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>> whereLambda, int pageIndex = 1, int pageSize = 15, int offset = 0, bool isTrack = true, string? orderBy = null) where T : class
+        public async Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>>? whereLambda, int pageIndex = 1, int pageSize = 15, int offset = 0, bool isTrack = true, string? orderBy = null) where T : class
         {
-            var query = Entities<T>().Where(whereLambda);
+            var query = Entities<T>();
+
+            if (whereLambda != null)
+                query = query.Where(whereLambda);
 
             if (!isTrack)
-            {
                 query = query.AsNoTracking();
-            }
 
             query = query.ApplySort(orderBy);
 

@@ -87,7 +87,7 @@
                                 <cite>设置</cite>
                             </a>
                             <dl class="layui-nav-child">                           
-                                <dd><a lay-href="/account">管理列表</a></dd>
+                                <dd><a lay-href="/accounts">管理列表</a></dd>
                                 <dd><a lay-href="/email">邮件服务</a></dd>                           
                             </dl>
                         </li>
@@ -133,6 +133,7 @@
     </div>
 </body>
 </html>
+<script type="text/javascript" src="~/common/docCookies.js"></script>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
 <script type="text/javascript">
     layui.config({
@@ -149,10 +150,19 @@
             'logout': function () {   
                 layer.confirm('确定登出吗?', {
                     title:false,
-                    btn: ["确定","关闭"]
+                    btn: ["确定","关闭"],
                 }, function () {
-                    console.log('logout')
-                     window.location.href = "/login"
+
+                    console.log('用户登出网站')
+                    docCookies.removeItem(".AspNetCore.Token");
+
+                    let loadIndex = layer.load(0);
+                    // 模拟关闭
+                    setTimeout(function () {
+                        layer.close(loadIndex)
+                        window.location.href = "/";
+                    }, 1000);
+                    //window.location.href = "/login"
                 })
 
             }

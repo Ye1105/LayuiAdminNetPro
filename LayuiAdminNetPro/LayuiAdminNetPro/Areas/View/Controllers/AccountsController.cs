@@ -4,26 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
+    //[Route($"{nameof(Areas.View)}/accounts")]
+    [Route("[controller]")]
     [Authorize(Policy = Policys.Admin)]
-    public class HomeController : Controller
+    public class AccountsController : Controller
     {
         /// <summary>
-        /// 框架主界面
+        /// 账号列表界面
         /// </summary>
         /// <returns></returns>
-        [Route("/")]
+        [HttpGet]
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 欢迎界面【公告、项目版本等展示】
-        /// </summary>
-        /// <returns></returns>
-        //[Route(nameof(Areas.View))]
-        [HttpGet("welcome")]
-        public IActionResult Welcome()
         {
             return View();
         }

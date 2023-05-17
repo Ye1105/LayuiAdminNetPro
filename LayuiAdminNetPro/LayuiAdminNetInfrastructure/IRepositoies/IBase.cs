@@ -215,7 +215,7 @@ namespace LayuiAdminNetInfrastructure.IRepositoies
         /// <param name="isTrack">跟踪</param>
         /// <param name="orderBy">排序</param>
         /// <returns></returns>
-        public Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>> whereLambda, int pageIndex = 1, int pageSize = 15, int offset = 0, bool isTrack = true, string? orderBy = null) where T : class;
+        public Task<PagedList<T>> QueryPagedAsync<T>(Expression<Func<T, bool>>? whereLambda, int pageIndex = 1, int pageSize = 15, int offset = 0, bool isTrack = true, string? orderBy = null) where T : class;
 
         #endregion 查询
 

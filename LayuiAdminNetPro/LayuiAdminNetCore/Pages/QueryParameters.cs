@@ -7,10 +7,11 @@ namespace LayuiAdminNetCore.Pages
     {
         private const int DefaultPageSize = 10;
         private const int DefaultMaxPageSize = 50;
+        private const int DefaultOffset = 0;
 
         #region OffSet
 
-        private int _offSet;
+        private int _offSet = DefaultOffset;
 
         public int OffSet
         {

@@ -38,9 +38,18 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] AccountPagedRequest req)
         {
+            var list = await _admin.QueryPagedAsync(req);
 
+            var JsonData = new
+            {
+                list.TotalPages,
+                list.CurrentPage,
+                list.PageSize,
+                list.TotalCount,
+                list
+            };
 
-            return Ok(Success());
+            return Ok(Success(JsonData));
         }
     }
 }

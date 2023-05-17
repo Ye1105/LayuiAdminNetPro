@@ -52,36 +52,36 @@ namespace LayuiAdminNetServer.Services
 
         public async Task<PagedList<AdminAccount>> QueryPagedAsync(AccountPagedRequest req)
         {
-            Expression<Func<AdminAccount, bool>>? whereLambda = x => true;
+            Expression<Func<AdminAccount, bool>> whereLambda = x => true;
 
             if (req.StartTime != null)
             {
-                whereLambda?.And(x => x.Created >= req.StartTime);
+                whereLambda = whereLambda.And(x => x.Created >= req.StartTime);
             }
 
             if (req.EndTime != null)
             {
-                whereLambda?.And(x => x.Created < req.EndTime);
+                whereLambda = whereLambda.And(x => x.Created < req.EndTime);
             }
 
             if (req.UId != null)
             {
-                whereLambda?.And(x => x.UId == req.UId);
+                whereLambda = whereLambda.And(x => x.UId == req.UId);
             }
 
             if (req.Name != null)
             {
-                whereLambda?.And(x => x.Name == req.Name);
+                whereLambda = whereLambda.And(x => x.Name == req.Name);
             }
 
             if (req.Phone != null)
             {
-                whereLambda?.And(x => x.Phone == req.Phone);
+                whereLambda = whereLambda.And(x => x.Phone == req.Phone);
             }
 
             if (req.Sex != null)
             {
-                whereLambda?.And(x => x.Sex == req.Sex);
+                whereLambda = whereLambda.And(x => x.Sex == req.Sex);
             }
 
             return await _base.QueryPagedAsync(whereLambda, req.PageIndex, req.PageSize, req.OffSet, isTrack: false, req.OrderBy);

@@ -19,11 +19,11 @@ namespace LayuiAdminNetPro.Utilities.Expansions
 
             if (!authorizeResult.Succeeded)
             {
-                if (ControllBase.IsAjaxRequest(context.Request))
+                if (ControllBase.IsAjaxRequest(context.Request) || context.Request.Path.Value!.Contains("/api"))
                 {
                     context.Response.StatusCode = (int)HttpStatus.OK;
-                    await context.Response.WriteAsJsonAsync(new { Status = HttpStatus.FORBIDDEN });
-                    //await context.ForbidAsync();
+                    //new {    Status = HttpStatus.FORBIDDEN }
+                    await context.Response.WriteAsJsonAsync(ControllBase.Res(status: HttpStatus.FORBIDDEN, msg: "权限不足", uimsg: "权限不足"));
 
                     return;
                 }

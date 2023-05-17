@@ -16,7 +16,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     /// <summary>
     /// 登录管理
     /// </summary>
-    [Route($"{nameof(Areas.Api)}/[controller]")]
+    [Route($"{nameof(Api)}/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
     public class LoginController : ControllBase
@@ -136,12 +136,12 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             #endregion 账号校验
 
             //4.AccessToken
-            if (!_auth.IsAuthenticated(new Authenticate() { UId = account.UId, Phone = account.Phone }, out string AccessToken))
+            if (!_auth.IsAuthenticated(new Authenticate() { UId = account.UId, Phone = account.Phone }, out string accessToken))
             {
                 return Ok(Fail("账号认证失败"));
             }
 
-            return Ok(Success(new { AccessToken }));
+            return Ok(Success(new { accessToken }));
         }
     }
 }

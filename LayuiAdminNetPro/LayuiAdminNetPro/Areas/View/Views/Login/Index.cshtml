@@ -69,7 +69,7 @@
         index: 'lib/index' //主入口模块
     }).use(function () {
 
-        let $ = layui.$,
+        var $ = layui.$,
             user = layui.user,
             util = layui.util,
             form = layui.form,
@@ -130,7 +130,8 @@
                     console.log(XMLHttpRequest.status, XMLHttpRequest.responseText)
                 }
             });
-           //return false; // 阻止默认 form 跳转
+           
+            return false; // 阻止默认 form 跳转
         })
     })
 

@@ -20,13 +20,24 @@
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
 </head>
-<body >
-     <div class="layui-fluid">
-
+<body>
+    <div class="layui-fluid">
+        <div class="layui-row layui-col-space15">
+            <!--公告模块-->
+            <div class="layui-col-md12">
+                <code>管理列表</code>
+            </div>
+        </div>
     </div>
-    
-    <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
 </body>
 </html>
+<script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use("index")
+</script>
 ```
 

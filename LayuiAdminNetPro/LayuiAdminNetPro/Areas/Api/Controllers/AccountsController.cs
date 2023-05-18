@@ -34,7 +34,11 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return Ok(Success(new { account }));
         }
 
-
+        /// <summary>
+        /// 账号列表【分页】
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] AccountPagedRequest req)
         {

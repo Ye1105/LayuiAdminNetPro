@@ -101,12 +101,20 @@
                 ,{field:'uId', title: 'ID'}
                 ,{field:'name', title: '用户名'}
                 ,{field:'phone', title: '手机号'}
-                ,{field:'sex', title: '性别'}
+                ,{field:'sex', title: '性别',width:60, templet:function(d){
+                    if(d.sex==='男性'){
+                        return '<span style="color: blue" title="男性">♂</span>';
+                    } else if (d.sex === '女性') {
+                        return '<span style="color: pink" title="女性">♀</span>';
+                    } else{
+                        return '<span style="color: dark" title="跨性别">⚧️</span>';
+                    }
+                 }}
                 ,{field:'jobStatus', title: '工作状态'}
                 ,{field:'status', title: '账号状态'}
                 ,{field:'lastLoginIp', title: '最后登录IP'}
                 ,{field:'lastLoginTime', title: '最后登录时间'}
-                ,{field:'created', title: '创建时间', sort:true}
+                ,{field:'created', title: '创建时间'}
             ]]
             ,response: {
                 statusCode: 200 // 重新规定成功的状态码为 200，table 组件默认为 0

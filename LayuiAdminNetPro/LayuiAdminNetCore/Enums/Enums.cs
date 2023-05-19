@@ -80,9 +80,9 @@ namespace LayuiAdminNetCore.Enums
         FEMALE = 1,
 
         /// <summary>
-        /// 女性
+        /// 跨性别
         /// </summary>
-        [EnumDescription("中性")]
+        [EnumDescription("跨性别")]
         NEUTRAL = 2
     }
 

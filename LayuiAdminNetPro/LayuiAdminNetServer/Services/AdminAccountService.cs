@@ -7,7 +7,6 @@ using LayuiAdminNetService.IServices;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace LayuiAdminNetService.Services
 {
@@ -84,7 +83,9 @@ namespace LayuiAdminNetService.Services
                 whereLambda = whereLambda.And(x => x.Sex == req.Sex);
             }
 
-            return await _base.QueryPagedAsync(whereLambda, req.PageIndex, req.PageSize, req.OffSet, isTrack: false, req.OrderBy);
+            var data = await _base.QueryPagedAsync(whereLambda, req.PageIndex, req.PageSize, req.OffSet, isTrack: false, req.OrderBy);
+
+            return data;
         }
     }
 }

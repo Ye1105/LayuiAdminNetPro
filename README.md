@@ -38,12 +38,14 @@
     |   |   ├── Expansions                         //接口扩展
     |   |   ├── Filters                            //过滤器
     |   |   ├── Common                             //帮助类
+    |   |   ├── AutoMapper                         //映射
     |   |   └── Autofac                            //依赖注入
     |   ├── appsettings.json                    //项目配置文件
     |   └── Program.cs                          //项目入口    
     ├── LayuiAdminNetCore                    //实体类库
     |   ├── AdminModels                         //数据库映射实体类
-    |   ├── RequstModels                        //接口参数实体类
+    |   ├── RequstModels                        //接口请求参数实体类【分页等】
+    |   ├── DtoModels                           //AutoMap映射实体类
     |   ├── Appsettings                       	//项目配置映射实体类
     |   ├── AuthorizationModels               	//权限相关实体类
     |   ├── Constants                         	//常量
@@ -55,7 +57,7 @@
     |   ├── Handler                             //权限校验
     |   ├── IServices                           //权限业务接口
     |   └── Services                            //权限业务实现
-    ├── LayuiAdminNetServer                  //逻辑业务层
+    ├── LayuiAdminNetService                 //逻辑业务层
     |   ├── IServices                        	//逻辑业务接口
     │   └── Services                         	//逻辑业务实现
     └── LayuiAdminNetInfrastructure          //仓储层

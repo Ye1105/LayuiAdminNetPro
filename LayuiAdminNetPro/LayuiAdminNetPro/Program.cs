@@ -4,6 +4,7 @@ using LayuiAdminNetCore.Appsettings;
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.Database.EF;
 using LayuiAdminNetPro.Utilities.Autofac;
+using LayuiAdminNetPro.Utilities.AutoMapper;
 using LayuiAdminNetPro.Utilities.Expansions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,14 @@ builder.Services.Configure<RazorViewEngineOptions>(options =>
 {
     options.ViewLocationExpanders.Add(new CustomViewLocationExpander());
 });
+#endregion
+
+#region AutoMapper
+builder.Services.AddAutoMapper(typeof(CustomProfile));
+#endregion
+
+#region AutoMap
+
 #endregion
 
 #region MemoryCache
@@ -105,7 +114,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterAssemblyTypes(authorizeAssembly).Where(t => t.IsClass && (t.Name.EndsWith("Service") || t.Name.EndsWith("Handler"))).AsImplementedInterfaces().InstancePerLifetimeScope();
 
     /* 业务逻辑注入 */
-    var serverAssembly = Assembly.Load("LayuiAdminNetServer");
+    var serverAssembly = Assembly.Load("LayuiAdminNetService");
     containerBuilder.RegisterAssemblyTypes(serverAssembly).Where(t => t.IsClass && t.Name.EndsWith("Service")).AsImplementedInterfaces().InstancePerLifetimeScope(); //InstancePerLifetimeScope 保证对象生命周期基于请求
 
     /* 仓储配置注入 */

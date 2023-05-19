@@ -5,61 +5,73 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>welcome</title>
+    <title>accounts</title>
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
 </head>
 <body>
     <div class="layui-fluid">
-        <form class="layui-form layui-row layui-col-space16">
-            <div class="layui-col-md3">
-                <div class="layui-input-wrap">
-                    <div class="layui-input-prefix">
-                        <i class="layui-icon layui-icon-username"></i>
+        <div class="layui-card">
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <div class="layui-form-item">
+                    <div class="layui-input-wrap layui-inline">
+                        <div class="layui-input-prefix">
+                            <i class="layui-icon layui-icon-username"></i>
+                        </div>
+                        <input type="text" name="name" value="" placeholder="用户名" class="layui-input" lay-affix="clear">
                     </div>
-                    <input type="text" name="name" value="" placeholder="用户名" class="layui-input" lay-affix="clear">
-                </div>
-            </div>
-            <div class="layui-col-md3">
-                <div class="layui-input-wrap">
-                    <div class="layui-input-prefix">
-                        <i class="layui-icon layui-icon-cellphone"></i>
+
+                    <div class="layui-input-wrap layui-inline">
+                        <div class="layui-input-prefix">
+                            <i class="layui-icon layui-icon-cellphone"></i>
+                        </div>
+                        <input type="text" name="phone" placeholder="手机号" lay-affix="clear" class="layui-input">
                     </div>
-                    <input type="text" name="phone" placeholder="手机号" lay-affix="clear" class="layui-input">
+       
+                    <button class="layui-btn" lay-submit lay-filter="demo-table-search">搜索</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
+
+             </div>
+            <div class="layui-card-body"> 
+                <!--工具栏-->
+                <script type="text/html" id="toolbarDemo" >
+                    <div class="layui-btn-container" >
+                    <button class="layui-btn layui-btn-sm" id="dropdownButton">
+                        下拉按钮 
+                        <i class="layui-icon layui-icon-down layui-font-12"></i>
+                    </button>
+                    </div>
+                </script>
+                <!--table-->
+                <table class="layui-hide layui-table" id="ID-table-account" ></table>
+                <!--分页栏-->
+                <script type="text/html" id="ID-table-account-pagebar"  >
+                    <div class="layui-btn-container" >
+                    </div>
+                </script>            
             </div>
-          
-            <div class="layui-btn-container layui-col-md6">
-                <button class="layui-btn" lay-submit lay-filter="demo-table-search">搜索</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-            <div class="layui-col-md12">
-                <table class="layui-hide layui-table" id="ID-table-demo-page"></table>
-            </div>
-        </form>
+        </div>
     </div>
 </body>
 </html>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
-<script type="text/html" id="ID-table-demo-page-pagebar">
-    <div class="layui-btn-container">
-    </div>
-</script>
 <script type="text/javascript">
     layui.config({
         base: '../layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(["index", "table", "laydate"], function () {
+    }).use(function () {
 
          var table = layui.table,
             $ = layui.$,
             form = layui.form,
+            dropdown = layui.dropdown,
             layer=layui.layer;
 
           // 创建渲染实例
          table.render({
-             elem: '#ID-table-demo-page'
+             elem: '#ID-table-account'
             ,url:'/api/accounts' // 此处为静态模拟数据，实际使用时需换成真实接口
             ,request:{
                 pageName:'pageIndex',  //替换分页的字段名称，后端可识别
@@ -81,12 +93,19 @@
             ,css: [ // 直接给当前表格主容器重置 css 样式
                 '.layui-table-page{text-align: center;}' // 让分页栏居中
                 ].join('')
-            ,pagebar: '#ID-table-demo-page-pagebar' // 分页栏模板
+            ,toolbar: '#toolbarDemo'
+            ,pagebar: '#ID-table-account-pagebar' // 分页栏模板
+             //,totalRow: true // 开启合计行
             ,cols: [[                               // 列名
-                {field:'uId', title: 'ID'}
+                 {type: 'checkbox', fixed: 'left'}
+                ,{field:'uId', title: 'ID'}
                 ,{field:'name', title: '用户名'}
+                ,{field:'phone', title: '手机号'}
                 ,{field:'sex', title: '性别'}
-                ,{field:'phone', title: '手机号',sort:true}
+                ,{field:'jobStatus', title: '工作状态'}
+                ,{field:'status', title: '账号状态'}
+                ,{field:'lastLoginIp', title: '最后登录IP'}
+                ,{field:'lastLoginTime', title: '最后登录时间'}
                 ,{field:'created', title: '创建时间', sort:true}
             ]]
             ,response: {
@@ -100,6 +119,34 @@
                     "data":res.data.list
                 };
              }
+             //toolbar 中的 dropdown render
+             ,done:function(){
+                 var id=this.id;
+                 dropdown.render({
+                    elem:'#dropdownButton'
+                    ,data:[{
+                         id:'add',
+                         title:'添加'
+                     }
+                     ,{
+                         id:'edit',
+                         title:'编辑'
+                     }]
+                     ,click:function(obj){
+                         let checkStatus=table.checkStatus(id);
+                         let data=checkStatus.data;  //获取选中的数据
+                         switch(obj.id){
+                             case 'add':
+                                 layer.open({
+                                     title:"添加",
+                                     type:2,
+                                     area:['80%','80%'],
+                                     content:'/'
+                             })
+                         }
+                     }
+                 })
+             }
          });
           
          //外部搜索
@@ -108,7 +155,7 @@
 
             //layer.msg(JSON.stringify(field))
 
-            table.reload('ID-table-demo-page', {
+            table.reload('ID-table-account', {
               page: {
                 curr: 1 // 重新从第 1 页开始
               }

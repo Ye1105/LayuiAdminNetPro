@@ -1,5 +1,168 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>accounts</title>
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <div class="layui-form-item">
+                    <div class="layui-input-wrap layui-inline">
+                        <div class="layui-input-prefix">
+                            <i class="layui-icon layui-icon-username"></i>
+                        </div>
+                        <input type="text" name="name" value="" placeholder="用户名" class="layui-input" lay-affix="clear">
+                    </div>
+
+                    <div class="layui-input-wrap layui-inline">
+                        <div class="layui-input-prefix">
+                            <i class="layui-icon layui-icon-cellphone"></i>
+                        </div>
+                        <input type="text" name="phone" placeholder="手机号" lay-affix="clear" class="layui-input">
+                    </div>
+       
+                    <button class="layui-btn" lay-submit lay-filter="demo-table-search">搜索</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+
+             </div>
+            <div class="layui-card-body"> 
+                <!--工具栏-->
+                <script type="text/html" id="toolbarDemo" >
+                    <div class="layui-btn-container" >
+                    <button class="layui-btn layui-btn-sm" id="dropdownButton">
+                        下拉按钮 
+                        <i class="layui-icon layui-icon-down layui-font-12"></i>
+                    </button>
+                    </div>
+                </script>
+                <!--table-->
+                <table class="layui-hide layui-table" id="ID-table-account" ></table>
+                <!--分页栏-->
+                <script type="text/html" id="ID-table-account-pagebar"  >
+                    <div class="layui-btn-container" >
+                    </div>
+                </script>            
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(function () {
+
+         var table = layui.table,
+            $ = layui.$,
+            form = layui.form,
+            dropdown = layui.dropdown,
+            layer=layui.layer;
+
+          // 创建渲染实例
+         table.render({
+             elem: '#ID-table-account'
+            ,url:'/api/accounts' // 此处为静态模拟数据，实际使用时需换成真实接口
+            ,request:{
+                pageName:'pageIndex',  //替换分页的字段名称，后端可识别
+                limitName:'pageSize'
+            }
+            //除分页固定参数之后，其他的拼接参数
+            ,where:{
+                offset:0,                //数据偏移量
+                orderby:"created desc"   //默认排序
+            }
+            ,page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,limit:5   //页面数量限制
+            }
+            ,skin: 'default' // 表格风格
+            ,even: true   //开启偶数行背景色
+            ,css: [ // 直接给当前表格主容器重置 css 样式
+                '.layui-table-page{text-align: center;}' // 让分页栏居中
+                ].join('')
+            ,toolbar: '#toolbarDemo'
+            ,pagebar: '#ID-table-account-pagebar' // 分页栏模板
+             //,totalRow: true // 开启合计行
+            ,cols: [[                               // 列名
+                 {type: 'checkbox', fixed: 'left'}
+                ,{field:'uId', title: 'ID'}
+                ,{field:'name', title: '用户名'}
+                ,{field:'phone', title: '手机号'}
+                ,{field:'sex', title: '性别'}
+                ,{field:'jobStatus', title: '工作状态'}
+                ,{field:'status', title: '账号状态'}
+                ,{field:'lastLoginIp', title: '最后登录IP'}
+                ,{field:'lastLoginTime', title: '最后登录时间'}
+                ,{field:'created', title: '创建时间', sort:true}
+            ]]
+            ,response: {
+                statusCode: 200 // 重新规定成功的状态码为 200，table 组件默认为 0
+            }
+            ,parseData:function(res){  //转换后端返回的数据格式
+                return {
+                    "code":res.status,
+                    "msg":res.uimsg,
+                    "count":res.data.totalCount,
+                    "data":res.data.list
+                };
+             }
+             //toolbar 中的 dropdown render
+             ,done:function(){
+                 var id=this.id;
+                 dropdown.render({
+                    elem:'#dropdownButton'
+                    ,data:[{
+                         id:'add',
+                         title:'添加'
+                     }
+                     ,{
+                         id:'edit',
+                         title:'编辑'
+                     }]
+                     ,click:function(obj){
+                         let checkStatus=table.checkStatus(id);
+                         let data=checkStatus.data;  //获取选中的数据
+                         switch(obj.id){
+                             case 'add':
+                                 layer.open({
+                                     title:"添加",
+                                     type:2,
+                                     area:['80%','80%'],
+                                     content:'/'
+                             })
+                         }
+                     }
+                 })
+             }
+         });
+          
+         //外部搜索
+         form.on('submit(demo-table-search)',function(data){
+            var field=data.field; //获得表单字段
+
+            //layer.msg(JSON.stringify(field))
+
+            table.reload('ID-table-account', {
+              page: {
+                curr: 1 // 重新从第 1 页开始
+              }
+              ,where: field // 搜索的字段
+            });
+             return false; // 阻止默认 form 跳转
+         })
+
+    })
+</script>

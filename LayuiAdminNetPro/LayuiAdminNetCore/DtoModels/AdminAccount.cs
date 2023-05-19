@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LayuiAdminNetCore.AdminModels
+namespace LayuiAdminNetCore.DtoModels
 {
-    public class AdminAccount
+    public class DtoAdminAccount
     {
         /// <summary>
         /// 用户Id
@@ -29,7 +28,7 @@ namespace LayuiAdminNetCore.AdminModels
         /// 性别
         /// </summary>
         [JsonProperty("sex")]
-        public sbyte Sex { get; set; }
+        public string? Sex { get; set; }
 
         /// <summary>
         /// 密码
@@ -60,22 +59,12 @@ namespace LayuiAdminNetCore.AdminModels
         /// 0 在职  1 离职  2 出差  3 休假
         /// </summary>
         [JsonProperty("jobStatus")]
-        public sbyte JobStatus { get; set; } = (sbyte)Enums.JobStatus.ON_JOB;
+        public string? JobStatus { get; set; }
 
         /// <summary>
         /// 0 启用  1 禁用  2 审核中  3 审核失败
         /// </summary>
         [JsonProperty("status")]
-        public sbyte Status { get; set; } = (sbyte)Enums.Status.ENABLE;
-
-        [NotMapped]
-        [JsonIgnore]
-        [JsonProperty("adminAccountRoles")]
-        public IList<AdminAccountRole>? AdminAccountRoles { get; set; } = new List<AdminAccountRole>();
-
-        [NotMapped]
-        [JsonIgnore]
-        [JsonProperty("adminSystemLog")]
-        public AdminSystemLog? AdminSystemLog { get; set; }
+        public string? Status { get; set; }
     }
 }

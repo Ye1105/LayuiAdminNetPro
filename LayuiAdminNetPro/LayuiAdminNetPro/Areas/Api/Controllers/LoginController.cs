@@ -6,7 +6,7 @@ using LayuiAdminNetCore.Enums;
 using LayuiAdminNetGate.IServices;
 using LayuiAdminNetPro.Utilities.Common;
 using LayuiAdminNetPro.Utilities.Filters;
-using LayuiAdminNetServer.IServices;
+using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;

@@ -1,8 +1,10 @@
-﻿using LayuiAdminNetCore.AuthorizationModels;
+﻿using AutoMapper;
+using LayuiAdminNetCore.AuthorizationModels;
+using LayuiAdminNetCore.DtoModels;
 using LayuiAdminNetCore.RequstModels;
 using LayuiAdminNetPro.Utilities.Common;
 using LayuiAdminNetPro.Utilities.Filters;
-using LayuiAdminNetServer.IServices;
+using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,10 +17,12 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     public class AccountsController : ControllBase
     {
         private readonly IAdminAccountService _admin;
+        private readonly IMapper _mapper;
 
-        public AccountsController(IAdminAccountService adminAccountService)
+        public AccountsController(IAdminAccountService adminAccountService, IMapper mapper)
         {
             _admin = adminAccountService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -34,7 +38,11 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return Ok(Success(new { account }));
         }
 
-
+        /// <summary>
+        /// 账号列表【分页】
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] AccountPagedRequest req)
         {
@@ -46,7 +54,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 list.CurrentPage,
                 list.PageSize,
                 list.TotalCount,
-                list
+                list = _mapper.Map<IEnumerable<DtoAdminAccount>>(list)
             };
 
             return Ok(Success(JsonData));

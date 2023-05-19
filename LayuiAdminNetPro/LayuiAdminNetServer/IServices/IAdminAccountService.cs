@@ -3,7 +3,7 @@ using LayuiAdminNetCore.Pages;
 using LayuiAdminNetCore.RequstModels;
 using System.Linq.Expressions;
 
-namespace LayuiAdminNetServer.IServices
+namespace LayuiAdminNetService.IServices
 {
     public interface IAdminAccountService
     {

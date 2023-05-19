@@ -3,13 +3,13 @@ using LayuiAdminNetCore.AdminModels;
 using LayuiAdminNetCore.Pages;
 using LayuiAdminNetCore.RequstModels;
 using LayuiAdminNetInfrastructure.IRepositoies;
-using LayuiAdminNetServer.IServices;
+using LayuiAdminNetService.IServices;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace LayuiAdminNetServer.Services
+namespace LayuiAdminNetService.Services
 {
     public class AdminAccountService : IAdminAccountService
     {
@@ -69,12 +69,12 @@ namespace LayuiAdminNetServer.Services
                 whereLambda = whereLambda.And(x => x.UId == req.UId);
             }
 
-            if (req.Name != null)
+            if (!string.IsNullOrWhiteSpace(req.Name))
             {
                 whereLambda = whereLambda.And(x => x.Name == req.Name);
             }
 
-            if (req.Phone != null)
+            if (!string.IsNullOrWhiteSpace(req.Phone))
             {
                 whereLambda = whereLambda.And(x => x.Phone == req.Phone);
             }

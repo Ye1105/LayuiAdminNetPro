@@ -14,9 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetCore", "LayuiA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetInfrastructure", "LayuiAdminNetInfrastructure\LayuiAdminNetInfrastructure.csproj", "{2CBA7439-0E7C-40A3-809D-6D3AF7C41FF2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetServer", "LayuiAdminNetServer\LayuiAdminNetServer.csproj", "{3BA73F66-78A1-44A2-8FDD-D8CDFE07ABAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetService", "LayuiAdminNetServer\LayuiAdminNetService.csproj", "{3BA73F66-78A1-44A2-8FDD-D8CDFE07ABAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LayuiAdminNetGate", "LayuiAdminNetGate\LayuiAdminNetGate.csproj", "{0F337B40-2243-4585-8125-8F1D95049C46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetGate", "LayuiAdminNetGate\LayuiAdminNetGate.csproj", "{0F337B40-2243-4585-8125-8F1D95049C46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -123,7 +123,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe  src="/welcome" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe src="/accounts" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
 
@@ -142,7 +142,7 @@
         index: 'lib/index' //主入口模块
     }).use(["index", "util", "layer"], function () {
 
-        let util = layui.util,
+        var util = layui.util,
             layer = layui.layer;
 
         util.on("lay-on", {
@@ -153,7 +153,7 @@
                     btn: ["确定","关闭"],
                 }, function () {
 
-                    console.log('用户登出网站')
+                    //console.log('用户登出网站')
                     docCookies.removeItem(".AspNetCore.Token");
 
                     let loadIndex = layer.load(0);

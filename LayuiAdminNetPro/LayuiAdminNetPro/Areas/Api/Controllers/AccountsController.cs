@@ -54,6 +54,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 list.CurrentPage,
                 list.PageSize,
                 list.TotalCount,
+                //AutoMapper 映射
                 list = _mapper.Map<IEnumerable<DtoAdminAccount>>(list)
             };
 

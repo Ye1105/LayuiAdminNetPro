@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace LayuiAdminNetPro.Utilities.Common
+namespace LayuiAdminNetPro.Areas.Api.Common
 {
-    public class ControllBase : Controller
+    public class BaseController : Controller
     {
         #region Requst
 

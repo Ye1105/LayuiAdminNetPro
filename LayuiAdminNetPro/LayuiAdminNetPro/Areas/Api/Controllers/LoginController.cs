@@ -4,7 +4,6 @@ using LayuiAdminNetCore.Appsettings;
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetGate.IServices;
-using LayuiAdminNetPro.Utilities.Common;
 using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     [Route($"{nameof(Api)}/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
-    public class LoginController : ControllBase
+    public class LoginController : Common.BaseController
     {
         private readonly IAdminAccountService _admin;
         private readonly IAuthenticateService _auth;

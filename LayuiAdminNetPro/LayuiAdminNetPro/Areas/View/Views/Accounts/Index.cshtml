@@ -29,7 +29,7 @@
                     </div>
        
                     <button class="layui-btn" lay-submit lay-filter="demo-table-search">搜索</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
                 </div>
 
              </div>
@@ -55,6 +55,7 @@
     </div>
 </body>
 </html>
+<script type="text/javascript" src="~/common/dayjs.min.js"></script>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
 <script type="text/javascript">
     layui.config({
@@ -111,10 +112,25 @@
                     }
                  }}
                 ,{field:'jobStatus', title: '工作状态'}
-                ,{field:'status', title: '账号状态'}
                 ,{field:'lastLoginIp', title: '最后登录IP'}
-                ,{field:'lastLoginTime', title: '最后登录时间'}
-                ,{field:'created', title: '创建时间'}
+                ,{field:'lastLoginTime', title: '最后登录时间',templet:function(d){
+                    if (dayjs(d.lastLoginTime).isValid())
+                        return `${dayjs(d.lastLoginTime).format('YYYY-MM-DD hh:mm:ss')}`
+                    else return ``
+                }}
+                ,{field:'created', title: '创建时间',templet:function(d){
+                    return `${dayjs(d.created).format('YYYY-MM-DD hh:mm:ss')}`
+                }}
+                ,{field: 'status', title: '账号状态', templet: function (d) {
+                    if (d.status === "启用") {
+                        return `<span class="layui-badge layui-bg-green" > ${d.status} </span>`
+                    } else if (d.status === "禁用")
+                        return `<span class="layui-badge" > ${d.status} </span>`
+                    else {
+                        return `<span class="layui-badge layui-bg-orange" > ${d.status} </span>`
+                    }
+                 }
+                }
             ]]
             ,response: {
                 statusCode: 200 // 重新规定成功的状态码为 200，table 组件默认为 0
@@ -149,7 +165,7 @@
                                      title:"添加",
                                      type:2,
                                      area:['80%','80%'],
-                                     content:'/'
+                                     content:'/creation'
                              })
                          }
                      }

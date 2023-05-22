@@ -1,20 +1,22 @@
 ﻿using LayuiAdminNetCore.AuthorizationModels;
+using LayuiAdminNetPro.Areas.View.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
-    //[Route($"{nameof(Areas.View)}/accounts")]
     [Route("[controller]")]
     [Authorize(Policy = Policys.Admin)]
-    public class AccountsController : Controller
+    public class AccountsController : ViewController
     {
-        /// <summary>
-        /// 账号列表界面
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public IActionResult Index()
+        public override IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet(_create)]
+        public override IActionResult Create()
         {
             return View();
         }

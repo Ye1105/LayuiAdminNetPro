@@ -2,7 +2,6 @@
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.DtoModels;
 using LayuiAdminNetCore.RequstModels;
-using LayuiAdminNetPro.Utilities.Common;
 using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +13,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     [Authorize(Policy = Policys.Admin)]
     [Route($"{nameof(Api)}/[controller]")]
     [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
-    public class AccountsController : ControllBase
+    public class AccountsController : Common.BaseController
     {
         private readonly IAdminAccountService _admin;
         private readonly IMapper _mapper;

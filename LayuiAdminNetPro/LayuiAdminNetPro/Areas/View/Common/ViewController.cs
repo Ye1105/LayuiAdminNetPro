@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace LayuiAdminNetPro.Areas.View.Common
 {
@@ -7,7 +8,7 @@ namespace LayuiAdminNetPro.Areas.View.Common
         /// <summary>
         ///【创建功能】路由模板
         /// </summary>
-        protected const string _create = "/create";
+        protected const string _create = "create";
 
         /// <summary>
         ///【更新功能】路由模板

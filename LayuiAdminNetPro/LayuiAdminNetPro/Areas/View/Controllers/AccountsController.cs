@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
-    [Route("[controller]")]
+    [Route("accounts")]
     [Authorize(Policy = Policys.Admin)]
     public class AccountsController : ViewController
     {
@@ -20,5 +20,6 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         {
             return View();
         }
+
     }
 }

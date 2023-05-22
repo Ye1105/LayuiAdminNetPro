@@ -55,22 +55,22 @@
             </div>
         </div>
 
-      @*<div class="layui-trans layadmin-user-login-footer">
+        @*<div class="layui-trans layadmin-user-login-footer">
         </div>*@
     </div>
 </body>
 </html>
 <script type="text/javascript" src="~/common/docCookies.js"></script>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
-<script type="text/javascript">        
+<script type="text/javascript">
+
     layui.config({
         base: '../layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
     }).use(function () {
 
-        var $ = layui.$,
-            user = layui.user,
+        var user = layui.user,
             util = layui.util,
             form = layui.form,
             layer = layui.layer
@@ -101,39 +101,33 @@
         form.on('submit(LAY-user-login-submit)', function (data) {
             let field = data.field; // 获取表单全部字段值
 
-            // 显示填写结果，仅作演示用
-            //layer.alert(JSON.stringify(field), {
-            //    title: '当前填写的字段值'
-            //});
+            //登录接口
+            login(field);
 
-            //请求接口
-            $.ajax({
-                url: `/api/login?phone=${field.phone}&password=${field.password}`,
-                type: "Get",
-                success: function (result) {
-                    if (result.status == 200) {
-                        
-                        //设置cookie
-                        docCookies.setItem('.AspNetCore.Token', result.data.accessToken)
-
-                        let loadIndex = layer.load(0);
-                        // 模拟关闭
-                        setTimeout(function () {
-                            layer.close(loadIndex)
-                            window.location.href = "/";
-                        }, 1000);
-                    } else {
-                        layer.msg(result.uimsg);
-                    }
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest.status, XMLHttpRequest.responseText)
-                }
-            });
-           
             return false; // 阻止默认 form 跳转
         })
     })
 
+    async function login(field) {
+        try {
+            let response = await fetch(`/api/login?phone=${field.phone}&password=${field.password}`);
+            //console.log(result)
+            let result = await response.json();
+            if (result.status == 200) {
+                //设置cookie
+                docCookies.setItem('.AspNetCore.Token', result.data.accessToken);
 
+                let loadIndex = layer.load(0);
+                // 模拟关闭
+                setTimeout(function () {
+                    layer.close(loadIndex)
+                    window.location.href = "/";
+                }, 1000);
+            } else {
+                layer.msg(result.uimsg);
+            }
+        } catch (error) {
+            console.log('Request Failed', error);
+        }
+     }
 </script>

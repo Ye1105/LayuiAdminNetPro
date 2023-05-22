@@ -5,16 +5,65 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>welcome</title>
+    <title></title>
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
 </head>
 <body>
     <div class="layui-fluid">
-        <div class="layui-row layui-col-space15">
-            <!--公告模块-->
-            <div class="layui-col-md12">
-                <code>添加账号</code>
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form layui-form-pane" lay-filter="form-account-filter">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" autocomplete="off" placeholder="用户名" lay-verify="required|name" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="phone" autocomplete="off" placeholder="手机号" lay-verify="required|phone" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="password" autocomplete="off" placeholder="密码" lay-verify="required|password" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">确认密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="cpassword" autocomplete="off" placeholder="确认密码" lay-verify="required|cpassword" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item" pane>
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="sex" value="0" title="男性" checked>
+                            <input type="radio" name="sex" value="1" title="女性">
+                            <input type="radio" name="sex" value="2" title="跨性别">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item" pane>
+                        <label class="layui-form-label">在职状态</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="jobStatus" value="0" title="在职" checked>
+                            <input type="radio" name="jobStatus" value="1" title="离职">
+                            <input type="radio" name="jobStatus" value="2" title="出差">
+                            <input type="radio" name="jobStatus" value="3" title="休假">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div>
+                            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="account-create-submit">提交</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -26,8 +75,58 @@
         base: '../layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use("index",function(){
+    }).use(function () {
+
+        var $=layui.$,
+            user = layui.user,
+            util = layui.util,
+            form = layui.form,
+            layer = layui.layer
+
+        //初始化数据
+        form.val('form-account-filter', {
+            "name": "贤心" 
+            ,"phone": "15868707168"
+            , "sex": 1
+            , "jobStatus": 1 
+            , "password": 112233 
+            , "cpassword":112233
+        });
+
+        //自定义校验
+        form.verify({
+            //账号
+            name: function (value, item) {
+                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                    return '用户名不能有特殊字符';
+                }
+                if (/(^_)|(__)|(_+$)/.test(value)) return '用户名首尾不能出现 _ 下划线';
+                if (/^\d+$/.test(value)) return '用户名不能全为数字';
+            },
+            //密码
+            password: [/^[\S]{6,12}$/, '密码必须为6到12位的非空字符'],
+            //确认密码
+            cpassword: function (value, item) {
+                let password = $("input[name=password]").val()
+                //console.log(password)
+                if(value!==password)
+                    return '两次密码必须一致';
+            },
+        })
+
         
-    
+        form.on('submit(account-create-submit)', function (data) {
+            let field = data.field; // 获取表单全部字段值
+
+            console.log(JSON.stringify(field))
+
+            let index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+            parent.layer.msg('添加完成', { shade: 0.3 })
+            parent.table.reload('LAY-account-list')
+
+            return false; // 阻止默认 form 跳转
+        })
+
     })
 </script>

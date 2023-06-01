@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 
-namespace LayuiAdminNetPro.Areas.View.Common
+namespace LayuiAdminNetPro.Areas.View.Controllers
 {
     public class ViewController : Controller
     {

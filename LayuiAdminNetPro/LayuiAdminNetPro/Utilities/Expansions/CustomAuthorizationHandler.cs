@@ -1,5 +1,5 @@
 ﻿using CodeHelper.Common;
-using LayuiAdminNetPro.Areas.Api.Common;
+using LayuiAdminNetPro.Areas.Api.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Controllers;

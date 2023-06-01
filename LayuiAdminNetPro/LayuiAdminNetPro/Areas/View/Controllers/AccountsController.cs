@@ -1,5 +1,4 @@
 ﻿using LayuiAdminNetCore.AuthorizationModels;
-using LayuiAdminNetPro.Areas.View.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

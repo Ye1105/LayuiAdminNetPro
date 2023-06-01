@@ -18,7 +18,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     [Route($"{nameof(Api)}/[controller]")]
     [ApiController]
     [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
-    public class LoginController : Common.BaseController
+    public class LoginController : BaseController
     {
         private readonly IAdminAccountService _admin;
         private readonly IAuthenticateService _auth;

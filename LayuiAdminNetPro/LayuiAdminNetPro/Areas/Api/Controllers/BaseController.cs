@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-namespace LayuiAdminNetPro.Areas.Api.Common
+namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
     public class BaseController : Controller
     {

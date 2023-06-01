@@ -1,5 +1,4 @@
-﻿using LayuiAdminNetPro.Areas.View.Common;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {

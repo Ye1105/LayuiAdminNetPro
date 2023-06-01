@@ -1,5 +1,5 @@
 ﻿using CodeHelper.Common;
-using LayuiAdminNetPro.Utilities.Common;
+using LayuiAdminNetPro.Areas.Api.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Mvc.Controllers;
@@ -19,11 +19,11 @@ namespace LayuiAdminNetPro.Utilities.Expansions
 
             if (!authorizeResult.Succeeded)
             {
-                if (ControllBase.IsAjaxRequest(context.Request) || context.Request.Path.Value!.Contains("/api"))
+                if (BaseController.IsAjaxRequest(context.Request) || context.Request.Path.Value!.Contains("/api"))
                 {
                     context.Response.StatusCode = (int)HttpStatus.OK;
                     //new {    Status = HttpStatus.FORBIDDEN }
-                    await context.Response.WriteAsJsonAsync(ControllBase.Res(status: HttpStatus.FORBIDDEN, msg: "权限不足", uimsg: "权限不足"));
+                    await context.Response.WriteAsJsonAsync(BaseController.Res(status: HttpStatus.FORBIDDEN, msg: "权限不足", uimsg: "权限不足"));
 
                     return;
                 }

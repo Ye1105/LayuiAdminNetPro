@@ -2,11 +2,11 @@
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.DtoModels;
 using LayuiAdminNetCore.RequstModels;
-using LayuiAdminNetPro.Utilities.Common;
 using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Principal;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -14,7 +14,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     [Authorize(Policy = Policys.Admin)]
     [Route($"{nameof(Api)}/[controller]")]
     [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
-    public class AccountsController : ControllBase
+    public class AccountsController : BaseController
     {
         private readonly IAdminAccountService _admin;
         private readonly IMapper _mapper;
@@ -37,6 +37,17 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
 
             return Ok(Success(new { account }));
         }
+
+        /// <summary>
+        /// 创建账号
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] string req)
+        {
+            return Ok(Success());
+        }
+
 
         /// <summary>
         /// 账号列表【分页】

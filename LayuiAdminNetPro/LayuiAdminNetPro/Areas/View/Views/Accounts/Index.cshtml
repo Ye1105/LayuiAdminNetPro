@@ -12,7 +12,7 @@
 <body>
     <div class="layui-fluid">
         <div class="layui-card">
-            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="LAY-account-list">
                 <div class="layui-form-item">
                     <div class="layui-input-wrap layui-inline">
                         <div class="layui-input-prefix">
@@ -27,34 +27,35 @@
                         </div>
                         <input type="text" name="phone" placeholder="手机号" lay-affix="clear" class="layui-input">
                     </div>
-       
+
                     <button class="layui-btn" lay-submit lay-filter="demo-table-search">搜索</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
                 </div>
 
-             </div>
-            <div class="layui-card-body"> 
+            </div>
+            <div class="layui-card-body">
                 <!--工具栏-->
-                <script type="text/html" id="toolbarDemo" >
+                <script type="text/html" id="toolbarDemo">
                     <div class="layui-btn-container" >
                     <button class="layui-btn layui-btn-sm" id="dropdownButton">
-                        下拉按钮 
+                        下拉按钮
                         <i class="layui-icon layui-icon-down layui-font-12"></i>
                     </button>
                     </div>
                 </script>
                 <!--table-->
-                <table class="layui-hide layui-table" id="ID-table-account" ></table>
+                <table class="layui-hide layui-table" id="ID-table-account"></table>
                 <!--分页栏-->
-                <script type="text/html" id="ID-table-account-pagebar"  >
+                <script type="text/html" id="ID-table-account-pagebar">
                     <div class="layui-btn-container" >
                     </div>
-                </script>            
+                </script>
             </div>
         </div>
     </div>
 </body>
 </html>
+<script type="text/javascript" src="~/common/dayjs.min.js"></script>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
 <script type="text/javascript">
     layui.config({
@@ -63,114 +64,175 @@
         index: 'lib/index' //主入口模块
     }).use(function () {
 
-         var table = layui.table,
+        var table = layui.table,
             $ = layui.$,
             form = layui.form,
             dropdown = layui.dropdown,
-            layer=layui.layer;
+            layer = layui.layer;
 
-          // 创建渲染实例
-         table.render({
-             elem: '#ID-table-account'
-            ,url:'/api/accounts' // 此处为静态模拟数据，实际使用时需换成真实接口
-            ,request:{
-                pageName:'pageIndex',  //替换分页的字段名称，后端可识别
-                limitName:'pageSize'
+        // 创建渲染实例
+        table.render({
+            elem: '#ID-table-account'
+            , url: '/api/accounts' // 此处为静态模拟数据，实际使用时需换成真实接口
+            , request: {
+                pageName: 'pageIndex',  //替换分页的字段名称，后端可识别
+                limitName: 'pageSize'
             }
             //除分页固定参数之后，其他的拼接参数
-            ,where:{
-                offset:0,                //数据偏移量
-                orderby:"created desc"   //默认排序
+            , where: {
+                offset: 0,                //数据偏移量
+                orderby: "created desc"   //默认排序
             }
-            ,page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+            , page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
                 //,curr: 5 //设定初始在第 5 页
-                ,groups: 1 //只显示 1 个连续页码
-                ,limit:5   //页面数量限制
+                , groups: 1 //只显示 1 个连续页码
+                , limit: 5   //页面数量限制
             }
-            ,skin: 'default' // 表格风格
-            ,even: true   //开启偶数行背景色
-            ,css: [ // 直接给当前表格主容器重置 css 样式
+            , skin: 'default' // 表格风格
+            , even: true   //开启偶数行背景色
+            , css: [ // 直接给当前表格主容器重置 css 样式
                 '.layui-table-page{text-align: center;}' // 让分页栏居中
-                ].join('')
-            ,toolbar: '#toolbarDemo'
-            ,pagebar: '#ID-table-account-pagebar' // 分页栏模板
-             //,totalRow: true // 开启合计行
-            ,cols: [[                               // 列名
-                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'uId', title: 'ID'}
-                ,{field:'name', title: '用户名'}
-                ,{field:'phone', title: '手机号'}
-                ,{field:'sex', title: '性别',width:60, templet:function(d){
-                    if(d.sex==='男性'){
-                        return '<span style="color: blue" title="男性">♂</span>';
-                    } else if (d.sex === '女性') {
-                        return '<span style="color: pink" title="女性">♀</span>';
-                    } else{
-                        return '<span style="color: dark" title="跨性别">⚧️</span>';
+            ].join('')
+            , toolbar: '#toolbarDemo'
+            , pagebar: '#ID-table-account-pagebar' // 分页栏模板
+            //,totalRow: true // 开启合计行
+            , cols: [[                               // 列名
+                { type: 'checkbox', fixed: 'left' }
+                , { field: 'uId', title: 'ID' }
+                , { field: 'name', title: '用户名' }
+                , { field: 'phone', title: '手机号' }
+                , {
+                    field: 'sex', title: '性别', width: 60, templet: function (d) {
+                        if (d.sex === '男性') {
+                            return '<span style="color: blue" title="男性">♂</span>';
+                        } else if (d.sex === '女性') {
+                            return '<span style="color: pink" title="女性">♀</span>';
+                        } else {
+                            return '<span style="color: dark" title="跨性别">⚧️</span>';
+                        }
                     }
-                 }}
-                ,{field:'jobStatus', title: '工作状态'}
-                ,{field:'status', title: '账号状态'}
-                ,{field:'lastLoginIp', title: '最后登录IP'}
-                ,{field:'lastLoginTime', title: '最后登录时间'}
-                ,{field:'created', title: '创建时间'}
+                }
+                , { field: 'jobStatus', title: '工作状态' }
+                , { field: 'lastLoginIp', title: '最后登录IP' }
+                , {
+                    field: 'lastLoginTime', title: '最后登录时间', templet: function (d) {
+                        if (dayjs(d.lastLoginTime).isValid())
+                            return `${dayjs(d.lastLoginTime).format('YYYY-MM-DD hh:mm:ss')}`
+                        else return ``
+                    }
+                }
+                , {
+                    field: 'created', title: '创建时间', templet: function (d) {
+                        return `${dayjs(d.created).format('YYYY-MM-DD hh:mm:ss')}`
+                    }
+                }
+                , {
+                    field: 'status', title: '账号状态', templet: function (d) {
+                        if (d.status === "启用") {
+                            return `<span class="layui-badge layui-bg-green" > ${d.status} </span>`
+                        } else if (d.status === "禁用")
+                            return `<span class="layui-badge" > ${d.status} </span>`
+                        else {
+                            return `<span class="layui-badge layui-bg-orange" > ${d.status} </span>`
+                        }
+                    }
+                }
             ]]
-            ,response: {
+            , response: {
                 statusCode: 200 // 重新规定成功的状态码为 200，table 组件默认为 0
             }
-            ,parseData:function(res){  //转换后端返回的数据格式
+            , parseData: function (res) {  //转换后端返回的数据格式
                 return {
-                    "code":res.status,
-                    "msg":res.uimsg,
-                    "count":res.data.totalCount,
-                    "data":res.data.list
+                    "code": res.status,
+                    "msg": res.uimsg,
+                    "count": res.data.totalCount,
+                    "data": res.data.list
                 };
-             }
-             //toolbar 中的 dropdown render
-             ,done:function(){
-                 var id=this.id;
-                 dropdown.render({
-                    elem:'#dropdownButton'
-                    ,data:[{
-                         id:'add',
-                         title:'添加'
-                     }
-                     ,{
-                         id:'edit',
-                         title:'编辑'
-                     }]
-                     ,click:function(obj){
-                         let checkStatus=table.checkStatus(id);
-                         let data=checkStatus.data;  //获取选中的数据
-                         switch(obj.id){
-                             case 'add':
-                                 layer.open({
-                                     title:"添加",
-                                     type:2,
-                                     area:['80%','80%'],
-                                     content:'/'
-                             })
-                         }
-                     }
-                 })
-             }
-         });
-          
-         //外部搜索
-         form.on('submit(demo-table-search)',function(data){
-            var field=data.field; //获得表单字段
+            }
+            //toolbar 中的 dropdown render
+            , done: function () {
+                var id = this.id;
+                dropdown.render({
+                    elem: '#dropdownButton'
+                    , data: [{
+                        id: 'add',
+                        title: '添加'
+                    }
+                        , {
+                        id: 'edit',
+                        title: '编辑'
+                    }]
+                    , click: function (obj) {
+                        let checkStatus = table.checkStatus(id);
+                        let data = checkStatus.data;  //获取选中的数据
+                        switch (obj.id) {
+                            case 'add':
+                                layer.open({
+                                    title: "添加账号",
+                                    type: 2,
+                                    area: ['480px', '510px'],
+                                    content: 'accounts/create',
+                                    btn: ["提交", '取消'],
+                                    yes: function (index, layero) {
+                                        var iframeWindow = window['layui-layer-iframe' + index]
+                                            //, submitID = 'LAY-account-create'
+                                            , submitFilter = 'form-account-filter'
+
+                                        //获取、校验表单数据
+                                        let formData = iframeWindow.layui.form.val(submitFilter)
+                                        if (formData != undefined && formData != "") {
+                                            let keys = Object.keys(formData);       
+                                            for(var i=0;i<keys.length;i++){
+                                              
+                                                var res = iframeWindow.layui.form.validate(`#${keys[i]}`);
+                                                if(!res)return;
+                                            }
+                                        }
+                        
+                                        //提交表单数据
+                                         createAccount(JSON.stringify(formData));
+                                        //layer.close(index); //关闭弹层
+                                    }
+                                })
+                        }
+                    }
+                })
+            }
+        });
+
+
+
+        function createAccount(field) {
+            try {
+                let response = new Request(`/api/accounts`,{method:'post',body:field});
+                //console.log(result)
+                let result =  response.json();
+                if (result.status == 200) {
+
+                } else {
+                    layer.msg(result.uimsg);
+                }
+            } catch (error) {
+                console.log('Request Failed', error);
+            }
+        }
+
+
+        //外部搜索
+        form.on('submit(demo-table-search)', function (data) {
+            var field = data.field; //获得表单字段
 
             //layer.msg(JSON.stringify(field))
 
             table.reload('ID-table-account', {
-              page: {
-                curr: 1 // 重新从第 1 页开始
-              }
-              ,where: field // 搜索的字段
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+                , where: field // 搜索的字段
             });
-             return false; // 阻止默认 form 跳转
-         })
+            return false; // 阻止默认 form 跳转
+        })
 
     })
 </script>

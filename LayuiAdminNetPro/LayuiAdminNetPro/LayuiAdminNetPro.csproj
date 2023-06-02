@@ -34,4 +34,10 @@
 		<ProjectReference Include="..\LayuiAdminNetServer\LayuiAdminNetService.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Update="Areas\Api\JsonSchemas\JsonSchemas.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
 </Project>

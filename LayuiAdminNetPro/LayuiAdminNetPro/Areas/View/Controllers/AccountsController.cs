@@ -19,6 +19,5 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         {
             return View();
         }
-
     }
 }

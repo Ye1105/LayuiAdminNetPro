@@ -1,14 +1,15 @@
 ﻿using CodeHelper.Common;
-using CodeHelper.Common.Validator;
 using LayuiAdminNetCore.Appsettings;
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetGate.IServices;
+using LayuiAdminNetPro.Areas.Api.Schemas;
 using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -50,70 +51,18 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
 
             #region 参数校验
 
-            #region 账号校验
+            var signinSchema = await JsonSchemas.GetSchema("signin");
 
-            //var namePatterns = new[] { Rgx.RGX_SPECIAL_CHARACTER, Rgx.RGX_UNDERLING, Rgx.RGX_NUMBER };
-            ////账号校验
-            //var nameVerify = name.RegexVerify(namePatterns, () =>
-            //  {
-            //      foreach (var pattern in namePatterns)
-            //      {
-            //          if (Regex.IsMatch(name, pattern.Item1))
-            //          {
-            //              if (pattern == Rgx.RGX_SPECIAL_CHARACTER)
-            //                  continue;
-            //              return (false, pattern.Item2);
-            //          }
-            //          else
-            //          {
-            //              if (pattern == Rgx.RGX_SPECIAL_CHARACTER)
-            //                  return (false, pattern.Item2);
-            //          }
-            //      }
-            //      return (true, "");
-            //  });
-            //if (!nameVerify.Item1)
-            //{
-            //    return Ok(Fail(nameVerify.Item2));
-            //}
-
-            #endregion 账号校验
-
-            //手机号校验
-            var phonePatterns = new[] { Rgx.RGX_PHONE };
-            var phoneVerify = phone.RegexVerify(phonePatterns, () =>
+            var sign = new
             {
-                foreach (var pattern in phonePatterns)
-                {
-                    if (Regex.IsMatch(phone, pattern.Item1))
-                        return (true, "");
-                    else
-                        return (false, pattern.Item2);
-                }
-                return (true, "");
-            });
-            if (!phoneVerify.Item1)
-            {
-                return Ok(Fail(phoneVerify.Item2));
-            }
+                phone,
+                password
+            };
 
-            //密码校验
-            var passwordPatterns = new[] { Rgx.RGX_PASSWORD_LENGTH };
-            var passwordVerify = password.RegexVerify(passwordPatterns, () =>
+            var psdValidate = JObject.Parse(sign.SerObj()).IsValid(JSchema.Parse(signinSchema), out IList<string> errorMessages);
+            if (!psdValidate)
             {
-                foreach (var pattern in passwordPatterns)
-                {
-                    if (Regex.IsMatch(password, pattern.Item1))
-                        return (true, "");
-                    else
-                        return (false, pattern.Item2);
-                }
-                return (true, "");
-            });
-
-            if (!passwordVerify.Item1)
-            {
-                return Ok(Fail(passwordVerify.Item2));
+                return Ok(Fail(errorMessages, "参数错误"));
             }
 
             #endregion 参数校验

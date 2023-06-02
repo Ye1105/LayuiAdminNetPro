@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
@@ -38,7 +37,6 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         {
             throw new NotImplementedException();
         }
-
 
         /// <summary>
         /// create a view to update function

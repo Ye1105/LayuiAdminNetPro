@@ -49,7 +49,7 @@ namespace LayuiAdminNetService.Services
             }
         }
 
-        public async Task<PagedList<AdminAccount>> QueryPagedAsync(AccountPagedRequest req)
+        public async Task<PagedList<AdminAccount>> QueryPagedAsync(AccountPagedReq req)
         {
             Expression<Func<AdminAccount, bool>> whereLambda = x => true;
 

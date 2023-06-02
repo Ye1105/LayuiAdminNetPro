@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace LayuiAdminNetCore.RequstModels
 {
-    public class AccountPagedRequest : QueryParameters
+    public class AccountPagedReq : QueryParameters
     {
 
         /// <summary>

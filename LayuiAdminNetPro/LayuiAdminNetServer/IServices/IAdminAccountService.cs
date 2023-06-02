@@ -30,6 +30,6 @@ namespace LayuiAdminNetService.IServices
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        Task<PagedList<AdminAccount>> QueryPagedAsync(AccountPagedRequest req);
+        Task<PagedList<AdminAccount>> QueryPagedAsync(AccountPagedReq req);
     }
 }

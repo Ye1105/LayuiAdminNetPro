@@ -182,16 +182,16 @@
                                         //获取、校验表单数据
                                         let formData = iframeWindow.layui.form.val(submitFilter)
                                         if (formData != undefined && formData != "") {
-                                            let keys = Object.keys(formData);       
-                                            for(var i=0;i<keys.length;i++){
-                                              
+                                            let keys = Object.keys(formData);
+                                            for (let i = 0; i < keys.length; i++) {
+
                                                 var res = iframeWindow.layui.form.validate(`#${keys[i]}`);
-                                                if(!res)return;
+                                                if (!res) return;
                                             }
                                         }
-                        
+
                                         //提交表单数据
-                                         createAccount(JSON.stringify(formData));
+                                        createAccount(formData);
                                         //layer.close(index); //关闭弹层
                                     }
                                 })
@@ -202,20 +202,35 @@
         });
 
 
+        /*
+         * {param} json
+         */
+        async function createAccount(data) {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/accounts`,
+                {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.status == 200) {
+                        layer.close(loadIndex);
 
-        function createAccount(field) {
-            try {
-                let response = new Request(`/api/accounts`,{method:'post',body:field});
-                //console.log(result)
-                let result =  response.json();
-                if (result.status == 200) {
 
-                } else {
-                    layer.msg(result.uimsg);
-                }
-            } catch (error) {
-                console.log('Request Failed', error);
-            }
+
+                    } else {
+                        layer.close(loadIndex);
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
         }
 
 

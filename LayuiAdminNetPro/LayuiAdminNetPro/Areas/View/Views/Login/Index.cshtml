@@ -109,25 +109,27 @@
     })
 
     async function login(field) {
-        try {
-            let response = await fetch(`/api/login?phone=${field.phone}&password=${field.password}`);
-            //console.log(result)
-            let result = await response.json();
-            if (result.status == 200) {
-                //设置cookie
-                docCookies.setItem('.AspNetCore.Token', result.data.accessToken);
-
-                let loadIndex = layer.load(0);
-                // 模拟关闭
-                setTimeout(function () {
-                    layer.close(loadIndex)
-                    window.location.href = "/";
-                }, 1000);
-            } else {
-                layer.msg(result.uimsg);
-            }
-        } catch (error) {
-            console.log('Request Failed', error);
-        }
-     }
+        //loading过渡
+        let loadIndex = layer.load(0);
+        await fetch(`/api/login?phone=${field.phone}&password=${field.password}`)
+            .then(response => response.json())
+            .then(result => {
+                if (result.status == 200) {
+                    //设置cookie
+                    docCookies.setItem('.AspNetCore.Token', result.data.accessToken);
+                    //跳转到主界面
+                    setTimeout(function () {
+                        layer.close(loadIndex);
+                        window.location.href = "/";
+                    }, 1000);
+                } else {
+                    layer.close(loadIndex);
+                    layer.msg(result.uimsg);
+                }
+            })
+            .catch(function (ex) {
+                layer.close(loadIndex);
+                console.log('parsing failed', ex);
+            })
+    }
 </script>

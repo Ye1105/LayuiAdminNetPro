@@ -35,11 +35,10 @@ namespace LayuiAdminNetGate.Handler
                 //context?.Succeed(requirement);
                 bool? isAuthenticated = context?.User?.Identity?.IsAuthenticated;
 
-                var claimssd = httpContext?.User?.Claims;
+                var claims = httpContext?.User?.Claims;
 
                 if (isAuthenticated != null && isAuthenticated.Value)
                 {
-                    var claims = httpContext?.User?.Claims;
 
                     var dicClaims = new Dictionary<string, string>();
 

@@ -2,11 +2,13 @@
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.DtoModels;
 using LayuiAdminNetCore.RequstModels;
+using LayuiAdminNetCore.Schemas;
 using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Principal;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -43,8 +45,16 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] string req)
+        public async Task<IActionResult> Create([FromBody] dynamic req)
         {
+            var schema = JSchema.Parse(AccountsSchema.Create);
+
+            var validate = ((JObject)req).IsValid(schema, out IList<string> errorMessages);
+            if (!validate)
+            {
+                return Ok(Fail(errorMessages, "参数错误"));
+            }
+
             return Ok(Success());
         }
 
@@ -55,7 +65,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         /// <param name="req"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] AccountPagedRequest req)
+        public async Task<IActionResult> Search([FromQuery] AccountPagedReq req)
         {
             var list = await _admin.QueryPagedAsync(req);
 

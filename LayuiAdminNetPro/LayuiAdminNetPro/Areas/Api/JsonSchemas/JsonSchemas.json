@@ -1,0 +1,72 @@
+{
+  //账号创建
+  "account": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "账号",
+        "minLength": 1
+      },
+      "phone": {
+        "type": "string",
+        "title": "手机",
+        "pattern": "^1[3456789]\\d{9}$"
+      },
+      "password": {
+        "type": "string",
+        "title": "密码",
+        "minLength": 6,
+        "maxLength": 12
+      },
+      "sex": {
+        "type": "number",
+        "title": "性别",
+        "minimum": 0,
+        "maximum": 3,
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "jobStatus": {
+        "type": "number",
+        "title": "工作状态",
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "required": [
+      "name",
+      "phone",
+      "password",
+      "sex",
+      "jobStatus"
+    ]
+  },
+  //手机密码登录
+  "signin": {
+    "type": "object",
+    "properties": {
+      "phone": {
+        "type": "string",
+        "title": "手机",
+        "pattern": "^1[3456789]\\d{9}$"
+      },
+      "password": {
+        "type": "string",
+        "title": "密码",
+        "pattern": "^[\\S]{6,12}$"
+      }
+    },
+    "required": [
+      "phone",
+      "password"
+    ]
+  }
+}

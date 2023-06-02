@@ -6,6 +6,7 @@
 
 
 
+
 <div align="center" style="color:gray"> 
     中文 
 </div>
@@ -61,7 +62,7 @@
     |   └── Services                            //权限业务实现
     ├── LayuiAdminNetService                 //逻辑业务层
     |   ├── IServices                        	//逻辑业务接口
-    │   └── Services                         	//逻辑业务实现
+    |   └── Services                         	//逻辑业务实现
     └── LayuiAdminNetInfrastructure          //仓储层
         ├── IRepositoies                        //EF数据交互接口
         └── Repositoies                         //EF数据交互实现【数据持久化】

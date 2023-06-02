@@ -5,6 +5,7 @@ using LayuiAdminNetCore.RequstModels;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using LayuiAdminNetService.IServices;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Ocsp;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 
@@ -18,6 +19,14 @@ namespace LayuiAdminNetService.Services
         public AdminAccountService(IBase baseSevice)
         {
             _base = baseSevice;
+        }
+
+        public async Task<int> AddAsync(AdminAccount adminAccount)
+        {
+
+            adminAccount.Password = Md5Helper.MD5(adminAccount.Password!);
+
+            return await _base.AddAsync(adminAccount);
         }
 
         public async Task<AdminAccount?> FirstOrDefaultAsync(string phone, string password, bool isTrack = true)

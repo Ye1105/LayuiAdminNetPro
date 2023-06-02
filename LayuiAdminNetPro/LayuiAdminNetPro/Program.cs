@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using CodeHelper.Common;
 using LayuiAdminNetCore.Appsettings;
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.Database.EF;
@@ -21,8 +22,8 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

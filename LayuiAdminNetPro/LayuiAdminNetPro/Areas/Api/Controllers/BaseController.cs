@@ -117,6 +117,17 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return res;
         }
 
+        public static ResponseModel Fail()
+        {
+            var res = new ResponseModel()
+            {
+                Status = HttpStatus.BAD_REQUEST,
+                Msg = "",
+                Uimsg = "",
+            };
+            return res;
+        }
+
         #endregion Reponse
     }
 

@@ -217,13 +217,11 @@
                 })
                 .then(response => response.json())
                 .then(result => {
+                    layer.close(loadIndex);
                     if (result.status == 200) {
-                        layer.close(loadIndex);
-
 
 
                     } else {
-                        layer.close(loadIndex);
                         layer.msg(result.uimsg);
                     }
                 })

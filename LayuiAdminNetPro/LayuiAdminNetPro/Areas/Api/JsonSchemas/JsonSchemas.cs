@@ -1,52 +1,74 @@
 ﻿using CodeHelper.Common;
+using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace LayuiAdminNetPro.Areas.Api.Schemas
+namespace LayuiAdminNetPro.Areas.Api
 {
     public class JsonSchemas
     {
         private static JsonSchemas? _instance;
-
+        private static IWebHostEnvironment? _webHostEnvironment;
         /// <summary>
         /// JsonSchema 配置路径
         /// </summary>
-        private static readonly string schemaPath = AppDomain.CurrentDomain.BaseDirectory + @"Areas\Api\JsonSchemas\" + "JsonSchemas.json";
+        private static string schemaPath = "";
 
         /// <summary>
         /// JsonSchema 配置信息
         /// </summary>
         private JObject? _schemas;
 
-        private JsonSchemas()
+        private JsonSchemas(IWebHostEnvironment webHostEnvironment)
         {
+            _webHostEnvironment = webHostEnvironment;
+            schemaPath = _webHostEnvironment?.WebRootPath + @"\schema\jsonSchemas.json";
         }
 
-        private static async Task Instance()
+        /// <summary>
+        /// 单例  Async
+        /// </summary>
+        /// <returns></returns>
+        private static async Task Instance(IWebHostEnvironment webHostEnvironment)
         {
-            _instance ??= new JsonSchemas()
+            _instance ??= new JsonSchemas(webHostEnvironment)
             {
                 _schemas = await JsonHelper.ReadJsonFileToJObjectAsync(schemaPath)
             };
         }
 
-        private static void InstanceSync()
+        /// <summary>
+        /// 单例  Sync
+        /// </summary>
+        private static void InstanceSync(IWebHostEnvironment webHostEnvironment)
         {
-            _instance ??= new JsonSchemas()
+            _instance ??= new JsonSchemas(webHostEnvironment)
             {
                 _schemas = JsonHelper.ReadJsonFileToJObjectSync(schemaPath)
             };
         }
 
-        public static async Task<string> GetSchema(string key)
+        /// <summary>
+        /// 获取规则
+        /// </summary>
+        /// <param name="webHostEnvironment">Web托管环境</param>
+        /// <param name="key">键名 wwwroot/schema/jsonSchemas.json中的key</param>
+        /// <returns></returns>
+        public static async Task<string> GetSchema(IWebHostEnvironment webHostEnvironment, string key)
         {
-            await Instance();
+            await Instance(webHostEnvironment);
             return JsonConvert.SerializeObject(_instance!._schemas![key]);
         }
 
-        public static string GetSchemaSync(string key)
+        /// <summary>
+        /// 获取规则 
+        /// </summary>
+        /// <param name="webHostEnvironment">Web托管环境</param>
+        /// <param name="key">键名</param>
+        /// <returns></returns>
+        public static string GetSchemaSync(IWebHostEnvironment webHostEnvironment, string key)
         {
-            InstanceSync();
+            InstanceSync(webHostEnvironment);
             return JsonConvert.SerializeObject(_instance!._schemas![key]);
         }
 

@@ -14,7 +14,7 @@
 
 ## :zap: 功能特性
 + :boom: 实现自定义用户权限配置  
-+ ⛳ 实现 [JsonSchema](https://www.newtonsoft.com/jsonschema) 接口参数校验
++ ⛳ 实现 [JsonSchema](https://www.newtonsoft.com/jsonschema) 统一配置页面和接口参数校验  
 + :palm_tree: 实现 [RESTful API](https://restfulapi.cn/) 自定义路由配置  
 + :sparkles: 实现 [JSON Web Tokens](https://jwt.io/) 认证  
 + :whale: 实现 [ASP.NET Authorization](https://learn.microsoft.com/zh-cn/aspnet/core/security/authorization/policies?view=aspnetcore-6.0) 自定义策略  
@@ -29,10 +29,10 @@
 ```C#
  Project 
     ├── LayuiAdminNetPro                     //主项目程序
-    |   ├── wwwroot                           	//静态资源、Layuiadmin资源等  
+    |   ├── wwwroot                           	//静态资源、Layuiadmin、js资源等  
     |   ├── Areas                           	//区域    
     |   |   ├── Api                                //接口模块
-    |   |       ├── JsonSchemas                       //数据处理接口参数校验
+    |   |   |   ├── JsonSchemas                       //数据处理接口参数校验
     |   |   |   └── Controllers                       //数据处理接口                   
     |   |   └── View                               //视图模块   
     |   |       ├── Controllers                       //视图控制器

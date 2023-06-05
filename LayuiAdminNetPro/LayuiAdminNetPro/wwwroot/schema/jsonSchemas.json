@@ -1,16 +1,36 @@
 {
-  //账号创建
+  "signin": {
+    "type": "object",
+    "description": "手机号密码登录参数规则",
+    "properties": {
+      "phone": {
+        "type": "string",
+        "title": "手机",
+        "pattern": "^1[3456789]\\d{9}$"
+      },
+      "password": {
+        "type": "string",
+        "title": "密码",
+        "pattern": "^[\\S]{6,12}$"
+      }
+    },
+    "required": [
+      "phone",
+      "password"
+    ]
+  },
   "account": {
     "type": "object",
+    "description": "账号创建参数规则",
     "properties": {
       "name": {
         "type": "string",
-        "title": "账号",
+        "title": "用户名",
         "minLength": 1
       },
       "phone": {
         "type": "string",
-        "title": "手机",
+        "title": "手机号",
         "pattern": "^1[3456789]\\d{9}$"
       },
       "password": {
@@ -22,8 +42,6 @@
       "sex": {
         "type": "number",
         "title": "性别",
-        "minimum": 0,
-        "maximum": 3,
         "enum": [
           0,
           1,
@@ -47,26 +65,6 @@
       "password",
       "sex",
       "jobStatus"
-    ]
-  },
-  //手机密码登录
-  "signin": {
-    "type": "object",
-    "properties": {
-      "phone": {
-        "type": "string",
-        "title": "手机",
-        "pattern": "^1[3456789]\\d{9}$"
-      },
-      "password": {
-        "type": "string",
-        "title": "密码",
-        "pattern": "^[\\S]{6,12}$"
-      }
-    },
-    "required": [
-      "phone",
-      "password"
     ]
   }
 }

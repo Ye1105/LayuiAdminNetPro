@@ -61,6 +61,7 @@
 </body>
 </html>
 <script type="text/javascript" src="~/common/docCookies.js"></script>
+<script type="text/javascript" src="~/schema/jsonSchemas.js"></script>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
 <script type="text/javascript">
 
@@ -84,14 +85,6 @@
 
         //自定义校验
         form.verify({
-            //账号
-            //username: function (value, item) {
-            //    if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-            //        return '用户名不能有特殊字符';
-            //    }
-            //    if (/(^_)|(__)|(_+$)/.test(value)) return '用户名首尾不能出现 _ 下划线';
-            //    if (/^\d+$/.test(value)) return '用户名不能全为数字';
-            //},
             //密码
             password: [/^[\S]{6,12}$/, '密码必须为6到12位的非空字符']
         })
@@ -115,8 +108,10 @@
             .then(response => response.json())
             .then(result => {
                 if (result.status == 200) {
-                    //设置cookie
+                    //设置 cookie
                     docCookies.setItem('.AspNetCore.Token', result.data.accessToken);
+                    //设置 schemas
+                    jsonSchemas.setSchemas();
                     //跳转到主界面
                     setTimeout(function () {
                         layer.close(loadIndex);

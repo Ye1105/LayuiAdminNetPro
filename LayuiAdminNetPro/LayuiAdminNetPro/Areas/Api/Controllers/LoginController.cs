@@ -3,7 +3,6 @@ using LayuiAdminNetCore.Appsettings;
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetGate.IServices;
-using LayuiAdminNetPro.Areas.Api.Schemas;
 using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Mvc;
@@ -24,12 +23,14 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         private readonly IAdminAccountService _admin;
         private readonly IAuthenticateService _auth;
         private readonly IOptions<AppSettings> _appSettings;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public LoginController(IAdminAccountService adminAccountService, IAuthenticateService authenticateService, IOptions<AppSettings> appSettings)
+        public LoginController(IAdminAccountService adminAccountService, IAuthenticateService authenticateService, IOptions<AppSettings> appSettings, IWebHostEnvironment webHostEnvironment)
         {
             _admin = adminAccountService;
             _auth = authenticateService;
             _appSettings = appSettings;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
 
             #region 参数校验
 
-            var signinSchema = await JsonSchemas.GetSchema("signin");
+            var signinSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "signin");
 
             var sign = new
             {

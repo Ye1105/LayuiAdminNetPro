@@ -4,7 +4,6 @@ using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.DtoModels;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetCore.RequstModels;
-using LayuiAdminNetPro.Areas.Api.Schemas;
 using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Microsoft.AspNetCore.Authorization;
@@ -23,11 +22,13 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     {
         private readonly IAdminAccountService _admin;
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AccountsController(IAdminAccountService adminAccountService, IMapper mapper)
+        public AccountsController(IAdminAccountService adminAccountService, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _admin = adminAccountService;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
              * 3.赋值
              */
 
-            var jsonSchema = await JsonSchemas.GetSchema("account");
+            var jsonSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "account");
 
             var schema = JSchema.Parse(jsonSchema);
 
@@ -68,7 +69,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             var exsit = await _admin.FirstOrDefaultAsync(x => x.Name == req.Name || x.Phone == req.Phone);
             if (exsit != null)
             {
-                return Ok(Fail(errorMessages, "账号已存在"));
+                return Ok(Fail(errorMessages, "用户名或手机号已存在"));
             }
 
             var acc = new AdminAccount()

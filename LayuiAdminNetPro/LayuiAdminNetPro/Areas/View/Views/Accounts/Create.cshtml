@@ -17,40 +17,32 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-block">
-                            <input id="name" type="text" name="name" autocomplete="off" placeholder="用户名" lay-verify="required|name" class="layui-input">
+                            <input type="text" name="name" autocomplete="off" placeholder="用户名"  class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">手机号</label>
                         <div class="layui-input-block">
-                            <input type="text" id="phone" name="phone" autocomplete="off" placeholder="手机号" lay-verify="required|phone|number" class="layui-input">
+                            <input type="text" name="phone" autocomplete="off" placeholder="手机号"  class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">密码</label>
                         <div class="layui-input-block">
-                            <input type="text" id="password" name="password" autocomplete="off" placeholder="密码" lay-verify="required|password" class="layui-input">
-                        </div>
-                    </div>
-
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">确认密码</label>
-                        <div class="layui-input-block">
-                            <input type="text" id="cpassword" name="cpassword" autocomplete="off" placeholder="确认密码" lay-verify="required|cpassword" class="layui-input">
+                            <input type="text"  name="password" autocomplete="off" placeholder="密码"  class="layui-input">
                         </div>
                     </div>
 
                     <div class="layui-form-item" pane>
-                        <label class="layui-form-label" id="sex">性别</label>
+                        <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
                             <input type="radio" name="sex" value=0 title="男性" checked>
                             <input type="radio" name="sex" value=1 title="女性">
                             <input type="radio" name="sex" value=2 title="跨性别">
                         </div>
                     </div>
-
                     <div class="layui-form-item" pane>
-                        <label class="layui-form-label" id="jobStatus">在职状态</label>
+                        <label class="layui-form-label">工作状态</label>
                         <div class="layui-input-block">
                             <input type="radio" name="jobStatus" value=0 title="在职" checked>
                             <input type="radio" name="jobStatus" value=1 title="离职">
@@ -65,45 +57,3 @@
 </body>
 </html>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
-<script type="text/javascript">
-    layui.config({
-        base: '../layuiadmin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(function () {
-
-        var $=layui.$,
-            form = layui.form;
-
-        form.val('form-account-filter', {
-            "name": "贤心" // "name": "value"
-            , "phone": 15868707168
-            , "password": "********"
-            , "cpassword": "********"
-            , "sex": 0 // 开关状态
-            , "jobStatus": 2
-        });
-
-
-        //自定义校验规则
-        form.verify({
-            //账号
-            name: function (value, item) {
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '用户名不能有特殊字符';
-                }
-                if (/(^_)|(__)|(_+$)/.test(value)) return '用户名首尾不能出现 _ 下划线';
-                if (/^\d+$/.test(value)) return '用户名不能全为数字';
-            },
-            //密码
-            password: [/^[\S]{6,12}$/, '密码必须为6到12位的非空字符'],
-            //确认密码
-            cpassword: function (value, item) {
-                let password = $("input[name=password]").val()
-                //console.log(password)
-                if(value!==password)
-                    return '两次密码必须一致';
-            },
-        })
-    })
-</script>

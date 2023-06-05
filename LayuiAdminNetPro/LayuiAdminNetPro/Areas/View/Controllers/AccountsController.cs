@@ -19,5 +19,11 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         {
             return View();
         }
+
+        [HttpPatch(_patch)]
+        public override IActionResult Patch()
+        {
+            return View();
+        }
     }
 }

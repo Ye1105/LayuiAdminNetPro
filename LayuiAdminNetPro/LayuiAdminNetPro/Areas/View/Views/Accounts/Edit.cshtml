@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Dictionary<string,string>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,30 +14,25 @@
     <div class="layui-fluid">
         <div class="layui-card">
             <div class="layui-card-body">
-                <div class="layui-form layui-form-pane form" lay-filter="form-account-filter" id="LAY-account-create-submit">
+                <div class="layui-form layui-form-pane form" lay-filter="LAY-account-edit-submit" id="LAY-account-edit-submit">
+                    <input type="text" name="uId" class="layui-input" style="visibility:hidden;height:0px">
                     <div class="layui-form-item">
                         <label class="layui-form-label">用户名</label>
                         <div class="layui-input-block">
-                            <input type="text" name="name" autocomplete="off" placeholder="用户名"  class="layui-input">
+                            <input type="text"  name="name" autocomplete="off" placeholder="用户名" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">手机号</label>
                         <div class="layui-input-block">
-                            <input type="text" name="phone" autocomplete="off" placeholder="手机号"  class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">密码</label>
-                        <div class="layui-input-block">
-                            <input type="text"  name="password" autocomplete="off" placeholder="密码"  class="layui-input">
+                            <input type="text" name="phone" autocomplete="off" placeholder="手机号" class="layui-input">
                         </div>
                     </div>
 
                     <div class="layui-form-item" pane>
                         <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
-                            <input type="radio" name="sex" value="男性" title="男性" checked>
+                            <input type="radio" name="sex" value="男性" title="男性">
                             <input type="radio" name="sex" value="女性" title="女性">
                             <input type="radio" name="sex" value="跨性别" title="跨性别">
                         </div>
@@ -44,12 +40,21 @@
                     <div class="layui-form-item" pane>
                         <label class="layui-form-label">工作状态</label>
                         <div class="layui-input-block">
-                            <input type="radio" name="jobStatus" value="在职" title="在职" checked>
+                            <input type="radio" name="jobStatus" value="在职" title="在职" >
                             <input type="radio" name="jobStatus" value="离职" title="离职">
                             <input type="radio" name="jobStatus" value="出差" title="出差">
                             <input type="radio" name="jobStatus" value="休假" title="休假">
                         </div>
                     </div>
+
+                    <div class="layui-form-item" pane>
+                        <label class="layui-form-label">账号状态</label>
+                        <div class="layui-input-block">
+                            <input type="radio" name="status" value="启用" title="启用">
+                            <input type="radio" name="status" value="禁用" title="禁用">
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -57,3 +62,22 @@
 </body>
 </html>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(function () {
+
+        let form = layui.form
+
+        form.val("LAY-account-edit-submit",{
+            name: `@(Model["name"])`,
+            phone: `@(Model["phone"])`,
+            sex: `@(Model["sex"])`,
+            jobStatus: `@(Model["jobStatus"])`,
+            status: `@(Model["status"])`,
+            uId: `@(Model["uId"])`,
+        })
+    })
+</script>

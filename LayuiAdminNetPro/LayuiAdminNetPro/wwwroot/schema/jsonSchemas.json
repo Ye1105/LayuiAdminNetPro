@@ -19,7 +19,7 @@
       "password"
     ]
   },
-  "account": {
+  "account-create": {
     "type": "object",
     "description": "账号创建参数规则",
     "properties": {
@@ -40,22 +40,22 @@
         "maxLength": 12
       },
       "sex": {
-        "type": "number",
+        "type": "string",
         "title": "性别",
         "enum": [
-          0,
-          1,
-          2
+          "男性",
+          "女性",
+          "跨性别"
         ]
       },
       "jobStatus": {
-        "type": "number",
+        "type": "string",
         "title": "工作状态",
         "enum": [
-          0,
-          1,
-          2,
-          3
+          "在职",
+          "离职",
+          "出差",
+          "休假"
         ]
       }
     },
@@ -65,6 +65,56 @@
       "password",
       "sex",
       "jobStatus"
+    ]
+  },
+  "account-edit": {
+    "type": "object",
+    "description": "账号编辑参数规则",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "用户名",
+        "minLength": 1
+      },
+      "phone": {
+        "type": "string",
+        "title": "手机号",
+        "pattern": "^1[3456789]\\d{9}$"
+      },
+      "sex": {
+        "type": "string",
+        "title": "性别",
+        "enum": [
+          "男性",
+          "女性",
+          "跨性别"
+        ]
+      },
+      "jobStatus": {
+        "type": "string",
+        "title": "工作状态",
+        "enum": [
+          "在职",
+          "离职",
+          "出差",
+          "休假"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "title": "账号状态",
+        "enum": [
+          "启用",
+          "禁用"
+        ]
+      }
+    },
+    "required": [
+      "name",
+      "phone",
+      "sex",
+      "jobStatus",
+      "status"
     ]
   }
 }

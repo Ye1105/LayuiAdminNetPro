@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CodeHelper.Common;
 using LayuiAdminNetCore.AdminModels;
 using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.DtoModels;
@@ -11,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
-using System.Collections.Generic;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -46,6 +46,28 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return Ok(Success(new { account = dtoAccount }));
         }
 
+        [HttpPatch]
+        public async Task<IActionResult> Patch([FromBody] AccountEditReq req)
+        {
+            /*
+             * 1.参数校验
+             * 2.账号是否存在
+             * 3.修改值
+             */
+
+            var jsonSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "account-edit");
+
+            var schema = JSchema.Parse(jsonSchema);
+
+            var validate = JObject.Parse(JsonConvert.SerializeObject(req)).IsValid(schema, out IList<string> errorMessages);
+            if (!validate)
+            {
+                return Ok(Fail(errorMessages, "参数错误"));
+            }
+
+            return Ok();
+        }
+
         /// <summary>
         /// 创建账号
         /// </summary>
@@ -59,7 +81,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
              * 3.赋值
              */
 
-            var jsonSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "account");
+            var jsonSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "account-create");
 
             var schema = JSchema.Parse(jsonSchema);
 
@@ -81,8 +103,8 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 Name = req.Name,
                 Phone = req.Phone,
                 Password = req.Password,
-                Sex = req.Sex!.Value,
-                JobStatus = req.JobStatus!.Value,
+                Sex = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<SexStatus>(req.Sex),
+                JobStatus = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<JobStatus>(req.JobStatus),
                 Status = (sbyte)Status.ENABLE,
                 Created = DateTime.Now,
                 LastLoginIp = null,

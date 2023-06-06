@@ -12,7 +12,7 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         /// <summary>
         ///【更新功能】路由模板
         /// </summary>
-        protected const string _update = "${id:guid}/update";
+        protected const string _patch = "${id:guid}/patch";
 
         /// <summary>
         ///【删除功能】路由模板
@@ -39,11 +39,11 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         }
 
         /// <summary>
-        /// create a view to update function
+        /// create a view to patch function
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public virtual IActionResult Update()
+        public virtual IActionResult Patch()
         {
             throw new NotImplementedException();
         }

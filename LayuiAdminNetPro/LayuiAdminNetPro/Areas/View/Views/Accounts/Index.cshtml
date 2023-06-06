@@ -36,14 +36,20 @@
             <div class="layui-card-body">
                 <!--工具栏-->
                 <script type="text/html" id="ID-table-account-toolbar">
-                    <div class="layui-btn-container">
-                        <button class="layui-btn  layui-btn-primary layui-btn-sm" lay-on="add" title="添加账号">
-                                <i class="layui-icon  layui-icon-addition"></i>
-                        </button>
+                    <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-on="add" title="添加账号">
+                       添加
+                    </div>
+
+                </script>
+
+                <!--行编辑按钮-->
+                <script type="text/html" id="row-operation">
+                    <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary"  lay-event="edit" title="编辑账号">
+                     编辑
                     </div>
                 </script>
                 <!--table-->
-                <table class="layui-hide layui-table" id="ID-table-account"></table>
+                <table class="layui-hide layui-table" id="ID-table-account" lay-filter="ID-table-account"></table>
                 <!--分页栏-->
                 <script type="text/html" id="ID-table-account-pagebar">
                     <div class="layui-btn-container" >
@@ -70,7 +76,7 @@
             util = layui.util,
             layer = layui.layer;
 
-        // 创建渲染实例
+        //表单渲染
         table.render({
             elem: '#ID-table-account'
             , url: '/api/accounts' // 此处为静态模拟数据，实际使用时需换成真实接口
@@ -130,13 +136,16 @@
                 , {
                     field: 'status', title: '账号状态', templet: function (d) {
                         if (d.status === "启用") {
-                            return `<span class="layui-badge layui-bg-green" > ${d.status} </span>`
+                            return `<span class="layui-badge  layui-bg-green" > ${d.status} </span>`
                         } else if (d.status === "禁用")
                             return `<span class="layui-badge" > ${d.status} </span>`
                         else {
                             return `<span class="layui-badge layui-bg-orange" > ${d.status} </span>`
                         }
                     }
+                }
+                ,{
+                    field: 'right', title: '操作',toolbar: "#row-operation"
                 }
             ]]
             , response: {
@@ -152,9 +161,9 @@
             }
         });
 
-
-        //添加账号
+        
         util.on("lay-on", {
+            //添加账号
             "add": function () {
                 layer.open({
                     title: "添加账号",
@@ -173,10 +182,14 @@
                         formData["jobStatus"] = Number(formData["jobStatus"])
                         formData["sex"] = Number(formData["sex"])
                         //2.json schema 校验表单数据
-                        if (formData != undefined && formData != "") {
+                        if (formData != "{}" && formData != "") {
                             let schemas = jsonSchemas.getSchema("account")
+                            if (schemas.res == false) {
+                                layer.msg(schemas.msg)
+                                return;
+                            }
                             let validator = new ZSchema();
-                            validator.validate(formData, schemas, function (err, valid) {
+                            validator.validate(formData, schemas.data, function (err, valid) {
                                 if (!valid) {
                                     layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
                                     return
@@ -190,11 +203,25 @@
             }
         })
 
+        //table.on('toolbar(ID-table-account)', function (obj) {
+        //    var options = obj.config; // 获取当前表格属性配置项
+        //    var checkStatus = table.checkStatus(options.id); // 获取选中行相关数据
+        //    console.log(obj); // 查看对象所有成员
 
-        /*
-         * {param} json
+        //    switch(obj.event){
+        //        case 'edit':
+        //            console.log(options);
+        //            break;
+        //    }
+        //})
+
+
+        /**
+         * bref fetch 创建账号
+         * param data json格式的表单参数
+         * param iframeIndex 弹窗的 index
          */
-        async function createAccount(data,iframeIndex) {
+        async function createAccount(data, iframeIndex) {
             let loadIndex = layer.load(0);
             await fetch(`/api/accounts`,
                 {

@@ -25,8 +25,19 @@ namespace LayuiAdminNetService.IServices
         /// <returns></returns>
         Task<AdminAccount?> FirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isIncludeAccountRoles = false, bool isTrack = true);
 
-
+        /// <summary>
+        /// 新增账号
+        /// </summary>
+        /// <param name="adminAccount"></param>
+        /// <returns></returns>
         Task<int> AddAsync(AdminAccount adminAccount);
+
+        /// <summary>
+        /// 编辑账号
+        /// </summary>
+        /// <param name="adminAccount"></param>
+        /// <returns></returns>
+        Task<int> UpdateAsync(AdminAccount adminAccount);
 
         /// <summary>
         /// 账号分页列表

@@ -21,6 +21,12 @@ namespace LayuiAdminNetService.Services
             _base = baseSevice;
         }
 
+
+        public async Task<int> UpdateAsync(AdminAccount adminAccount)
+        {
+            return await _base.UpdateAsync(adminAccount);
+        }
+
         public async Task<int> AddAsync(AdminAccount adminAccount)
         {
 

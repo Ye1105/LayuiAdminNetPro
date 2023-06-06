@@ -1,5 +1,4 @@
 ﻿using CodeHelper.Common;
-using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -9,6 +8,7 @@ namespace LayuiAdminNetPro.Areas.Api
     {
         private static JsonSchemas? _instance;
         private static IWebHostEnvironment? _webHostEnvironment;
+
         /// <summary>
         /// JsonSchema 配置路径
         /// </summary>
@@ -52,7 +52,7 @@ namespace LayuiAdminNetPro.Areas.Api
         /// 获取规则
         /// </summary>
         /// <param name="webHostEnvironment">Web托管环境</param>
-        /// <param name="key">键名 wwwroot/schema/jsonSchemas.json中的key</param>
+        /// <param name="key">Schema规则 wwwroot/schema/jsonSchemas.json中的key</param>
         /// <returns></returns>
         public static async Task<string> GetSchema(IWebHostEnvironment webHostEnvironment, string key)
         {
@@ -61,7 +61,7 @@ namespace LayuiAdminNetPro.Areas.Api
         }
 
         /// <summary>
-        /// 获取规则 
+        /// 获取规则
         /// </summary>
         /// <param name="webHostEnvironment">Web托管环境</param>
         /// <param name="key">键名</param>

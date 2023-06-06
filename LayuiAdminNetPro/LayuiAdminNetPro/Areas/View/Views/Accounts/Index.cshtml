@@ -43,7 +43,7 @@
                 </script>
 
                 <!--行编辑按钮-->
-                <script type="text/html" id="row-operation">
+                <script type="text/html" id="cell-operation">
                     <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary"  lay-event="edit" title="编辑账号">
                      编辑
                     </div>
@@ -60,6 +60,7 @@
     </div>
 </body>
 </html>
+<script type="text/javascript" src="~/common/qs.js"></script>
 <script type="text/javascript" src="~/schema/ZSchema-browser-min.js"></script>
 <script type="text/javascript" src="~/schema/jsonSchemas.js"></script>
 <script type="text/javascript" src="~/common/dayjs.min.js"></script>
@@ -145,7 +146,7 @@
                     }
                 }
                 ,{
-                    field: 'right', title: '操作',toolbar: "#row-operation"
+                    field: 'right', title: '操作', toolbar: "#cell-operation"
                 }
             ]]
             , response: {
@@ -161,9 +162,8 @@
             }
         });
 
-        
+        //【添加账号】
         util.on("lay-on", {
-            //添加账号
             "add": function () {
                 layer.open({
                     title: "添加账号",
@@ -178,12 +178,9 @@
 
                         //1.获取表单数据
                         let formData = iframeWindow.layui.form.val(submitFilter)
-                        //1.1转换类型
-                        formData["jobStatus"] = Number(formData["jobStatus"])
-                        formData["sex"] = Number(formData["sex"])
                         //2.json schema 校验表单数据
                         if (formData != "{}" && formData != "") {
-                            let schemas = jsonSchemas.getSchema("account")
+                            let schemas = jsonSchemas.getSchema("account-create")
                             if (schemas.res == false) {
                                 layer.msg(schemas.msg)
                                 return;
@@ -203,17 +200,77 @@
             }
         })
 
-        //table.on('toolbar(ID-table-account)', function (obj) {
-        //    var options = obj.config; // 获取当前表格属性配置项
-        //    var checkStatus = table.checkStatus(options.id); // 获取选中行相关数据
-        //    console.log(obj); // 查看对象所有成员
+        //【编辑账号】触发单元格工具事件
+        table.on('tool(ID-table-account)', function (obj) {
+            var data = obj.data; // 获取当前表格属性配置项
+            switch(obj.event){
+                case 'edit':
+                    //console.log(data,Qs.stringify(data))
+                    let params=Qs.stringify(data);
+                    layer.open({
+                        title: "编辑账号",
+                        type: 2,
+                        area: ['480px', '458px'],
+                        content: `accounts/edit?${params}`,
+                        btn: ["提交", '取消'],
+                        yes: function (index, layero) {
+                            var iframeWindow = window['layui-layer-iframe' + index]
+                                //, submitID = 'LAY-account-create'
+                                , submitFilter = 'LAY-account-edit-submit'
+                            //1.获取表单数据
+                            let formData = iframeWindow.layui.form.val(submitFilter)
+                            //2.json schema 校验表单数据
+                            if (formData != "{}" && formData != "") {
+                                let schemas = jsonSchemas.getSchema("account-edit")
+                                if (schemas.res == false) {
+                                    layer.msg(schemas.msg)
+                                }
+                                let validator = new ZSchema();
+                                validator.validate(formData, schemas.data, function (err, valid) {
+                                    if (!valid) {
+                                        layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
+                                        return
+                                    }
+                                    //3.提交表单数据
+                                    editAccount(formData, index);
+                                });
+                            }
+                        }
+                    })
+            }
+        })
 
-        //    switch(obj.event){
-        //        case 'edit':
-        //            console.log(options);
-        //            break;
-        //    }
-        //})
+        /**
+        * bref fetch 修改账号
+        * param data json格式的表单参数
+        * param iframeIndex 弹窗的 index
+        */
+        async function editAccount(data, iframeIndex) {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/accounts`,
+                {
+                    method: 'patch',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        table.reload('ID-table-account');
+                        layer.close(iframeIndex); //关闭弹层
+                        layer.msg("编辑账号成功");
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
 
 
         /**

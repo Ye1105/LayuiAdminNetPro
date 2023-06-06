@@ -19,6 +19,13 @@ namespace LayuiAdminNetGate.Services
             return account;
         }
 
+        public AdminAccount? AccountFirstOrDefaultSync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true)
+        {
+            var account = _base.FirstOrDefault(expression, isTrack);
+            return account;
+        }
+
+
         public Task<List<AdminAccountRole>> GetAccountRolesAsync(Expression<Func<AdminAccountRole, bool>> express, bool isTrack = true)
         {
             throw new NotImplementedException();
@@ -32,6 +39,11 @@ namespace LayuiAdminNetGate.Services
         public async Task<bool> ModifyAccountAsync(AdminAccount account)
         {
             return await _base.UpdateAsync(account) > 0;
+        }
+
+        public bool ModifyAccountSync(AdminAccount account)
+        {
+            return _base.Update(account) > 0;
         }
     }
 }

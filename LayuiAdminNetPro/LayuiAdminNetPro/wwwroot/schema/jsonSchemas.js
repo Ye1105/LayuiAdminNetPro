@@ -13,7 +13,7 @@ var jsonSchemas = {
      * @{res,data,msg}
      */
     getSchema: function (key) {
-        if (!key) return { res: false, msg: "参数错误" };
+        if (!key) return { res: false, msg: "参数错误,请退出重新登陆" };
         let schemas = localStorage.getItem("JsonSchemas")
         if (schemas) {
             let data = JSON.parse(schemas)
@@ -21,10 +21,13 @@ var jsonSchemas = {
                 return { res: true, data: data[key] }
             }
             else
-                return { res: false, msg: "键值不存在" }
+                return { res: false, msg: "schema规则不存在,请退出重新登陆" }
         } else {
             this.setSchemas();
-            return { res: false, msg: "重载schemas列表，请稍后重试" }
+            //setTimeout(() => {
+            //    this.getSchema(key);
+            //}, 500);
+            return { res: false, msg: "重载schemas列表，请重新提交" }
         }
     },
     setSchemas: function () {

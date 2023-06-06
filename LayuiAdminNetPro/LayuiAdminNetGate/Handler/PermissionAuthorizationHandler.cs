@@ -26,6 +26,7 @@ namespace LayuiAdminNetGate.Handler
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
+            //是否需要用 lock(this) 线程锁定 ？
             try
             {
                 HttpContext? httpContext = context.Resource as HttpContext;

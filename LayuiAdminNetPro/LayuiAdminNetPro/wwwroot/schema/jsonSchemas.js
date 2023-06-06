@@ -9,22 +9,22 @@
 
 var jsonSchemas = {
     /*
-     * {key} require  
+     * @{key}   
+     * @{res,data,msg}
      */
     getSchema: function (key) {
-
-        if (!localStorage.getItem("JsonSchemas"))
-            this.setSchemas();
-
-        if (!key) return "";
+        if (!key) return { res: false, msg: "参数错误" };
         let schemas = localStorage.getItem("JsonSchemas")
         if (schemas) {
             let data = JSON.parse(schemas)
             if (data.hasOwnProperty(key)) {
-                return data[key]
+                return { res: true, data: data[key] }
             }
             else
-                return ""
+                return { res: false, msg: "键值不存在" }
+        } else {
+            this.setSchemas();
+            return { res: false, msg: "重载schemas列表，请稍后重试" }
         }
     },
     setSchemas: function () {

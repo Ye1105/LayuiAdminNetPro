@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
+using System.Collections.Generic;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -40,7 +41,9 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         {
             var account = await _admin.FirstOrDefaultAsync(x => x.UId == uId);
 
-            return Ok(Success(new { account }));
+            var dtoAccount = _mapper.Map<DtoAdminAccount>(account);
+
+            return Ok(Success(new { account = dtoAccount }));
         }
 
         /// <summary>

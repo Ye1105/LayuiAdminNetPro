@@ -18,7 +18,7 @@
                 <h2>LayuiAdminNetPro</h2>
                 <p>后台管理模板系统</p>
             </div>
-            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+            <div class="layadmin-user-login-box layadmin-user-login-body layui-form" lay-filter="form-val-filter">
                 <div class="layui-form-item">
                     <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="LAY-user-login-username"></label>
                     <input type="text" name="phone" id="LAY-user-login-username" lay-verify="required|phone" placeholder="手机号" class="layui-input" lay-affix="clear">
@@ -98,6 +98,13 @@
 
             return false; // 阻止默认 form 跳转
         })
+
+        form.val("form-val-filter",{
+            "phone": "16666666666",
+            "password": "112233",
+            "code": "******",
+        })
+
     })
 
     /*

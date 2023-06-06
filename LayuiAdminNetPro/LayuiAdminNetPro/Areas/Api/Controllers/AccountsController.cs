@@ -32,6 +32,8 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        #region Get
+
         /// <summary>
         /// 单个账号
         /// </summary>
@@ -46,27 +48,32 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return Ok(Success(new { account = dtoAccount }));
         }
 
-        [HttpPatch]
-        public async Task<IActionResult> Patch([FromBody] AccountEditReq req)
+        /// <summary>
+        /// 账号列表【分页】
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Search([FromQuery] AccountPagedReq req)
         {
-            /*
-             * 1.参数校验
-             * 2.账号是否存在
-             * 3.修改值
-             */
+            var list = await _admin.QueryPagedAsync(req);
 
-            var jsonSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "account-edit");
-
-            var schema = JSchema.Parse(jsonSchema);
-
-            var validate = JObject.Parse(JsonConvert.SerializeObject(req)).IsValid(schema, out IList<string> errorMessages);
-            if (!validate)
+            var JsonData = new
             {
-                return Ok(Fail(errorMessages, "参数错误"));
-            }
+                list.TotalPages,
+                list.CurrentPage,
+                list.PageSize,
+                list.TotalCount,
+                //AutoMapper 映射
+                list = _mapper.Map<IEnumerable<DtoAdminAccount>>(list)
+            };
 
-            return Ok();
+            return Ok(Success(JsonData));
         }
+
+        #endregion Get
+
+        #region Create
 
         /// <summary>
         /// 创建账号
@@ -115,27 +122,57 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return res > 0 ? Ok(Success()) : Ok(Fail());
         }
 
+        #endregion Create
+
+        #region Patch
+
         /// <summary>
-        /// 账号列表【分页】
+        /// 编辑账号
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] AccountPagedReq req)
+        [HttpPatch]
+        public async Task<IActionResult> Patch([FromBody] AccountEditReq req)
         {
-            var list = await _admin.QueryPagedAsync(req);
+            /*
+             * 1.参数校验
+             * 2.账号是否存在
+             * 3.修改值
+             */
 
-            var JsonData = new
+            var jsonSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "account-edit");
+
+            var schema = JSchema.Parse(jsonSchema);
+
+            var validate = JObject.Parse(JsonConvert.SerializeObject(req)).IsValid(schema, out IList<string> errorMessages);
+            if (!validate)
             {
-                list.TotalPages,
-                list.CurrentPage,
-                list.PageSize,
-                list.TotalCount,
-                //AutoMapper 映射
-                list = _mapper.Map<IEnumerable<DtoAdminAccount>>(list)
-            };
+                return Ok(Fail(errorMessages, "参数错误"));
+            }
 
-            return Ok(Success(JsonData));
+            var exsit = await _admin.FirstOrDefaultAsync(x => (x.Name == req.Name || x.Phone == req.Phone) && x.UId != req.UId);
+            if (exsit != null)
+            {
+                return Ok(Fail(errorMessages, "用户名或手机号已存在"));
+            }
+
+            var account = await _admin.FirstOrDefaultAsync(x => x.UId == req.UId, isTrack: true);
+            if (account != null)
+            {
+                account.Name = req.Name;
+                account.Phone = req.Phone;
+                account.Sex = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<SexStatus>(req.Sex);
+                account.JobStatus = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<JobStatus>(req.JobStatus);
+                account.Status = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<Status>(req.Status);
+                var res = await _admin.UpdateAsync(account);
+                return res > 0 ? Ok(Success()) : Ok(Fail());
+            }
+            else
+            {
+                return Ok(Fail("账号不存在"));
+            }
         }
+
+        #endregion Patch
     }
 }

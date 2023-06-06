@@ -43,8 +43,8 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        [HttpGet("{id:guid}/delete")]
-        public virtual IActionResult Delete(Guid id)
+        [HttpGet("delete")]
+        public virtual IActionResult Delete()
         {
             throw new NotImplementedException();
         }

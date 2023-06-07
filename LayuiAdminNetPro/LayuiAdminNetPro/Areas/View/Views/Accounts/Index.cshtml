@@ -12,7 +12,7 @@
 <body>
     <div class="layui-fluid">
         <div class="layui-card">
-            <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="LAY-account-list">
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="account-search">
                 <div class="layui-form-item">
                     <div class="layui-input-wrap layui-inline">
                         <div class="layui-input-prefix">
@@ -28,7 +28,7 @@
                         <input type="text" name="phone" placeholder="手机号" lay-affix="clear" class="layui-input">
                     </div>
 
-                    <button class="layui-btn" lay-submit lay-filter="demo-table-search">搜索</button>
+                    <button class="layui-btn" lay-submit lay-filter="table-search">搜索</button>
 
                 </div>
 
@@ -91,6 +91,7 @@
         var table = layui.table,
             form = layui.form,
             layer = layui.layer;
+
 
         //表单渲染
         table.render({
@@ -176,6 +177,20 @@
                 };
             }
         });
+
+        //外部搜索
+        form.on('submit(table-search)', function (data) {
+            var field = data.field;
+            //console.log('search',field)
+            // 执行搜索重载
+            table.reload('ID-table-account', {
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+                , where: field // 搜索的字段
+            });
+            return false; // 阻止默认 form 跳转
+        })
 
 
         //工具栏事件

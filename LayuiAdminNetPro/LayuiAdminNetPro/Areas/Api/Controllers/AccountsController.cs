@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
-using System.Collections.Generic;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -111,7 +110,6 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 return Ok(Fail(errorMessages, "手机号已存在"));
             }
 
-
             var acc = new AdminAccount()
             {
                 UId = Guid.NewGuid(),
@@ -164,13 +162,11 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 return Ok(Fail(errorMessages, "用户名已存在"));
             }
 
-
             exsit = await _admin.FirstOrDefaultAsync(x => x.Phone == req.Phone && x.UId != req.UId);
             if (exsit != null)
             {
                 return Ok(Fail(errorMessages, "手机号已存在"));
             }
-
 
             var account = await _admin.FirstOrDefaultAsync(x => x.UId == req.UId, isTrack: true);
             if (account != null)
@@ -190,7 +186,6 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         }
 
         #endregion Put
-
 
         #region Patch
 
@@ -216,6 +211,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             }
 
             #region 锁定 | 解锁账号
+
             if (req.Method == "锁定" || req.Method == "解锁")
             {
                 if (req.UIds.Any())
@@ -234,9 +230,11 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 }
                 return Ok(Fail("uId不能为空"));
             }
-            #endregion
+
+            #endregion 锁定 | 解锁账号
 
             #region 修改密码
+
             if (req.Method == "修改密码")
             {
                 if (!string.IsNullOrWhiteSpace(req.Password))
@@ -252,10 +250,12 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 }
                 return Ok(Fail("密码不能为空"));
             }
-            #endregion
+
+            #endregion 修改密码
 
             return Ok(Fail());
         }
-        #endregion
+
+        #endregion Patch
     }
 }

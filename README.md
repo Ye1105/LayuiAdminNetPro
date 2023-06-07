@@ -29,7 +29,7 @@
 ```C#
  Project 
     ├── LayuiAdminNetPro                     //主项目程序
-    |   ├── wwwroot                           	//静态资源、Layuiadmin、js资源等  
+    |   ├── wwwroot                           	//静态资源（Layuiadmin、schema、common等等）  
     |   ├── Areas                           	//区域    
     |   |   ├── Api                                //接口模块
     |   |   |   ├── JsonSchemas                       //数据处理接口参数校验

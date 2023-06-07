@@ -1,8 +1,6 @@
 ﻿using CodeHelper.Common;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Text;
-using System.Web;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -39,7 +37,6 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
 
             return body;
         }
-
 
         #endregion Requst
 

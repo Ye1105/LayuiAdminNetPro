@@ -67,10 +67,14 @@
       "jobStatus"
     ]
   },
-  "account-edit": {
+  "account-put": {
     "type": "object",
-    "description": "账号编辑参数规则",
+    "description": "账号 put 参数规则",
     "properties": {
+      "uId": {
+        "type": "string",
+        "title": "用户Id"
+      },
       "name": {
         "type": "string",
         "title": "用户名",
@@ -110,11 +114,69 @@
       }
     },
     "required": [
+      "uId",
       "name",
       "phone",
       "sex",
       "jobStatus",
       "status"
+    ]
+  },
+  "account-patch": {
+    "type": "object",
+    "description": "账号 patch 参数规则",
+    "properties": {
+      "method": {
+        "type": "string",
+        "title": "方式类型",
+        "enum": [
+          "解锁",
+          "锁定",
+          "修改密码"
+        ]
+      },
+      "uIds": {
+        "type": "array",
+        "title": "uId列表",
+        "items": {
+          "type": "string"
+        }
+      },
+      "password": {
+        "type": "string",
+        "title": "密码",
+        "minLength": 6,
+        "maxLength": 12
+      }
+    },
+    "required": [
+      "method"
+    ]
+  },
+  "account-psd": {
+    "type": "object",
+    "description": "账号 修改密码 参数规则",
+    "properties": {
+      "uId": {
+        "type": "string",
+        "title": "用户Id"
+      },
+      "password": {
+        "type": "string",
+        "title": "密码",
+        "minLength": 6,
+        "maxLength": 12
+      },
+      "cpassword": {
+        "type": "string",
+        "title": "确认密码",
+        "minLength": 6,
+        "maxLength": 12
+      }
+    },
+    "required": [
+      "uId",
+      "password"
     ]
   }
 }

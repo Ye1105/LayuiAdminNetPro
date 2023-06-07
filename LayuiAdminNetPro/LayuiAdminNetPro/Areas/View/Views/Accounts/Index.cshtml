@@ -36,18 +36,34 @@
             <div class="layui-card-body">
                 <!--工具栏-->
                 <script type="text/html" id="ID-table-account-toolbar">
-                    <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-on="add" title="添加账号">
-                       添加
-                    </div>
+                    <div class="layui-btn-group">
+                        <!-- 添加账号 -->
+                        <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="add" title="添加账号">
+                            添加
+                        </div>
 
+                        <!-- 锁定账号-->
+                        <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="lock" title="锁定账号">
+                            锁定
+                        </div>
+                        <!--解锁账号-->
+                        <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="unlock" title="解锁账号">
+                            解锁
+                        </div>
+                     </div>
                 </script>
 
-                <!--行编辑按钮-->
+                <!-- 行编辑按钮 -->
+                <!-- 编辑账号 -->
                 <script type="text/html" id="cell-operation">
-                    <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary"  lay-event="edit" title="编辑账号">
-                     编辑
+                    <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="edit" title="编辑账号">
+                          <i class="layui-icon layui-icon-edit"></i>
+                    </div>
+                    <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="psd" title="修改密码">
+                          <i class="layui-icon layui-icon-key"></i>
                     </div>
                 </script>
+
                 <!--table-->
                 <table class="layui-hide layui-table" id="ID-table-account" lay-filter="ID-table-account"></table>
                 <!--分页栏-->
@@ -74,7 +90,6 @@
 
         var table = layui.table,
             form = layui.form,
-            util = layui.util,
             layer = layui.layer;
 
         //表单渲染
@@ -145,8 +160,8 @@
                         }
                     }
                 }
-                ,{
-                    field: 'right', title: '操作', toolbar: "#cell-operation"
+                , {
+                    fixed: 'right', minWidth: 100, title: '操作', toolbar: "#cell-operation"
                 }
             ]]
             , response: {
@@ -162,51 +177,91 @@
             }
         });
 
-        //【添加账号】
-        util.on("lay-on", {
-            "add": function () {
-                layer.open({
-                    title: "添加账号",
-                    type: 2,
-                    area: ['480px', '455px'],
-                    content: 'accounts/create',
-                    btn: ["提交", '取消'],
-                    yes: function (index, layero) {
-                        var iframeWindow = window['layui-layer-iframe' + index]
-                            //, submitID = 'LAY-account-create'
-                            , submitFilter = 'form-account-filter'
 
-                        //1.获取表单数据
-                        let formData = iframeWindow.layui.form.val(submitFilter)
-                        //2.json schema 校验表单数据
-                        if (formData != "{}" && formData != "") {
-                            let schemas = jsonSchemas.getSchema("account-create")
-                            if (schemas.res == false) {
-                                layer.msg(schemas.msg)
-                                return;
-                            }
-                            let validator = new ZSchema();
-                            validator.validate(formData, schemas.data, function (err, valid) {
-                                if (!valid) {
-                                    layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
-                                    return
-                                }
-                                //3.提交表单数据
-                                createAccount(formData, index);
-                            });
-                        }
+        //工具栏事件
+        table.on('toolbar(ID-table-account)', function (obj) {
+            var id = obj.config.id;
+            var checkStatus = table.checkStatus(id);
+            switch (obj.event) {
+                case 'lock':
+                    let data = checkStatus.data.map(x => x.uId);
+                    if (data.length === 0) {
+                        layer.msg("请至少勾选一行");
+                        return;
                     }
-                })
+                    //提示确认框
+                    layer.confirm("确认锁定吗？", function (index) {
+                        var param = {
+                            "method": "锁定",
+                            uIds: data
+                        }
+                        //console.log(JSON.stringify(param))
+                        //fetch 锁定选中的账户
+                        updateAccount(param, index);
+                    })
+                    break;
+
+                case 'unlock':
+                    let unluckData = checkStatus.data.map(x => x.uId);
+                    if (unluckData.length === 0) {
+                        layer.msg("请至少勾选一行");
+                        return;
+                    }
+                    //提示确认框
+                    layer.confirm("确认解锁吗？", function (index) {
+                        var param = {
+                            "method": "解锁",
+                            uIds: unluckData
+                        }
+                        //fetch 解锁选中的账户
+                        updateAccount(param, index);
+                    })
+                    break;
+                case 'add':
+                    layer.open({
+                        title: "添加账号",
+                        type: 2,
+                        area: ['480px', '455px'],
+                        content: 'accounts/create',
+                        btn: ["提交", '取消'],
+                        yes: function (index, layero) {
+                            var iframeWindow = window['layui-layer-iframe' + index]
+                                //, submitID = 'LAY-account-create'
+                                , submitFilter = 'form-account-filter'
+
+                            //1.获取表单数据
+                            let formData = iframeWindow.layui.form.val(submitFilter)
+                            //2.json schema 校验表单数据
+                            if (formData != {}) {
+                                let schemas = jsonSchemas.getSchema("account-create")
+                                if (schemas.res == false) {
+                                    layer.msg(schemas.msg)
+                                    return;
+                                }
+                                let validator = new ZSchema();
+                                validator.validate(formData, schemas.data, function (err, valid) {
+                                    if (!valid) {
+                                        layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
+                                        return
+                                    }
+                                    //3.提交表单数据
+                                    createAccount(formData, index);
+                                });
+                            }
+                        }
+                    })
+                    break;
             }
         })
+
 
         //【编辑账号】触发单元格工具事件
         table.on('tool(ID-table-account)', function (obj) {
             var data = obj.data; // 获取当前表格属性配置项
-            switch(obj.event){
+            switch (obj.event) {
                 case 'edit':
                     //console.log(data,Qs.stringify(data))
-                    let params=Qs.stringify(data);
+                    let params = Qs.stringify(data);
                     layer.open({
                         title: "编辑账号",
                         type: 2,
@@ -220,8 +275,8 @@
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
                             //2.json schema 校验表单数据
-                            if (formData != "{}" && formData != "") {
-                                let schemas = jsonSchemas.getSchema("account-edit")
+                            if (formData != {}) {
+                                let schemas = jsonSchemas.getSchema("account-put")
                                 if (schemas.res == false) {
                                     layer.msg(schemas.msg)
                                 }
@@ -237,8 +292,88 @@
                             }
                         }
                     })
+                    break;
+                case 'psd':
+                    console.log(data, data.uId)
+                    layer.open({
+                        title: "修改密码",
+                        type: 2,
+                        area: ['480px', '268px'],
+                        content: `accounts/psd?uId=${data.uId}`,
+                        btn: ["提交", '取消'],
+                        yes: function (index, layero) {
+                            var iframeWindow = window['layui-layer-iframe' + index]
+                                //, submitID = 'LAY-account-create'
+                                , submitFilter = 'LAY-account-psd-submit'
+                            //1.获取表单数据
+                            let formData = iframeWindow.layui.form.val(submitFilter)
+                            console.log(formData)
+                            //2.json schema 校验表单数据
+                            if (formData != {}) {
+                                let schemas = jsonSchemas.getSchema("account-psd")
+                                if (schemas.res == false) {
+                                    layer.msg(schemas.msg)
+                                }
+                                let validator = new ZSchema();
+                                validator.validate(formData, schemas.data, function (err, valid) {
+                                    if (!valid) {
+                                        layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
+                                        return
+                                    }
+                                    //判定 password 和 cpassword 的值是否一致
+                                    if (formData["password"] !== formData["cpassword"]) {
+                                        layer.msg("两次输入的密码不一致");
+                                        return;
+                                    }
+
+                                    var param = {
+                                        "method": "修改密码",
+                                        uIds: [formData["uId"]],
+                                        password: formData["password"]
+                                    }
+                                    //fetch 解锁选中的账户
+                                    updateAccount(param, index);
+                                });
+                            }
+                        }
+                    })
             }
         })
+
+
+        /**
+        * bref fetch 修改账号状态
+        * param data json格式的表单参数
+        * param layerIndex 弹窗的 index
+        */
+        async function updateAccount(data, layerIndex) {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/accounts`,
+                {
+                    method: 'patch',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        table.reload('ID-table-account');
+                        layer.close(layerIndex); //关闭弹层
+                        layer.msg("操作账号成功");
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
+
+
 
         /**
         * bref fetch 修改账号
@@ -249,7 +384,7 @@
             let loadIndex = layer.load(0);
             await fetch(`/api/accounts`,
                 {
-                    method: 'patch',
+                    method: 'put',
                     headers: {
                         'Content-Type': 'application/json'
                     },

@@ -1,6 +1,8 @@
 ﻿using CodeHelper.Common;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Text;
+using System.Web;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -18,6 +20,26 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             string? header = request.Headers["X-Requested-With"];
             return "XMLHttpRequest".Equals(header);
         }
+
+        /// <summary>
+        /// 将 Context.Body 中的请求参数转为 json 字符串
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        protected string? GetRequestBody(HttpContext context)
+        {
+            //操作Request.Body之前加上EnableBuffering即可
+            context.Request.EnableBuffering();
+
+            var stream = new StreamReader(context.Request.Body);
+            string body = stream.ReadToEndAsync().GetAwaiter().GetResult();
+
+            //重置 position 的位置
+            context.Request.Body.Seek(0, SeekOrigin.Begin);
+
+            return body;
+        }
+
 
         #endregion Requst
 

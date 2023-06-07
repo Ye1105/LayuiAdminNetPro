@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Ocsp;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
+using System.Numerics;
 
 namespace LayuiAdminNetService.Services
 {
@@ -25,6 +26,12 @@ namespace LayuiAdminNetService.Services
         public async Task<int> UpdateAsync(AdminAccount adminAccount)
         {
             return await _base.UpdateAsync(adminAccount);
+        }
+
+
+        public async Task<int> UpdateRangeAsync(List<AdminAccount> list)
+        {
+            return await _base.UpdateRangeAsync(list);
         }
 
         public async Task<int> AddAsync(AdminAccount adminAccount)
@@ -62,6 +69,13 @@ namespace LayuiAdminNetService.Services
 
                 return isTrack ? await query.FirstOrDefaultAsync() : await query.AsNoTracking().FirstOrDefaultAsync();
             }
+        }
+
+        public async Task<List<AdminAccount>> QueryAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true, string? orderBy = null)
+        {
+            var list = await _base.QueryAsync(expression, isTrack, orderBy);
+
+            return list;
         }
 
         public async Task<PagedList<AdminAccount>> QueryPagedAsync(AccountPagedReq req)

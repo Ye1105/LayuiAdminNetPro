@@ -2,7 +2,7 @@
 
 namespace LayuiAdminNetCore.RequstModels
 {
-    public class AccountEditReq
+    public class AccountPutReq
     {
         [JsonProperty("uId")]
         public Guid UId { get; set; }

@@ -40,10 +40,25 @@ namespace LayuiAdminNetService.IServices
         Task<int> UpdateAsync(AdminAccount adminAccount);
 
         /// <summary>
+        /// 编辑账号集合
+        /// </summary>
+        /// <param name="adminAccount"></param>
+        /// <returns></returns>
+        Task<int> UpdateRangeAsync(List<AdminAccount> list);
+
+        /// <summary>
         /// 账号分页列表
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
         Task<PagedList<AdminAccount>> QueryPagedAsync(AccountPagedReq req);
+
+        /// <summary>
+        /// 查询列表
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <param name="isTrack"></param>
+        /// <returns></returns>
+        Task<List<AdminAccount>> QueryAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true, string? orderBy = null);
     }
 }

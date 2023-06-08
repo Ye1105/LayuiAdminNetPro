@@ -25,7 +25,7 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         }
 
         [HttpGet("psd")]
-        public  IActionResult Psd()
+        public IActionResult Psd()
         {
             var param = GetQueryString(HttpContext);
             return View(param);

@@ -15,6 +15,9 @@ using Newtonsoft.Json.Schema;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
+    /// <summary>
+    /// 用户接口
+    /// </summary>
     [ApiController]
     [Authorize(Policy = Policys.Admin)]
     [Route($"{nameof(Api)}/[controller]")]
@@ -38,8 +41,8 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         /// 单个账号
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{uId:guid}")]
-        public async Task<IActionResult> Single(Guid uId)
+        [HttpGet]
+        public async Task<IActionResult> Single([FromQuery] Guid uId)
         {
             var account = await _admin.FirstOrDefaultAsync(x => x.UId == uId);
 
@@ -53,8 +56,8 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> Search([FromQuery] AccountPagedReq req)
+        [HttpGet("paged")]
+        public async Task<IActionResult> Paged([FromQuery] AccountPagedReq req)
         {
             var list = await _admin.QueryPagedAsync(req);
 

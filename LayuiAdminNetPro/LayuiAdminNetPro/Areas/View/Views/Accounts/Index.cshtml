@@ -62,6 +62,9 @@
                     <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="psd" title="修改密码">
                           <i class="layui-icon layui-icon-key"></i>
                     </div>
+                        <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="roles" title="管理角色">
+                          <i class="layui-icon layui-icon-user"></i>
+                    </div>
                 </script>
 
                 <!--table-->
@@ -163,7 +166,7 @@
                     }
                 }
                 , {
-                    fixed: 'right', minWidth: 100, title: '操作', toolbar: "#cell-operation"
+                    fixed: 'right', minWidth: 142, title: '操作', toolbar: "#cell-operation"
                 }
             ]]
             , response: {
@@ -315,7 +318,7 @@
                     })
                     break;
                 case 'psd':
-                    console.log(data, data.uId)
+                    //console.log(data, data.uId)
                     layer.open({
                         title: "修改密码",
                         type: 2,
@@ -328,7 +331,7 @@
                                 , submitFilter = 'LAY-account-psd-submit'
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
-                            console.log(formData)
+                            //console.log(formData)
                             //2.json schema 校验表单数据
                             if (formData != {}) {
                                 let schemas = jsonSchemas.getSchema("account-psd")
@@ -356,6 +359,18 @@
                                     updateAccount(param, index);
                                 });
                             }
+                        }
+                    })
+                    break;
+                case 'roles':
+                    layer.open({
+                        title: "管理角色",
+                        type: 2,
+                        area: ['480px', '268px'],
+                        content: `roles?uId=${data.uId}`,
+                        btn: ["提交", '取消'],
+                        yes: function (index, layero) {
+                          
                         }
                     })
             }

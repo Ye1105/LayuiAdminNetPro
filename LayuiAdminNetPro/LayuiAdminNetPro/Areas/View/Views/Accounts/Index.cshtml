@@ -373,7 +373,7 @@
                                 , submitFilter = 'form-roles-filter'
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
-                      
+                            
                             let rIds=Object.keys(formData).filter(x=>x!='uId');
 
                             let data = { uId: formData.uId, rIds }

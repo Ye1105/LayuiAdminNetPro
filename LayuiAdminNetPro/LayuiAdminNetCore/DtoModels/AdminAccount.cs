@@ -70,7 +70,7 @@ namespace LayuiAdminNetCore.DtoModels
         public string? Status { get; set; }
 
         [NotMapped]
-        [JsonIgnore]
+        //[JsonIgnore]
         [JsonProperty("adminAccountRoles")]
         public IList<AdminAccountRole>? AdminAccountRoles { get; set; } = new List<AdminAccountRole>();
 

@@ -26,6 +26,7 @@ namespace LayuiAdminNetCore.AdminModels
         /// 账号表
         /// </summary>
         [NotMapped]
+        [JsonIgnore]
         [JsonProperty("adminAccount")]
         public AdminAccount? AdminAccount { get; set; }
 
@@ -33,6 +34,7 @@ namespace LayuiAdminNetCore.AdminModels
         /// 角色详情
         /// </summary>
         [NotMapped]
+        [JsonIgnore]
         [JsonProperty("adminRoleInfo")]
         public AdminRoleInfo? AdminRoleInfo { get; set; }
     }

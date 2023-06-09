@@ -196,11 +196,10 @@
             return false; // 阻止默认 form 跳转
         })
 
-          // 单元格编辑后的事件
-          //table.on('edit(ID-table-account)', function(obj){
-          //  console.log(obj.field, obj.oldValue, obj.value, obj.data)
-          //})
-
+        // 单元格编辑后的事件
+        //table.on('edit(ID-table-account)', function(obj){
+        //  console.log(obj.field, obj.oldValue, obj.value, obj.data)
+        //})
 
         //工具栏事件
         table.on('toolbar(ID-table-account)', function (obj) {
@@ -277,7 +276,6 @@
                     break;
             }
         })
-
 
         //【编辑账号】触发单元格工具事件
         table.on('tool(ID-table-account)', function (obj) {
@@ -370,12 +368,52 @@
                         content: `roles?uId=${data.uId}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
-                          
+                            let iframeWindow = window['layui-layer-iframe' + index]
+                                //, submitID = 'LAY-account-create'
+                                , submitFilter = 'form-roles-filter'
+                            //1.获取表单数据
+                            let formData = iframeWindow.layui.form.val(submitFilter)
+                      
+                            let rIds=Object.keys(formData).filter(x=>x!='uId');
+
+                            let data = { uId: formData.uId, rIds }
+
+                            editRoles(data, index);
                         }
                     })
             }
         })
 
+        /**
+        * bref fetch 修改用户角色
+        * param data json格式的表单参数
+        * param layerIndex 弹窗的 index
+        */
+        async function editRoles(data, layerIndex) {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/roles`,
+                {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        layer.close(layerIndex); //关闭弹层
+                        layer.msg("修改角色成功");
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
 
         /**
         * bref fetch 修改账号状态
@@ -409,8 +447,6 @@
                 })
         }
 
-
-
         /**
         * bref fetch 修改账号
         * param data json格式的表单参数
@@ -442,7 +478,6 @@
                     console.log('parsing failed', ex);
                 })
         }
-
 
         /**
          * bref fetch 创建账号

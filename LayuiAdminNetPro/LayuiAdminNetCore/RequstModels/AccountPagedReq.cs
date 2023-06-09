@@ -1,12 +1,10 @@
-﻿using LayuiAdminNetCore.AdminModels;
-using LayuiAdminNetCore.Pages;
+﻿using LayuiAdminNetCore.Pages;
 using Newtonsoft.Json;
 
 namespace LayuiAdminNetCore.RequstModels
 {
     public class AccountPagedReq : QueryParameters
     {
-
         /// <summary>
         /// 结束时间
         /// </summary>

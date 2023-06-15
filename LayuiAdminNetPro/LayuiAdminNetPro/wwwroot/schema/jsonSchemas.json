@@ -144,9 +144,7 @@
       },
       "password": {
         "type": "string",
-        "title": "密码",
-        "minLength": 6,
-        "maxLength": 12
+        "title": "密码"
       }
     },
     "required": [

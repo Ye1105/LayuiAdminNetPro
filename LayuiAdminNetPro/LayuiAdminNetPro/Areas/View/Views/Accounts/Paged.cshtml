@@ -245,7 +245,7 @@
                         title: "添加账号",
                         type: 2,
                         area: ['480px', '455px'],
-                        content: 'accounts/create',
+                        content: '/accounts/create',
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
@@ -288,7 +288,7 @@
                         title: "编辑账号",
                         type: 2,
                         area: ['480px', '458px'],
-                        content: `accounts/edit?${params}`,
+                        content: `/accounts/edit?${params}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
@@ -321,7 +321,7 @@
                         title: "修改密码",
                         type: 2,
                         area: ['480px', '268px'],
-                        content: `accounts/psd?uId=${data.uId}`,
+                        content: `/accounts/psd?uId=${data.uId}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
@@ -365,7 +365,7 @@
                         title: "管理角色",
                         type: 2,
                         area: ['480px', '268px'],
-                        content: `roles?uId=${data.uId}`,
+                        content: `/roles?uId=${data.uId}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             let iframeWindow = window['layui-layer-iframe' + index]
@@ -421,6 +421,7 @@
         * param layerIndex 弹窗的 index
         */
         async function updateAccount(data, layerIndex) {
+            console.log(data)
             let loadIndex = layer.load(0);
             await fetch(`/api/accounts`,
                 {
@@ -438,7 +439,7 @@
                         layer.close(layerIndex); //关闭弹层
                         layer.msg("操作账号成功");
                     } else {
-                        layer.msg(result.uimsg);
+                        layer.msg(result.uimsg,result.msg);
                     }
                 })
                 .catch(function (ex) {

@@ -41,6 +41,12 @@ namespace LayuiAdminNetService.Services
             return await _base.BatchTransactionAsync(dic);
         }
 
+        public async Task<int> DelRangeAsync(Guid uId)
+        {
+            var preList = await _base.QueryAsync<AdminAccountRole>(x => x.UId == uId, isTrack: true, null);
+            return await _base.DelRangeAsync(preList);
+        }
+
         public async Task<AdminAccountRole?> FirstOrDefaultAsync(Expression<Func<AdminAccountRole, bool>> expression, bool isTrack = true)
         {
             var mdoel = await _base.FirstOrDefaultAsync(expression, isTrack);

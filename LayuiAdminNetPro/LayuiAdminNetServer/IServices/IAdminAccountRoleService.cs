@@ -28,5 +28,13 @@ namespace Manager.Admin.Server.IServices
         /// <param name="uId"></param>
         /// <returns></returns>
         Task<int> AddRangeAsync(IEnumerable<AdminAccountRole> collection, Guid uId);
+
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="uId"></param>
+        /// <returns></returns>
+        Task<int> DelRangeAsync(Guid uId);
     }
 }

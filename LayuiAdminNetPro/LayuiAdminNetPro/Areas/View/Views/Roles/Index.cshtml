@@ -53,8 +53,10 @@
                         let { account, roleInfos } = result.data;
                         if (roleInfos && roleInfos.length > 0) {
                             let renderHtml = ``;
-                            let roleGroup = account.adminAccountRoles.map(x => x.uId);
+                            let roleGroup = account.adminAccountRoles.map(x => x.rId);
+                            console.log(roleGroup)
                             for (let i = 0; i < roleInfos.length; i++) {
+                                console.log(roleInfos[i].rId)
                                 if (roleGroup.includes(roleInfos[i].rId)) {                  
                                     renderHtml += `<input type="checkbox"  name="${roleInfos[i].rId}"  title="${roleInfos[i].name}" checked>`
                                 }else

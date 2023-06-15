@@ -73,6 +73,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
 
             if (req.RIds.Count > 0)
             {
+                //删除原有的用户角色对应关系，然后再新增
                 var list = await _roleInfo.QueryAsync(x => req.RIds.Contains(x.RId), false);
                 if (list.Count != req.RIds.Count)
                 {
@@ -88,15 +89,15 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                         UId = req.UId
                     });
                 }
-
-
+                var res = await _accrole.AddRangeAsync(accountRoles, req.UId);
+                return res > 0 ? Ok(Success()) : Ok(Fail());
             }
-
-
-
-
-
-            return Ok(Success());
+            else
+            {
+                //删除用户角色对应关系
+                var res = await _accrole.DelRangeAsync(req.UId);
+                return res > 0 ? Ok(Success()) : Ok(Fail());
+            }
         }
     }
 }

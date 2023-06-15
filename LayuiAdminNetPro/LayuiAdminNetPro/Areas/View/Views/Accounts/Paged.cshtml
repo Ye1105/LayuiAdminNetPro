@@ -98,7 +98,7 @@
         //表单渲染
         table.render({
             elem: '#ID-table-account'
-            , url: '/api/accounts/paged' // 此处为静态模拟数据，实际使用时需换成真实接口
+            , url: '/api/accounts/paged' // API接口
             , request: {
                 pageName: 'pageIndex',  //替换分页的字段名称，后端可识别
                 limitName: 'pageSize'
@@ -111,10 +111,10 @@
             , page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'] //自定义分页布局
                 ,prev:"上一页"
-                , next: "下一页"
+                ,next: "下一页"
                 //,curr: 5 //设定初始在第 5 页
                 //,groups: 1 //只显示 1 个连续页码
-                , limit: 10   //页面数量限制
+                ,limit: 10   //页面数量限制
             }
             , skin: 'default' // 表格风格
             , even: true   //开启偶数行背景色

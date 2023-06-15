@@ -13,5 +13,10 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
             var param = GetQueryString(HttpContext);
             return View(param);
         }
+
+        public override IActionResult Paged()
+        {
+            return View();
+        }
     }
 }

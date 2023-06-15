@@ -375,9 +375,13 @@
                             let formData = iframeWindow.layui.form.val(submitFilter)
                             
                             let formKey=Object.keys(formData);
-                            console.log(formKey)
+                          
                             data = new FormData();
-                            data.append("rIds", formKey)
+                          
+                            //数组请求出现bug?
+                            data.append("rIds",["fc081060-dda5-4dec-8f62-df2845c57100", "11433cc1-098a-4463-8e6f-8f85942e7525"])
+                            
+                            console.log(data)
 
                             editRoles(data, index);
                         }

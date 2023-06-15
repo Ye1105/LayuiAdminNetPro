@@ -4,14 +4,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
-    [Route("roles")]
+    [Route("roleinfos")]
     [Authorize(Policy = Policys.Admin)]
-    public class RolesController : ViewController
+    public class RoleInfosController : ViewController
     {
-        public override IActionResult Index()
+        public override IActionResult Paged()
         {
-            var param = GetQueryString(HttpContext);
-            return View(param);
+            return View();
+        }
+
+        public override IActionResult Create()
+        {
+            return View();
         }
     }
 }

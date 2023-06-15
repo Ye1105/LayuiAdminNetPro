@@ -6,7 +6,7 @@ namespace LayuiAdminNetCore.RequstModels
     public class AccountPagedReq : QueryParameters
     {
         /// <summary>
-        /// 结束时间
+        /// 账号id
         /// </summary>
         [JsonProperty("uId")]
         public Guid? UId { get; set; }

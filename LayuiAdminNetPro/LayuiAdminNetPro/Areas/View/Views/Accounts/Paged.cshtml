@@ -374,9 +374,10 @@
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
                             
-                            let rIds=Object.keys(formData).filter(x=>x!='uId');
-
-                            let data = { uId: formData.uId, rIds }
+                            let formKey=Object.keys(formData);
+                            console.log(formKey)
+                            data = new FormData();
+                            data.append("rIds", formKey)
 
                             editRoles(data, index);
                         }
@@ -394,10 +395,10 @@
             await fetch(`/api/roles`,
                 {
                     method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
+                    //headers: {
+                    //    'Content-Type': 'application/json'
+                    //},
+                    body: data
                 })
                 .then(response => response.json())
                 .then(result => {

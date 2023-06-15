@@ -59,6 +59,7 @@ namespace LayuiAdminNetGate.Handler
                          * 否则 获取所有用户的角色和菜单列表 ， 校验用户是否有当前路由的权限
                          *  
                          */
+
                         var uId = Guid.Parse(dicClaims["uId"]);
                         var account = await _roleModulePermissionService.AccountFirstOrDefaultAsync(x => x.UId == uId, isTrack: false);
                         if (account is null || account.Status is not (sbyte)Status.ENABLE)

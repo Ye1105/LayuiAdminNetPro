@@ -176,5 +176,16 @@
       "uId",
       "password"
     ]
+  },
+  "role-create": {
+    "type": "object",
+    "description": "角色 create 参数规则",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "角色名",
+        "minLength": 1
+      }
+    }
   }
 }

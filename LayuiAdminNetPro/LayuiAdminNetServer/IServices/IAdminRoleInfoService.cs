@@ -1,4 +1,6 @@
 ﻿using LayuiAdminNetCore.AdminModels;
+using LayuiAdminNetCore.Pages;
+using LayuiAdminNetCore.RequstModels;
 using System.Linq.Expressions;
 
 namespace LayuiAdminNetService.IServices
@@ -12,6 +14,13 @@ namespace LayuiAdminNetService.IServices
         /// <param name="isTrack"></param>
         /// <returns></returns>
         Task<AdminRoleInfo?> FirstOrDefaultAsync(Expression<Func<AdminRoleInfo, bool>> expression, bool isTrack = true);
+
+        /// <summary>
+        /// 角色信息分页列表
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        Task<PagedList<AdminRoleInfo>> QueryPagedAsync(RoleInfoPagedReq req);
 
         /// <summary>
         /// GetListByAsync

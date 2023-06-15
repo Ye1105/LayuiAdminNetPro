@@ -7,6 +7,7 @@ using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Manager.Admin.Server.IServices;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
@@ -33,6 +34,8 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             _mapper = mapper;
         }
 
+        #region Get
+
         /// <summary>
         /// 用户角色关系表
         /// </summary>
@@ -56,48 +59,55 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return Ok(Success(new { account = dtoAccount, roleInfos }));
         }
 
+        #endregion
+
+        #region Create
+
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] RoleCreateReq req)
+        public async Task<IActionResult> Create([FromForm] List<Guid> rIds)
         {
             /*
              * 1.判断 uId，rIds 是否都是有效 guid
              * 2.删除原有用户角色
              * 3.添加新用户角色
              */
+            var uId = base.UId;
 
-            var account = await _admin.FirstOrDefaultAsync(u => u.UId == req.UId);
+            var account = await _admin.FirstOrDefaultAsync(u => u.UId == uId);
             if (account == null)
             {
                 return Ok(Fail("用户不存在"));
             }
 
-            if (req.RIds.Count > 0)
+            if (rIds.Count > 0)
             {
                 //删除原有的用户角色对应关系，然后再新增
-                var list = await _roleInfo.QueryAsync(x => req.RIds.Contains(x.RId), false);
-                if (list.Count != req.RIds.Count)
+                var list = await _roleInfo.QueryAsync(x => rIds.Contains(x.RId), false);
+                if (list.Count != rIds.Count)
                 {
                     return Ok(Fail("rIds 列表参数不正确"));
                 }
 
                 var accountRoles = new List<AdminAccountRole>();
-                for (int i = 0; i < req.RIds.Count; i++)
+                for (int i = 0; i < rIds.Count; i++)
                 {
                     accountRoles.Add(new AdminAccountRole()
                     {
-                        RId = req.RIds[i],
-                        UId = req.UId
+                        RId = rIds[i],
+                        UId = uId
                     });
                 }
-                var res = await _accrole.AddRangeAsync(accountRoles, req.UId);
+                var res = await _accrole.AddRangeAsync(accountRoles, uId);
                 return res > 0 ? Ok(Success()) : Ok(Fail());
             }
             else
             {
                 //删除用户角色对应关系
-                var res = await _accrole.DelRangeAsync(req.UId);
+                var res = await _accrole.DelRangeAsync(uId);
                 return res > 0 ? Ok(Success()) : Ok(Fail());
             }
         }
+
+        #endregion
     }
 }

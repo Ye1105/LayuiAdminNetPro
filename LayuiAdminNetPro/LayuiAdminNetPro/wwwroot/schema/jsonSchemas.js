@@ -37,6 +37,7 @@ var jsonSchemas = {
                 .then((response) => response.json())
                 .then((json) => {
                     if (json != 'undefined' && json != "") {
+                        console.log("创建schema")
                         localStorage.removeItem("JsonSchemas")
                         localStorage.setItem("JsonSchemas", JSON.stringify(json))
                     }

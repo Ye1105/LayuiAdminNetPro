@@ -33,10 +33,11 @@ var jsonSchemas = {
     setSchemas: function () {
         try {
             //添加 | 更新 schemas
-            fetch('./schema/JsonSchemas.json', { mode: 'cors' })
+            fetch('/schema/JsonSchemas.json', { mode: 'cors' })
                 .then((response) => response.json())
                 .then((json) => {
                     if (json != 'undefined' && json != "") {
+                        console.log("创建schema")
                         localStorage.removeItem("JsonSchemas")
                         localStorage.setItem("JsonSchemas", JSON.stringify(json))
                     }

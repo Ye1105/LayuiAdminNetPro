@@ -1,11 +1,60 @@
 ﻿using CodeHelper.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
     public class BaseController : Controller
     {
+        //https://learn.microsoft.com/zh-cn/dotnet/csharp/properties 属性用法
+        /// <summary>
+        /// Attribute => 获取当前登陆用户的信息
+        /// </summary>
+        protected Dictionary<string, string>? UserClaims
+        {
+            get
+            {
+                var dicClaims = new Dictionary<string, string>();
+                var claims = HttpContext.User?.Claims.AsEnumerable();
+                if (claims is not null && claims.Any())
+                {
+                    foreach (var item in claims?.AsEnumerable() ?? new List<Claim>())
+                    {
+                        var k = item.Type;
+                        var v = item.Value;
+                        dicClaims[k] = v;
+                    }
+                }
+                return dicClaims;
+            }
+        }
+
+        /// <summary>
+        /// Attribute => 获取当前登陆用户 uId
+        /// </summary>
+        protected Guid UId
+        {
+            get
+            {
+                var claims = HttpContext.User?.Claims.AsEnumerable();
+                if (claims is not null && claims.Any())
+                {
+                    foreach (var item in claims?.AsEnumerable() ?? new List<Claim>())
+                    {
+                        if (item.Type == "uId")
+                        {
+                            return Guid.Parse(item.Value);
+                        }
+                    }
+                    return Guid.Empty;
+                }
+                else
+                    return Guid.Empty;
+            }
+        }
+
         #region Requst
 
         /// <summary>

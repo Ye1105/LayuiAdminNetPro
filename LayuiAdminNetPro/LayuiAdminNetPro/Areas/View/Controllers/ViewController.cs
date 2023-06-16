@@ -7,7 +7,7 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
     public class ViewController : Controller
     {
         /// <summary>
-        ///  create a view to list function
+        ///  (list)普通数据 视图，
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -17,7 +17,18 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         }
 
         /// <summary>
-        /// create a view to add function
+        /// 分页数据 视图
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [HttpGet("paged")]
+        public virtual IActionResult Paged()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 创建功能 视图
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
@@ -28,7 +39,7 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         }
 
         /// <summary>
-        /// create a view to edit function
+        /// 编辑功能 视图
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
@@ -39,7 +50,7 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         }
 
         /// <summary>
-        /// create a view to delete function
+        /// 删除功能 视图
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>

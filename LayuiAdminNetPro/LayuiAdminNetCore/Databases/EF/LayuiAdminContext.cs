@@ -1,7 +1,5 @@
 ﻿using LayuiAdminNetCore.AdminModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.Logging;
 
 namespace LayuiAdminNetCore.Database.EF
 {

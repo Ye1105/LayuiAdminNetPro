@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using LayuiAdminNetCore.AdminModels;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LayuiAdminNetCore.DtoModels
 {
@@ -66,5 +68,15 @@ namespace LayuiAdminNetCore.DtoModels
         /// </summary>
         [JsonProperty("status")]
         public string? Status { get; set; }
+
+        [NotMapped]
+        //[JsonIgnore]
+        [JsonProperty("adminAccountRoles")]
+        public IList<AdminAccountRole>? AdminAccountRoles { get; set; } = new List<AdminAccountRole>();
+
+        [NotMapped]
+        [JsonIgnore]
+        [JsonProperty("adminSystemLog")]
+        public AdminSystemLog? AdminSystemLog { get; set; }
     }
 }

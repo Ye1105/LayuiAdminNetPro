@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
-    [Route("accounts")]
+    [Route("roleinfos")]
     [Authorize(Policy = Policys.Admin)]
-    public class AccountsController : ViewController
+    public class RoleInfosController : ViewController
     {
         public override IActionResult Paged()
         {
@@ -16,19 +16,6 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         public override IActionResult Create()
         {
             return View();
-        }
-
-        public override IActionResult Edit()
-        {
-            var param = GetQueryString(HttpContext);
-            return View(param);
-        }
-
-        [HttpGet("psd")]
-        public IActionResult Psd()
-        {
-            var param = GetQueryString(HttpContext);
-            return View(param);
         }
     }
 }

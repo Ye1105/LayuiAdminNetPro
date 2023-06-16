@@ -83,3 +83,9 @@
 ## :rainbow:免责说明
 
 + `Layuiadmin`  相关代码版权归 [Layui](https://www.ilayuis.com/) 官方所有；除此之外，其他代码来自开源项目或作者原创；请尊重版权、开源和原创。
+
+## 💕联系作者
+
+> 对项目有疑问、建议或期待的朋友可以加我好友。
+
+- **wechat** ：`yejiancong1105`

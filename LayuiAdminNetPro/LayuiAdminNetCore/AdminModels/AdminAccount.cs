@@ -69,7 +69,7 @@ namespace LayuiAdminNetCore.AdminModels
         public sbyte Status { get; set; } = (sbyte)Enums.Status.ENABLE;
 
         [NotMapped]
-        [JsonIgnore]
+        //[JsonIgnore]
         [JsonProperty("adminAccountRoles")]
         public IList<AdminAccountRole>? AdminAccountRoles { get; set; } = new List<AdminAccountRole>();
 

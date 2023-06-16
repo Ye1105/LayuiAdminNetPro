@@ -1,0 +1,81 @@
+﻿@model Dictionary<string,string>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form layui-form-pane form" lay-filter="form-roles-filter" id="form-roles">
+                    <input type="text" name="uId" value=@Model["uId"] class="layui-input" style="visibility:hidden;height:0px">
+                    <div class="layui-form-item" id="role-group" style="min-height:92px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(function () {
+
+        var uId = `@(Model["uId"])`;
+        var form = layui.form
+            , $ = layui.$;
+
+        //拉取数据
+        getRoles(uId)
+
+        /**
+        * bref fetch 拉取角色管理界面
+        */
+        async function getRoles(uId) {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/roles?uid=${uId}`)
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {     
+                        //解构赋值
+                        let { account, roleInfos } = result.data;
+                        if (roleInfos && roleInfos.length > 0) {
+                            let renderHtml = ``;
+                            let roleGroup = account.adminAccountRoles.map(x => x.rId);
+                            console.log(roleGroup)
+                            for (let i = 0; i < roleInfos.length; i++) {
+                                console.log(roleInfos[i].rId)
+                                if (roleGroup.includes(roleInfos[i].rId)) {                  
+                                    renderHtml += `<input type="checkbox"  name="${roleInfos[i].rId}"  title="${roleInfos[i].name}" checked>`
+                                }else
+                                    renderHtml += `<input type="checkbox"  name="${roleInfos[i].rId}"  title="${roleInfos[i].name}">`
+                            };
+                            $("#role-group").html(renderHtml);
+                        }
+                        form.render();
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
+
+    })
+
+
+</script>

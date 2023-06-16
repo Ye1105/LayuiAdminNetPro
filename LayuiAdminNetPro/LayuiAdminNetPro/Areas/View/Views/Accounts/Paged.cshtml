@@ -62,6 +62,9 @@
                     <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="psd" title="修改密码">
                           <i class="layui-icon layui-icon-key"></i>
                     </div>
+                        <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="roles" title="管理角色">
+                          <i class="layui-icon layui-icon-user"></i>
+                    </div>
                 </script>
 
                 <!--table-->
@@ -92,11 +95,10 @@
             form = layui.form,
             layer = layui.layer;
 
-
         //表单渲染
         table.render({
             elem: '#ID-table-account'
-            , url: '/api/accounts' // 此处为静态模拟数据，实际使用时需换成真实接口
+            , url: '/api/accounts/paged' // API接口
             , request: {
                 pageName: 'pageIndex',  //替换分页的字段名称，后端可识别
                 limitName: 'pageSize'
@@ -107,10 +109,12 @@
                 orderby: "created desc"   //默认排序
             }
             , page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
-                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'] //自定义分页布局
+                ,prev:"上一页"
+                ,next: "下一页"
                 //,curr: 5 //设定初始在第 5 页
-                , groups: 1 //只显示 1 个连续页码
-                , limit: 10   //页面数量限制
+                //,groups: 1 //只显示 1 个连续页码
+                ,limit: 10   //页面数量限制
             }
             , skin: 'default' // 表格风格
             , even: true   //开启偶数行背景色
@@ -124,7 +128,7 @@
                 { type: 'checkbox', fixed: 'left' }
                 , { field: 'uId', title: 'ID' }
                 , { field: 'name', title: '用户名' }
-                , { field: 'phone', title: '手机号' }
+                , { field: 'phone', title: '手机号' } //, edit: 'editable'
                 , {
                     field: 'sex', title: '性别', width: 60, templet: function (d) {
                         if (d.sex === '男性') {
@@ -136,7 +140,7 @@
                         }
                     }
                 }
-                , { field: 'jobStatus', title: '工作状态' }
+                , { field: 'jobStatus', title: '工作状态'}
                 , { field: 'lastLoginIp', title: '最后登录IP' }
                 , {
                     field: 'lastLoginTime', title: '最后登录时间', templet: function (d) {
@@ -162,7 +166,7 @@
                     }
                 }
                 , {
-                    fixed: 'right', minWidth: 100, title: '操作', toolbar: "#cell-operation"
+                    fixed: 'right', minWidth: 142, title: '操作', toolbar: "#cell-operation"
                 }
             ]]
             , response: {
@@ -192,6 +196,10 @@
             return false; // 阻止默认 form 跳转
         })
 
+        // 单元格编辑后的事件
+        //table.on('edit(ID-table-account)', function(obj){
+        //  console.log(obj.field, obj.oldValue, obj.value, obj.data)
+        //})
 
         //工具栏事件
         table.on('toolbar(ID-table-account)', function (obj) {
@@ -237,7 +245,7 @@
                         title: "添加账号",
                         type: 2,
                         area: ['480px', '455px'],
-                        content: 'accounts/create',
+                        content: '/accounts/create',
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
@@ -269,7 +277,6 @@
             }
         })
 
-
         //【编辑账号】触发单元格工具事件
         table.on('tool(ID-table-account)', function (obj) {
             var data = obj.data; // 获取当前表格属性配置项
@@ -281,7 +288,7 @@
                         title: "编辑账号",
                         type: 2,
                         area: ['480px', '458px'],
-                        content: `accounts/edit?${params}`,
+                        content: `/accounts/edit?${params}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
@@ -309,12 +316,12 @@
                     })
                     break;
                 case 'psd':
-                    console.log(data, data.uId)
+                    //console.log(data, data.uId)
                     layer.open({
                         title: "修改密码",
                         type: 2,
                         area: ['480px', '268px'],
-                        content: `accounts/psd?uId=${data.uId}`,
+                        content: `/accounts/psd?uId=${data.uId}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
@@ -322,7 +329,7 @@
                                 , submitFilter = 'LAY-account-psd-submit'
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
-                            console.log(formData)
+                            //console.log(formData)
                             //2.json schema 校验表单数据
                             if (formData != {}) {
                                 let schemas = jsonSchemas.getSchema("account-psd")
@@ -352,9 +359,63 @@
                             }
                         }
                     })
+                    break;
+                case 'roles':
+                    layer.open({
+                        title: "管理角色",
+                        type: 2,
+                        area: ['480px', '268px'],
+                        content: `/roles?uId=${data.uId}`,
+                        btn: ["提交", '取消'],
+                        yes: function (index, layero) {
+                            let iframeWindow = window['layui-layer-iframe' + index]
+                                //, submitID = 'LAY-account-create'
+                                , submitFilter = 'form-roles-filter'
+                            //1.获取表单数据
+                            let formData = iframeWindow.layui.form.val(submitFilter)
+                            
+                            let formKey=Object.keys(formData).filter(x=>x!='uId');
+                          
+                            var params = { "rIds": formKey, "uId": formData["uId"] }
+
+                            console.log(params)
+
+                            editRoles(params, index);
+                        }
+                    })
             }
         })
 
+        /**
+        * bref fetch 修改用户角色
+        * param data json格式的表单参数
+        * param layerIndex 弹窗的 index
+        */
+        async function editRoles(data, layerIndex) {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/roles`,
+                {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        layer.close(layerIndex); //关闭弹层
+                        layer.msg("修改角色成功");
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
 
         /**
         * bref fetch 修改账号状态
@@ -362,6 +423,7 @@
         * param layerIndex 弹窗的 index
         */
         async function updateAccount(data, layerIndex) {
+            console.log(data)
             let loadIndex = layer.load(0);
             await fetch(`/api/accounts`,
                 {
@@ -379,7 +441,7 @@
                         layer.close(layerIndex); //关闭弹层
                         layer.msg("操作账号成功");
                     } else {
-                        layer.msg(result.uimsg);
+                        layer.msg(result.uimsg,result.msg);
                     }
                 })
                 .catch(function (ex) {
@@ -387,8 +449,6 @@
                     console.log('parsing failed', ex);
                 })
         }
-
-
 
         /**
         * bref fetch 修改账号
@@ -421,7 +481,6 @@
                     console.log('parsing failed', ex);
                 })
         }
-
 
         /**
          * bref fetch 创建账号

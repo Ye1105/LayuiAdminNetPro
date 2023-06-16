@@ -64,46 +64,45 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         #region Create
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] List<Guid> rIds)
+        public async Task<IActionResult> Create([FromBody] RoleCreateReq req)
         {
             /*
              * 1.判断 uId，rIds 是否都是有效 guid
              * 2.删除原有用户角色
              * 3.添加新用户角色
              */
-            var uId = base.UId;
 
-            var account = await _admin.FirstOrDefaultAsync(u => u.UId == uId);
+            var account = await _admin.FirstOrDefaultAsync(u => u.UId == req.UId);
             if (account == null)
             {
                 return Ok(Fail("用户不存在"));
             }
 
-            if (rIds.Count > 0)
+            if (req.RIds.Count > 0)
             {
                 //删除原有的用户角色对应关系，然后再新增
-                var list = await _roleInfo.QueryAsync(x => rIds.Contains(x.RId), false);
-                if (list.Count != rIds.Count)
+                var list = await _roleInfo.QueryAsync(x => req.RIds.Contains(x.RId), false);
+                if (list.Count != req.RIds.Count)
                 {
                     return Ok(Fail("rIds 列表参数不正确"));
                 }
 
                 var accountRoles = new List<AdminAccountRole>();
-                for (int i = 0; i < rIds.Count; i++)
+                for (int i = 0; i < req.RIds.Count; i++)
                 {
                     accountRoles.Add(new AdminAccountRole()
                     {
-                        RId = rIds[i],
-                        UId = uId
+                        RId = req.RIds[i],
+                        UId = req.UId
                     });
                 }
-                var res = await _accrole.AddRangeAsync(accountRoles, uId);
+                var res = await _accrole.AddRangeAsync(accountRoles, req.UId);
                 return res > 0 ? Ok(Success()) : Ok(Fail());
             }
             else
             {
                 //删除用户角色对应关系
-                var res = await _accrole.DelRangeAsync(uId);
+                var res = await _accrole.DelRangeAsync(req.UId);
                 return res > 0 ? Ok(Success()) : Ok(Fail());
             }
         }

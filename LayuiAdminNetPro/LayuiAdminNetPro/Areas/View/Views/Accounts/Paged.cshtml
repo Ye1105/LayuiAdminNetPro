@@ -374,16 +374,13 @@
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
                             
-                            let formKey=Object.keys(formData);
+                            let formKey=Object.keys(formData).filter(x=>x!='uId');
                           
-                            data = new FormData();
-                          
-                            //数组请求出现bug?
-                            data.append("rIds",["fc081060-dda5-4dec-8f62-df2845c57100", "11433cc1-098a-4463-8e6f-8f85942e7525"])
-                            
-                            console.log(data)
+                            var params = { "rIds": formKey, "uId": formData["uId"] }
 
-                            editRoles(data, index);
+                            console.log(params)
+
+                            editRoles(params, index);
                         }
                     })
             }
@@ -399,10 +396,10 @@
             await fetch(`/api/roles`,
                 {
                     method: 'post',
-                    //headers: {
-                    //    'Content-Type': 'application/json'
-                    //},
-                    body: data
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
                 })
                 .then(response => response.json())
                 .then(result => {

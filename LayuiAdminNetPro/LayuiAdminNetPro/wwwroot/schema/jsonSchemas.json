@@ -179,13 +179,17 @@
   },
   "role-create": {
     "type": "object",
-    "description": "角色 create 参数规则",
+    "description": "role创建规则：长度大于一且为中文",
     "properties": {
       "name": {
         "type": "string",
         "title": "角色名",
-        "minLength": 1
+        "minLength": 1,
+        "pattern": "^[\\u4e00-\\u9fa5]*$"
       }
-    }
+    },
+    "required": [
+      "name"
+    ]
   }
 }

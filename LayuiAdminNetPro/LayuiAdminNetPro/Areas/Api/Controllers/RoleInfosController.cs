@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
+using System.Text.RegularExpressions;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -69,31 +70,29 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         #region Create
 
         /// <summary>
-        /// 创建账号
+        /// 创建角色
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] RoleInfoCreateReq req)
+        public async Task<IActionResult> Create([FromForm] string name)
         {
             /*
              * 1.参数校验【合法性校验】
              * 2.角色名称是否存在【重复性校验】
              * 3.赋值 | 创建
              */
-            var claims = base.UId;
-
 
             var jsonSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "role-create");
 
             var schema = JSchema.Parse(jsonSchema);
 
-            var validate = JObject.Parse(JsonConvert.SerializeObject(req)).IsValid(schema, out IList<string> errorMessages);
+            var validate = JObject.Parse(JsonConvert.SerializeObject(new { name })).IsValid(schema, out IList<string> errorMessages);
             if (!validate)
             {
                 return Ok(Fail(errorMessages, "参数错误"));
             }
 
-            var exsit = await _roleInfo.FirstOrDefaultAsync(x => x.Name == req.Name);
+            var exsit = await _roleInfo.FirstOrDefaultAsync(x => x.Name == name.Trim());
             if (exsit != null)
             {
                 return Ok(Fail(errorMessages, "角色名称已存在"));
@@ -102,7 +101,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             var roleInfo = new AdminRoleInfo()
             {
                 RId = Guid.NewGuid(),
-                Name = req.Name,
+                Name = name,
             };
 
             var res = await _roleInfo.AddAsync(roleInfo);

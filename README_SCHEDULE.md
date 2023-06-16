@@ -1,19 +1,9 @@
-<!--
- * @Author: 15868707168@163.com 15868707168@163.com
- * @Date: 2023-05-22 11:20:41
- * @LastEditors: 15868707168@163.com 15868707168@163.com
- * @LastEditTime: 2023-06-02 11:59:39
- * @FilePath: \undefinedd:\LayuiAdminNetPro\README_SCHEDULE.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<h1 align="center" >🐌 LayuiAdminNetPro </h1>  
-
-<div align="center"> 
-<p> 更新日志 </p>
-</div>
-
-
 ## ✨V 0.0.1    
+
++ :tada: ` 2023-06-16`
+  
+  + 用户管理模块完成
+  + 角色管理模块完成
 
 + :tada: ` 2023-06-01 ~ 2023-06-02`
   

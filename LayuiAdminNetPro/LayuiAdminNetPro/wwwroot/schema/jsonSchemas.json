@@ -179,16 +179,36 @@
   },
   "role-create": {
     "type": "object",
-    "description": "role创建规则：长度大于一且为中文",
+    "description": "role创建规则",
     "properties": {
       "name": {
         "type": "string",
         "title": "角色名",
-        "minLength": 1,
-        "pattern": "^[\\u4e00-\\u9fa5]*$"
+        "minLength": 1
+        //"pattern": "^[\\u4e00-\\u9fa5]*$"
       }
     },
     "required": [
+      "name"
+    ]
+  },
+  "role-edit": {
+    "type": "object",
+    "description": "role编辑规则",
+    "properties": {
+      "rId": {
+        "type": "string",
+        "title": "角色Id"
+      },
+      "name": {
+        "type": "string",
+        "title": "角色名",
+        //"pattern": "^[\\u4e00-\\u9fa5]*$"
+        "minLength": 1
+      }
+    },
+    "required": [
+      "rId",
       "name"
     ]
   }

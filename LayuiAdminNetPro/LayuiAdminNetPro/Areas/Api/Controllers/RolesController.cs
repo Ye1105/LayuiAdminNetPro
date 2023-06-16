@@ -7,7 +7,6 @@ using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
 using Manager.Admin.Server.IServices;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
@@ -59,7 +58,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return Ok(Success(new { account = dtoAccount, roleInfos }));
         }
 
-        #endregion
+        #endregion Get
 
         #region Create
 
@@ -107,6 +106,6 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             }
         }
 
-        #endregion
+        #endregion Create
     }
 }

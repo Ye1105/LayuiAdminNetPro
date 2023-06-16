@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using CodeHelper.Common;
 using LayuiAdminNetCore.AdminModels;
 using LayuiAdminNetCore.AuthorizationModels;
-using LayuiAdminNetCore.Enums;
 using LayuiAdminNetCore.RequstModels;
 using LayuiAdminNetPro.Utilities.Filters;
 using LayuiAdminNetService.IServices;
@@ -12,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
-using System.Text.RegularExpressions;
 
 namespace LayuiAdminNetPro.Areas.Api.Controllers
 {
@@ -64,8 +61,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             return Ok(Success(JsonData));
         }
 
-        #endregion
-
+        #endregion Get
 
         #region Create
 
@@ -109,5 +105,52 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         }
 
         #endregion Create
+
+        #region Put
+
+        /// <summary>
+        /// 编辑账号
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] RoleInfoPutReq req)
+        {
+            /*
+             * 1.参数校验【合法性校验】
+             * 2.账号是否存在【重复性校验】
+             * 3.赋值 | 修改
+             */
+
+            var jsonSchema = await JsonSchemas.GetSchema(_webHostEnvironment, "role-edit");
+
+            var schema = JSchema.Parse(jsonSchema);
+
+            var validate = JObject.Parse(JsonConvert.SerializeObject(req)).IsValid(schema, out IList<string> errorMessages);
+            if (!validate)
+            {
+                return Ok(Fail(errorMessages, "参数错误"));
+            }
+
+            var exsit = await _roleInfo.FirstOrDefaultAsync(x => x.Name == req.Name.Trim() && x.RId != req.RId);
+            if (exsit != null)
+            {
+                return Ok(Fail(errorMessages, "角色名已存在"));
+            }
+
+            var roleInfo = await _roleInfo.FirstOrDefaultAsync(x => x.RId == req.RId, isTrack: true);
+            if (roleInfo != null)
+            {
+                roleInfo.Name = req.Name;
+                var res = await _roleInfo.UpdateAsync(roleInfo);
+                return res > 0 ? Ok(Success()) : Ok(Fail());
+            }
+            else
+            {
+                return Ok(Fail("角色不存在"));
+            }
+        }
+
+        #endregion Put
     }
 }

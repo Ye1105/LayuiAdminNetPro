@@ -4,8 +4,8 @@ using LayuiAdminNetCore.RequstModels;
 
 namespace LayuiAdminNetService.IServices
 {
-    public interface IAdminRoleInfoService : IService<AdminRoleInfo>
+    public interface IAdminRouteService : IService<AdminRoute>
     {
-        Task<PagedList<AdminRoleInfo>> QueryPagedAsync(RoleInfoPagedReq req);
+        Task<PagedList<AdminRoute>> QueryPagedAsync(RoutePagedReq req);
     }
 }

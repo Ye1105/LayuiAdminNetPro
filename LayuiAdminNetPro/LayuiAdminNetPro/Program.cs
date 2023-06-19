@@ -160,6 +160,8 @@ builder.Services
         {
             OnMessageReceived = context =>
             {
+                var res = context;
+
                 context.Token = context.Request.Cookies[".AspNetCore.Token"];
                 return Task.CompletedTask;
             }

@@ -5,10 +5,8 @@ using LayuiAdminNetCore.RequstModels;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using LayuiAdminNetService.IServices;
 using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Ocsp;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Numerics;
 
 namespace LayuiAdminNetService.Services
 {
@@ -115,6 +113,26 @@ namespace LayuiAdminNetService.Services
             var data = await _base.QueryPagedAsync(whereLambda, req.PageIndex, req.PageSize, req.OffSet, isTrack: false, req.OrderBy);
 
             return data;
+        }
+
+        public Task<AdminAccount?> FirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> AddRangeAsync(List<AdminAccount> list, Guid uId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> DelAsync(AdminAccount model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> DelRangeAsync(List<AdminAccount> list)
+        {
+            throw new NotImplementedException();
         }
     }
 }

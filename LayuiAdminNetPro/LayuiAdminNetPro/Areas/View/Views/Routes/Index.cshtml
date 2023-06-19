@@ -1,0 +1,58 @@
+﻿@model Dictionary<string,string>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>welcome</title>
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-fluid">
+            <div class="layui-card">
+                <div class="layui-card-body">
+             
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(function(){
+
+
+        var rId = `@(Model["rId"])`;
+
+        getRoute(rId);
+
+        async function getRoute(rId) {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/routes?rId=${rId}`)
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        //解构赋值
+                       console.log(result.data);
+
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
+    })
+</script>

@@ -22,9 +22,20 @@ namespace LayuiAdminNetService.Services
             return await _base.AddAsync(model);
         }
 
-        public async Task<int> DelRangeAsync(IEnumerable<AdminRoleInfo> models)
+        public Task<int> AddRangeAsync(List<AdminRoleInfo> list, Guid uId)
         {
-            return await _base.DelRangeAsync(models);
+            throw new NotImplementedException();
+        }
+
+        public Task<int> DelAsync(AdminRoleInfo model)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task<int> DelRangeAsync(List<AdminRoleInfo> list)
+        {
+            return await _base.DelRangeAsync(list);
         }
 
         public async Task<AdminRoleInfo?> FirstOrDefaultAsync(Expression<Func<AdminRoleInfo, bool>> expression, bool isTrack = true)
@@ -33,9 +44,10 @@ namespace LayuiAdminNetService.Services
             return adminRole;
         }
 
-        public async Task<List<AdminRoleInfo>> QueryAsync(Expression<Func<AdminRoleInfo, bool>> expression, bool isTrack = true)
+
+        public async Task<List<AdminRoleInfo>> QueryAsync(Expression<Func<AdminRoleInfo, bool>> expression, bool isTrack = true, string? orderBy = null)
         {
-            return await _base.QueryAsync(expression, isTrack);
+            return await _base.QueryAsync(expression, isTrack, orderBy);
         }
 
         public async Task<PagedList<AdminRoleInfo>> QueryPagedAsync(RoleInfoPagedReq req)
@@ -58,9 +70,14 @@ namespace LayuiAdminNetService.Services
             return data;
         }
 
-        public async Task<int> UpdateAsync(AdminRoleInfo model)
+        public Task<int> UpdateAsync(AdminRoleInfo model)
         {
-            return await _base.UpdateAsync(model);
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdateRangeAsync(List<AdminRoleInfo> list)
+        {
+            throw new NotImplementedException();
         }
     }
 }

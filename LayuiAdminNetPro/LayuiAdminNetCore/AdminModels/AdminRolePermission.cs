@@ -37,6 +37,6 @@ namespace LayuiAdminNetCore.AdminModels
         /// </summary>
         [NotMapped]
         [JsonProperty("adminModuleInfo")]
-        public AdminModuleInfo? AdminModuleInfo { get; set; } = null;
+        public AdminRoute? AdminModuleInfo { get; set; } = null;
     }
 }

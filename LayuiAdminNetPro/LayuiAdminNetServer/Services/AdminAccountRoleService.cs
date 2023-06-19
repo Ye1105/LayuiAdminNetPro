@@ -17,7 +17,13 @@ namespace LayuiAdminNetService.Services
             _base = baseSevice;
         }
 
-        public async Task<int> AddRangeAsync(IEnumerable<AdminAccountRole> collection, Guid uId)
+        public Task<int> AddAsync(AdminAccountRole model)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public async Task<int> AddRangeAsync(List<AdminAccountRole> list, Guid uId)
         {
             var dic = new Dictionary<object, CrudType>();
 
@@ -30,9 +36,9 @@ namespace LayuiAdminNetService.Services
                 }
             }
 
-            if (collection is not null && collection.Any())
+            if (list is not null && list.Any())
             {
-                foreach (var item in collection)
+                foreach (var item in list)
                 {
                     dic.Add(item, CrudType.CREATE);
                 }
@@ -41,10 +47,20 @@ namespace LayuiAdminNetService.Services
             return await _base.BatchTransactionAsync(dic);
         }
 
+        public Task<int> DelAsync(AdminAccountRole model)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<int> DelRangeAsync(Guid uId)
         {
             var preList = await _base.QueryAsync<AdminAccountRole>(x => x.UId == uId, isTrack: true, null);
             return await _base.DelRangeAsync(preList);
+        }
+
+        public Task<int> DelRangeAsync(List<AdminAccountRole> list)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<AdminAccountRole?> FirstOrDefaultAsync(Expression<Func<AdminAccountRole, bool>> expression, bool isTrack = true)
@@ -66,6 +82,21 @@ namespace LayuiAdminNetService.Services
             }
             else
                 return await _base.QueryAsync(expression, isTrack);
+        }
+
+        public Task<List<AdminAccountRole>> QueryAsync(Expression<Func<AdminAccountRole, bool>> expression, bool isTrack = true, string? orderBy = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdateAsync(AdminAccountRole model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdateRangeAsync(List<AdminAccountRole> list)
+        {
+            throw new NotImplementedException();
         }
     }
 }

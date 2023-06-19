@@ -29,7 +29,7 @@
                 <script type="text/html" id="ID-table-role-toolbar">
                     <div class="layui-btn-group">
                         <!-- 添加角色-->
-                        <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="add" title="添加角色">
+                        <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="add" title="添加路由">
                             添加
                         </div>
                      </div>
@@ -37,13 +37,10 @@
 
                 <!-- 行编辑按钮 -编辑角色 -->
                 <script type="text/html" id="cell-operation">
-                    <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="edit" title="编辑角色">
+                    <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="edit" title="编辑路由">
                           <i class="layui-icon layui-icon-edit"></i>
                     </div>
 
-                    <div  type="button" class="layui-btn layui-btn-xs layui-btn-primary"  lay-event="route" title="编辑权限树">
-                          <i class="layui-icon layui-icon-form"></i>
-                    </div>
                 </script>
                 <!--table-->
                 <table class="layui-hide layui-table" id="ID-table-role" lay-filter="ID-table-role"></table>
@@ -76,7 +73,7 @@
         //表单渲染
         table.render({
             elem: '#ID-table-role'
-            , url: '/api/roleinfos/paged' // API接口
+            , url: '/api/routes/paged' // API接口
             , request: {
                 pageName: 'pageIndex',  //替换分页的字段名称，后端可识别
                 limitName: 'pageSize'
@@ -102,10 +99,14 @@
             , toolbar: '#ID-table-role-toolbar'
             , pagebar: '#ID-table-role-pagebar' // 分页栏模板
             //, totalRow: true // 开启合计行
-            , cols: [[                               // 列名
+            , cols: [[                          // 列名
                 { type: 'checkbox', fixed: 'left' }
-                , { field: 'rId', title: 'ID' }
-                , { field: 'name', title: '角色名' }
+                , { field: 'id', title: '当前节点' }
+                , { field: 'pId', title: '父节点' }
+                , { field: 'route', title: '路由' }
+                , { field: 'name', title: '名称' }
+                , { field: 'order', title: '排序' }
+                , { field: 'status', title: '状态' }
                 , {
                     fixed: 'right', minWidth: 142, title: '操作', toolbar: "#cell-operation"
                 }
@@ -132,38 +133,39 @@
                     layer.open({
                         title: "添加角色",
                         type: 2,
-                        area: ['480px', '215px'],
-                        content: '/roleinfos/create',
+                        area: ['480px', '375px'],
+                        content: '/routes/create',
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
                                 //, submitID = 'LAY-account-create'
-                                , submitFilter = 'form-role-filter'
+                                , submitFilter = 'form-route-filter'
 
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
                             console.log(formData)
                             //2.json schema 校验表单数据
                             if (formData != {}) {
-                                let schemas = jsonSchemas.getSchema("role-create")
-                                if (schemas.res == false) {
-                                    layer.msg(schemas.msg)
-                                    return;
-                                }
+                                 return
+                                //let schemas = jsonSchemas.getSchema("route-create")
+                                //if (schemas.res == false) {
+                                //    layer.msg(schemas.msg)
+                                //    return;
+                                //}
 
-                                let validator = new ZSchema();
-                                validator.validate(formData, schemas.data, function (err, valid) {
-                                    if (!valid) {
-                                        layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
-                                        return
-                                    }
+                                //let validator = new ZSchema();
+                                //validator.validate(formData, schemas.data, function (err, valid) {
+                                //    if (!valid) {
+                                //        layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
+                                //        return
+                                //    }
 
-                                    var form = new FormData();
-                                    form.append('name', formData["name"]);
+                                //    var form = new FormData();
+                                //    form.append('name', formData["name"]);
 
-                                    //3.提交表单数据
-                                    createRole(form, index);
-                                });
+                                //    //3.提交表单数据
+                                //    createRole(form, index);
+                                //});
                             }
                         }
                     })
@@ -181,7 +183,7 @@
                         title: "编辑账号",
                         type: 2,
                         area: ['480px', '268px'],
-                        content: `/roleinfos/edit?${params}`,
+                        content: `/routes/edit?${params}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
@@ -239,7 +241,7 @@
         */
         async function editRole(data, iframeIndex) {
             let loadIndex = layer.load(0);
-            await fetch(`/api/roleinfos`,
+            await fetch(`/api/routes`,
                 {
                     method: 'put',
                     headers: {
@@ -272,7 +274,7 @@
         */
         async function createRole(data, iframeIndex) {
             let loadIndex = layer.load(0);
-            await fetch(`/api/roleinfos`,
+            await fetch(`/api/routes`,
                 {
                     method: 'post',
                     //headers: {

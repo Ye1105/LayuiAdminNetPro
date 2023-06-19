@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
     [Authorize(Policy = Policys.Admin)]
-    public class HomeController : Controller
+    public class WelcomeController : Controller
     {
         /// <summary>
-        /// 框架主界面
+        /// 欢迎界面【公告、项目版本等展示】
         /// </summary>
         /// <returns></returns>
-        [Route("/")]
+        //[Route(nameof(Areas.View))]
+        [HttpGet("/welcome")]
         public IActionResult Index()
         {
             return View();

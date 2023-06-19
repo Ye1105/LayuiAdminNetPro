@@ -90,6 +90,12 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 return Ok(Fail("账号认证失败"));
             }
 
+            ////删除cookie
+            DeleteCookies(".AspNetCore.Token");
+
+            //更新Token
+            SetCookies(".AspNetCore.Token", accessToken);
+
             return Ok(Success(new { accessToken }));
         }
     }

@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form layui-form-pane form" lay-filter="form-route-filter" id="LAY-route-create-submit">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上级节点</label>
+                        <div class="layui-input-block">
+                            <select name="pId" id="pId" >
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" autocomplete="off" placeholder="名称" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">路由</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="route" id="route" autocomplete="off" placeholder="路由" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item" pane>
+                        <label class="layui-form-label">排序</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="order" autocomplete="off" placeholder="排序" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(function () {
+
+        var form = layui.form
+            ,$ = layui.$;
+
+        //拉取数据
+        getRoutes()
+
+        /**
+        * bref fetch 拉取权限树
+        */
+        async function getRoutes() {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/routes?pId=00000000-0000-0000-0000-000000000000`)
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        //解构赋值
+                        let { list } = result.data;
+                        let renderHtml = `<option value="00000000-0000-0000-0000-000000000000">无</option>`;
+                        if (list && list.length > 0) {
+                            for (let i = 0; i < list.length; i++) {
+                                renderHtml += `<option value="${list[i].id}">${list[i].name}</option>`
+                            }
+                        }
+                        $("#pId").html(renderHtml);
+                        form.render();
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
+
+        //当用户选择上级节点之后，关联触发的事件
+
+
+    })
+
+
+</script>

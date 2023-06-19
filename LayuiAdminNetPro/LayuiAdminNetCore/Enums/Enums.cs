@@ -38,16 +38,16 @@ namespace LayuiAdminNetCore.Enums
     public enum Status
     {
         /// <summary>
-        /// 启用
-        /// </summary>
-        [EnumDescription("启用")]
-        ENABLE = 0,
-
-        /// <summary>
         /// 禁用
         /// </summary>
         [EnumDescription("禁用")]
-        DISABLE = 1,
+        DISABLE = 0,
+
+        /// <summary>
+        /// 启用
+        /// </summary>
+        [EnumDescription("启用")]
+        ENABLE = 1,
 
         /// <summary>
         /// 审核中

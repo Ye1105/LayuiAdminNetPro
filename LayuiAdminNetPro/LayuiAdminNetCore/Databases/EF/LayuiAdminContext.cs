@@ -57,7 +57,7 @@ namespace LayuiAdminNetCore.Database.EF
         public virtual DbSet<AdminLogTencentSMS> Admin_Log_Tencent_SMS { get; set; }
         public virtual DbSet<AdminRoleInfo> Admin_Role_Info { get; set; }
         public virtual DbSet<AdminRolePermission> Admin_Role_Permission { get; set; }
-        public virtual DbSet<AdminModuleInfo> Admin_Module_Info { get; set; }
+        public virtual DbSet<AdminRoute> Admin_Route { get; set; }
         public virtual DbSet<AdminSystemLog> Admin_System_Log { get; set; }
 
         #endregion 映射

@@ -109,7 +109,17 @@
                 , { field: 'route', title: '路由' }
                 , { field: 'name', title: '名称' }
                 , { field: 'order', title: '排序' }
-                , { field: 'status', title: '状态' }
+                , {
+                    field: 'status', title: '账号状态', templet: function (d) {
+                        if (d.status === "启用") {
+                            return `<span class="layui-badge  layui-bg-green" > ${d.status} </span>`
+                        } else if (d.status === "禁用")
+                            return `<span class="layui-badge" > ${d.status} </span>`
+                        else {
+                            return `<span class="layui-badge layui-bg-orange" > ${d.status} </span>`
+                        }
+                    }
+                }
                 , {
                     fixed: 'right', minWidth: 142, title: '操作', toolbar: "#cell-operation"
                 }

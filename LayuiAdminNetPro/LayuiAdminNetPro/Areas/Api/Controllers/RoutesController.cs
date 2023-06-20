@@ -70,7 +70,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 list.CurrentPage,
                 list.PageSize,
                 list.TotalCount,
-                list
+                list = _mapper.Map<IEnumerable<DtoAdminRoute>>(list)
             };
 
             return Ok(Success(JsonData));
@@ -101,7 +101,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 return Ok(Fail(errorMessages, "参数错误"));
             }
 
-            var exsit = await _route.FirstOrDefaultAsync(x => x.Name == req.Name&&x.Route==req.Route, isTrack: false);
+            var exsit = await _route.FirstOrDefaultAsync(x => x.Name == req.Name && x.Route == req.Route, isTrack: false);
             if (exsit != null)
             {
                 return Ok(Fail("名称已存在"));

@@ -221,6 +221,7 @@
       "route": {
         "type": "string",
         "title": "路由",
+        "pattern": "(^\/[a-z]{1,15}$)|(^\/{1}$)",
         "minLength": 1
       },
       "name": {

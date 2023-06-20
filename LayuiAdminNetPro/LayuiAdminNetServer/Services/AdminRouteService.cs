@@ -58,6 +58,11 @@ namespace LayuiAdminNetService.Services
                 whereLambda = whereLambda.And(x => x.Name == req.Name);
             }
 
+            if (req.PId is not null)
+            {
+                whereLambda = whereLambda.And(x => x.PId == req.PId);
+            }
+
             var data = await _base.QueryPagedAsync(whereLambda, req.PageIndex, req.PageSize, req.OffSet, isTrack: false, req.OrderBy);
 
             return data;

@@ -101,17 +101,12 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 return Ok(Fail(errorMessages, "参数错误"));
             }
 
-            var exsit = await _route.FirstOrDefaultAsync(x => x.Name == req.Name, isTrack: false);
+            var exsit = await _route.FirstOrDefaultAsync(x => x.Name == req.Name&&x.Route==req.Route, isTrack: false);
             if (exsit != null)
             {
                 return Ok(Fail("名称已存在"));
             }
 
-            exsit = await _route.FirstOrDefaultAsync(x => x.Route == req.Route, isTrack: false);
-            if (exsit != null)
-            {
-                return Ok(Fail("路由已存在"));
-            }
 
             var acc = new AdminRoute()
             {

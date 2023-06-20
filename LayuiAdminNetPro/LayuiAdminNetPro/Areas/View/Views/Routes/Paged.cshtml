@@ -15,10 +15,7 @@
             <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="route-search">
                 <div class="layui-form-item">
                     <div class="layui-input-wrap layui-inline">
-                        <div class="layui-input-prefix">
-                            <i class="layui-icon layui-icon-username"></i>
-                        </div>
-                        <input type="text" name="name" value="" placeholder="角色名" class="layui-input" lay-affix="clear">
+                        <input type="text" name="name" value="" placeholder="名称" class="layui-input" lay-affix="clear">
                     </div>
 
                     <button class="layui-btn" lay-submit lay-filter="table-search">搜索</button>
@@ -81,7 +78,7 @@
             //除分页固定参数之后，其他的拼接参数
             , where: {
                 offset: 0,                //数据偏移量
-                orderby: "rId desc"   //默认排序
+                orderby: "pId desc,id asc"   //默认排序
             }
             , page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'] //自定义分页布局
@@ -101,6 +98,12 @@
             //, totalRow: true // 开启合计行
             , cols: [[                          // 列名
                 { type: 'checkbox', fixed: 'left' }
+                , {field:'hierarchy',templet:function(d){
+                    if (d.pId == "00000000-0000-0000-0000-000000000000")
+                            return `<span class="layui-badge" style="background-color:#2f363c">顶级栏目</span>`
+                    else
+                            return `<span class="layui-badge" style="background-color:#c2c2c2">次级栏目</span>`
+                }}
                 , { field: 'id', title: '节点' }
                 , { field: 'pId', title: '父节点' }
                 , { field: 'route', title: '路由' }
@@ -152,7 +155,8 @@
                             //转换number类型
                             formData["order"] = formData["order"] !== "" ? Number(formData["order"]) : formData["order"]
                             let validator = new ZSchema();
-                            validator.validate(formData, schemas.data, function (err, valid) {
+
+                            validator.validate(formData, schemas.data, function (err, valid) {// schemas.data
                                 if (!valid) {
                                     layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
                                     return
@@ -302,12 +306,14 @@
             var field = data.field;
             //console.log('search',field)
             // 执行搜索重载
-            table.reload('ID-table-route', {
+
+            table.reload("ID-table-route", {
                 page: {
                     curr: 1 // 重新从第 1 页开始
                 }
                 , where: field // 搜索的字段
             });
+
             return false; // 阻止默认 form 跳转
         })
 

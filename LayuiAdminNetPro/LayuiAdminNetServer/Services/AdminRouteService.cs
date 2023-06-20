@@ -17,9 +17,9 @@ namespace LayuiAdminNetService.Services
             _base = baseService;
         }
 
-        public Task<int> AddAsync(AdminRoute model)
+        public async Task<int> AddAsync(AdminRoute model)
         {
-            throw new NotImplementedException();
+            return await _base.AddAsync(model);
         }
 
         public Task<int> AddRangeAsync(List<AdminRoute> list, Guid uId)
@@ -37,9 +37,9 @@ namespace LayuiAdminNetService.Services
             throw new NotImplementedException();
         }
 
-        public Task<AdminRoute?> FirstOrDefaultAsync(Expression<Func<AdminRoute, bool>> expression, bool isTrack = true)
+        public async Task<AdminRoute?> FirstOrDefaultAsync(Expression<Func<AdminRoute, bool>> expression, bool isTrack = true)
         {
-            throw new NotImplementedException();
+            return await _base.FirstOrDefaultAsync(expression, isTrack);
         }
 
         public async Task<List<AdminRoute>> QueryAsync(Expression<Func<AdminRoute, bool>> expression, bool isTrack = true, string? orderBy = null)

@@ -40,8 +40,7 @@ namespace LayuiAdminNetService.Services
 
         public async Task<AdminRoleInfo?> FirstOrDefaultAsync(Expression<Func<AdminRoleInfo, bool>> expression, bool isTrack = true)
         {
-            var adminRole = await _base.FirstOrDefaultAsync(expression, isTrack);
-            return adminRole;
+            return await _base.FirstOrDefaultAsync(expression, isTrack);
         }
 
 
@@ -72,7 +71,7 @@ namespace LayuiAdminNetService.Services
 
         public Task<int> UpdateAsync(AdminRoleInfo model)
         {
-            throw new NotImplementedException();
+            return _base.UpdateAsync(model);
         }
 
         public Task<int> UpdateRangeAsync(List<AdminRoleInfo> list)

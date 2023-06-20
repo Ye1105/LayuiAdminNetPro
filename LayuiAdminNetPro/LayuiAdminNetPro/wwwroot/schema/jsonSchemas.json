@@ -185,7 +185,6 @@
         "type": "string",
         "title": "角色名",
         "minLength": 1
-        //"pattern": "^[\\u4e00-\\u9fa5]*$"
       }
     },
     "required": [
@@ -203,13 +202,53 @@
       "name": {
         "type": "string",
         "title": "角色名",
-        //"pattern": "^[\\u4e00-\\u9fa5]*$"
         "minLength": 1
       }
     },
     "required": [
       "rId",
       "name"
+    ]
+  },
+  "route-create": {
+    "type": "object",
+    "description": "路由编辑规则",
+    "properties": {
+      "pId": {
+        "type": "string",
+        "title": "父节点"
+      },
+      "route": {
+        "type": "string",
+        "title": "路由",
+        "minLength": 1
+      },
+      "name": {
+        "type": "string",
+        "title": "名称",
+        "pattern": "^[\\u4e00-\\u9fa5]*$",
+        "minLength": 1
+      },
+      "order": {
+        "type": "number",
+        "title": "排序",
+        "minimum": 0
+      },
+      "status": {
+        "type": "string",
+        "title": "状态",
+        "enum": [
+          "启用",
+          "禁用"
+        ]
+      }
+    },
+    "required": [
+      "pId",
+      "route",
+      "name",
+      "order",
+      "status"
     ]
   }
 }

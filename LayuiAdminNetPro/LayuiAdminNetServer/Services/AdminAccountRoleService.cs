@@ -65,8 +65,7 @@ namespace LayuiAdminNetService.Services
 
         public async Task<AdminAccountRole?> FirstOrDefaultAsync(Expression<Func<AdminAccountRole, bool>> expression, bool isTrack = true)
         {
-            var mdoel = await _base.FirstOrDefaultAsync(expression, isTrack);
-            return mdoel;
+            return await _base.FirstOrDefaultAsync(expression, isTrack);
         }
 
         public async Task<List<AdminAccountRole>> QueryAsync(Expression<Func<AdminAccountRole, bool>> expression, bool isInculdeRoleInfo = false, bool isTrack = true)

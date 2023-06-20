@@ -5,20 +5,17 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>roles</title>
+    <title>routes</title>
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
     <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
 </head>
 <body>
     <div class="layui-fluid">
         <div class="layui-card">
-            <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="role-search">
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto" id="route-search">
                 <div class="layui-form-item">
                     <div class="layui-input-wrap layui-inline">
-                        <div class="layui-input-prefix">
-                            <i class="layui-icon layui-icon-username"></i>
-                        </div>
-                        <input type="text" name="name" value="" placeholder="角色名" class="layui-input" lay-affix="clear">
+                        <input type="text" name="name" value="" placeholder="名称" class="layui-input" lay-affix="clear">
                     </div>
 
                     <button class="layui-btn" lay-submit lay-filter="table-search">搜索</button>
@@ -26,7 +23,7 @@
             </div>
             <div class="layui-card-body">
                 <!--工具栏-->
-                <script type="text/html" id="ID-table-role-toolbar">
+                <script type="text/html" id="ID-table-route-toolbar">
                     <div class="layui-btn-group">
                         <!-- 添加角色-->
                         <div  type="button" class="layui-btn layui-btn-sm layui-btn-primary" lay-event="add" title="添加路由">
@@ -43,9 +40,9 @@
 
                 </script>
                 <!--table-->
-                <table class="layui-hide layui-table" id="ID-table-role" lay-filter="ID-table-role"></table>
+                <table class="layui-hide layui-table" id="ID-table-route" lay-filter="ID-table-route"></table>
                 <!--分页栏-->
-                <script type="text/html" id="ID-table-role-pagebar">
+                <script type="text/html" id="ID-table-route-pagebar">
                     <div class="layui-btn-container" >
                     </div>
                 </script>
@@ -72,7 +69,7 @@
 
         //表单渲染
         table.render({
-            elem: '#ID-table-role'
+            elem: '#ID-table-route'
             , url: '/api/routes/paged' // API接口
             , request: {
                 pageName: 'pageIndex',  //替换分页的字段名称，后端可识别
@@ -81,7 +78,7 @@
             //除分页固定参数之后，其他的拼接参数
             , where: {
                 offset: 0,                //数据偏移量
-                orderby: "rId desc"   //默认排序
+                orderby: "pId desc,id asc"   //默认排序
             }
             , page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'] //自定义分页布局
@@ -96,12 +93,18 @@
             , css: [ // 直接给当前表格主容器重置 css 样式
                 '.layui-table-page{text-align: center;}' // 让分页栏居中
             ].join('')
-            , toolbar: '#ID-table-role-toolbar'
-            , pagebar: '#ID-table-role-pagebar' // 分页栏模板
+            , toolbar: '#ID-table-route-toolbar'
+            , pagebar: '#ID-table-route-pagebar' // 分页栏模板
             //, totalRow: true // 开启合计行
             , cols: [[                          // 列名
                 { type: 'checkbox', fixed: 'left' }
-                , { field: 'id', title: '当前节点' }
+                , {field:'hierarchy',templet:function(d){
+                    if (d.pId == "00000000-0000-0000-0000-000000000000")
+                            return `<span class="layui-badge" style="background-color:#2f363c">顶级栏目</span>`
+                    else
+                            return `<span class="layui-badge" style="background-color:#c2c2c2">次级栏目</span>`
+                }}
+                , { field: 'id', title: '节点' }
                 , { field: 'pId', title: '父节点' }
                 , { field: 'route', title: '路由' }
                 , { field: 'name', title: '名称' }
@@ -125,15 +128,15 @@
         })
 
         //工具栏事件
-        table.on('toolbar(ID-table-role)', function (obj) {
+        table.on('toolbar(ID-table-route)', function (obj) {
             var id = obj.config.id;
             var checkStatus = table.checkStatus(id);
             switch (obj.event) {
                 case 'add':
                     layer.open({
-                        title: "添加角色",
+                        title: "添加路由",
                         type: 2,
-                        area: ['480px', '375px'],
+                        area: ['480px', '430px'],
                         content: '/routes/create',
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
@@ -143,30 +146,25 @@
 
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
-                            console.log(formData)
+                            //console.log(formData)
                             //2.json schema 校验表单数据
-                            if (formData != {}) {
-                                 return
-                                //let schemas = jsonSchemas.getSchema("route-create")
-                                //if (schemas.res == false) {
-                                //    layer.msg(schemas.msg)
-                                //    return;
-                                //}
-
-                                //let validator = new ZSchema();
-                                //validator.validate(formData, schemas.data, function (err, valid) {
-                                //    if (!valid) {
-                                //        layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
-                                //        return
-                                //    }
-
-                                //    var form = new FormData();
-                                //    form.append('name', formData["name"]);
-
-                                //    //3.提交表单数据
-                                //    createRole(form, index);
-                                //});
+                            let schemas = jsonSchemas.getSchema("route-create")
+                            if (schemas.res == false) {
+                                layer.msg(schemas.msg)
                             }
+                            //转换number类型
+                            formData["order"] = formData["order"] !== "" ? Number(formData["order"]) : formData["order"]
+                            let validator = new ZSchema();
+
+                            validator.validate(formData, schemas.data, function (err, valid) {// schemas.data
+                                if (!valid) {
+                                    layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
+                                    return
+                                }
+                                //3.提交表单数据
+                                console.log(formData)
+                                createRoute(formData, index)
+                            });
                         }
                     })
                     break;
@@ -174,13 +172,13 @@
         })
 
         //【编辑账号】触发单元格工具事件
-        table.on('tool(ID-table-role)', function (obj) {
+        table.on('tool(ID-table-route)', function (obj) {
             var data = obj.data; // 获取当前表格属性配置项
             let params = Qs.stringify(data);
             switch (obj.event) {
                 case 'edit':
                     layer.open({
-                        title: "编辑账号",
+                        title: "编辑路由",
                         type: 2,
                         area: ['480px', '268px'],
                         content: `/routes/edit?${params}`,
@@ -188,13 +186,13 @@
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
                                 //, submitID = 'LAY-account-create'
-                                , submitFilter = 'LAY-role-edit-submit'
+                                , submitFilter = 'LAY-route-edit-submit'
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
                             //2.json schema 校验表单数据
                             if (formData != {}) {
 
-                                let schemas = jsonSchemas.getSchema("role-edit")
+                                let schemas = jsonSchemas.getSchema("route-edit")
                                 if (schemas.res == false) {
                                     layer.msg(schemas.msg)
                                 }
@@ -206,7 +204,7 @@
                                     }
                                     //3.提交表单数据
                                     console.log(formData)
-                                    editRole(formData, index);
+                                    editroute(formData, index);
                                 });
                             }
                         }
@@ -227,6 +225,9 @@
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
 
+                            console.log(formData)
+                       
+
                         }
                     })
                     break;
@@ -239,7 +240,7 @@
         * param data json格式的表单参数
         * param iframeIndex 弹窗的 index
         */
-        async function editRole(data, iframeIndex) {
+        async function editRoute(data, iframeIndex) {
             let loadIndex = layer.load(0);
             await fetch(`/api/routes`,
                 {
@@ -253,7 +254,7 @@
                 .then(result => {
                     layer.close(loadIndex);
                     if (result.status == 200) {
-                        table.reload('ID-table-role');
+                        table.reload('ID-table-route');
                         layer.close(iframeIndex); //关闭弹层
                         layer.msg("编辑角色成功");
                     } else {
@@ -272,23 +273,23 @@
         * param data
         * param iframeIndex 弹窗的 index
         */
-        async function createRole(data, iframeIndex) {
+        async function createRoute(data, iframeIndex) {
             let loadIndex = layer.load(0);
             await fetch(`/api/routes`,
                 {
                     method: 'post',
-                    //headers: {
-                    //    'Content-Type': 'application/json'
-                    //},
-                    body: data
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
                 })
                 .then(response => response.json())
                 .then(result => {
                     layer.close(loadIndex);
                     if (result.status == 200) {
-                        table.reload('ID-table-role');
+                        table.reload('ID-table-route');
                         layer.close(iframeIndex); //关闭弹层
-                        layer.msg("角色添加成功");
+                        layer.msg("路由添加成功");
                     } else {
                         layer.msg(result.uimsg);
                     }
@@ -305,12 +306,14 @@
             var field = data.field;
             //console.log('search',field)
             // 执行搜索重载
-            table.reload('ID-table-role', {
+
+            table.reload("ID-table-route", {
                 page: {
                     curr: 1 // 重新从第 1 页开始
                 }
                 , where: field // 搜索的字段
             });
+
             return false; // 阻止默认 form 跳转
         })
 

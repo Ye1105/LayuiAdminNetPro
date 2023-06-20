@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
-
     [Route("routes")]
     [Authorize(Policy = Policys.Admin)]
     public class RoutesController : ViewController
@@ -24,7 +23,5 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         {
             return View();
         }
-
-
     }
 }

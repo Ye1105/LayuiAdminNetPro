@@ -6,6 +6,7 @@ namespace LayuiAdminNetCore.RequstModels
     {
         [JsonProperty("uId")]
         public Guid UId { get; set; }
+
         /// <summary>
         /// 角色Id列表
         /// </summary>

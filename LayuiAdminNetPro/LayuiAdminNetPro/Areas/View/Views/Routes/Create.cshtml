@@ -17,26 +17,35 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">上级节点</label>
                         <div class="layui-input-block">
-                            <select name="pId" id="pId" >
+                            <select name="pId" lay-filter='pId-filter'>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">名称</label>
                         <div class="layui-input-block">
-                            <input type="text" name="name" autocomplete="off" placeholder="名称" class="layui-input">
+                            <input type="text" name="name" autocomplete="off" placeholder="中文" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">路由</label>
                         <div class="layui-input-block">
-                            <input type="text" name="route" id="route" autocomplete="off" placeholder="路由" class="layui-input">
+                            <input type="text" name="route" id="route" autocomplete="off" placeholder="/route" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item" pane>
                         <label class="layui-form-label">排序</label>
                         <div class="layui-input-block">
-                            <input type="number" name="order" autocomplete="off" placeholder="排序" class="layui-input">
+                            <input type="number" name="order" autocomplete="off" placeholder="数字" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-block">
+                            <select name="status">
+                                <option value="启用">启用</option>
+                                <option value="禁用">禁用</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -56,12 +65,10 @@
         var form = layui.form
             ,$ = layui.$;
 
-        //拉取数据
+        //调用：拉取数据
         getRoutes()
 
-        /**
-        * bref fetch 拉取权限树
-        */
+        //bref fetch 拉取权限树
         async function getRoutes() {
             let loadIndex = layer.load(0);
             await fetch(`/api/routes?pId=00000000-0000-0000-0000-000000000000`)
@@ -77,7 +84,18 @@
                                 renderHtml += `<option value="${list[i].id}">${list[i].name}</option>`
                             }
                         }
-                        $("#pId").html(renderHtml);
+
+                        //初始化上级节点选项
+                        $("select[name=pId]").html(renderHtml);
+
+                        //初始化路由值
+                        if ($("select[name=pId]").val() == "00000000-0000-0000-0000-000000000000")
+                        {
+                            $("input[name=route]").val("/")
+                            $("input[name=route]").attr("readonly", "readonly")
+                        }
+
+                        //表单渲染
                         form.render();
                     } else {
                         layer.msg(result.uimsg);
@@ -89,9 +107,18 @@
                 })
         }
 
-        //当用户选择上级节点之后，关联触发的事件
-
-
+        //当用户选择上级节点之后，关联触发的处理路由值
+        form.on('select(pId-filter)', function (data) {
+            let value=data.value;
+            if (value == '00000000-0000-0000-0000-000000000000')
+            {
+                $("input[name=route]").val("/")
+                $("input[name=route]").attr("readonly", "readonly")
+            }else{
+                $("input[name=route]").val("")
+                $("#route").removeAttr("readonly");
+            }
+        });
     })
 
 

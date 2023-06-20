@@ -7,5 +7,8 @@ namespace LayuiAdminNetCore.RequstModels
     {
         [JsonProperty("name")]
         public string? Name { get; set; } = "";
+
+        [JsonProperty("pId")]
+        public Guid? PId { get; set; }
     }
 }

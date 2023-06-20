@@ -115,9 +115,9 @@ namespace LayuiAdminNetService.Services
             return data;
         }
 
-        public Task<AdminAccount?> FirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true)
+        public async Task<AdminAccount?> FirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true)
         {
-            throw new NotImplementedException();
+            return await _base.FirstOrDefaultAsync(expression, isTrack);
         }
 
         public Task<int> AddRangeAsync(List<AdminAccount> list, Guid uId)

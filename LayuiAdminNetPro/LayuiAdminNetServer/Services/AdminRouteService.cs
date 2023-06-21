@@ -1,9 +1,11 @@
 ﻿using CodeHelper.Common;
 using LayuiAdminNetCore.AdminModels;
+using LayuiAdminNetCore.Enums;
 using LayuiAdminNetCore.Pages;
 using LayuiAdminNetCore.RequstModels;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using LayuiAdminNetService.IServices;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace LayuiAdminNetService.Services
@@ -68,9 +70,9 @@ namespace LayuiAdminNetService.Services
             return data;
         }
 
-        public Task<int> UpdateAsync(AdminRoute model)
+        public async Task<int> UpdateAsync(AdminRoute model)
         {
-            throw new NotImplementedException();
+            return await _base.UpdateAsync(model);
         }
 
         public Task<int> UpdateRangeAsync(List<AdminRoute> list)

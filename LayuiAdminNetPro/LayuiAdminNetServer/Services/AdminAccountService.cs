@@ -14,18 +14,15 @@ namespace LayuiAdminNetService.Services
     {
         private readonly IBase _base;
 
-
         public AdminAccountService(IBase baseSevice)
         {
             _base = baseSevice;
         }
 
-
         public async Task<int> UpdateAsync(AdminAccount adminAccount)
         {
             return await _base.UpdateAsync(adminAccount);
         }
-
 
         public async Task<int> UpdateRangeAsync(List<AdminAccount> list)
         {
@@ -34,7 +31,6 @@ namespace LayuiAdminNetService.Services
 
         public async Task<int> AddAsync(AdminAccount adminAccount)
         {
-
             adminAccount.Password = Md5Helper.MD5(adminAccount.Password!);
 
             return await _base.AddAsync(adminAccount);
@@ -42,7 +38,6 @@ namespace LayuiAdminNetService.Services
 
         public async Task<AdminAccount?> FirstOrDefaultAsync(string phone, string password, bool isTrack = true)
         {
-
             password = Md5Helper.MD5(password);
 
             var account = await _base.FirstOrDefaultAsync<AdminAccount>((x => x.Password == password && x.Phone == phone), isTrack);

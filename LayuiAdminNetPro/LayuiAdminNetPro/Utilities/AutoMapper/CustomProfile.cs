@@ -17,6 +17,8 @@ namespace LayuiAdminNetPro.Utilities.AutoMapper
                 .ForMember(dest => dest.Sex, opt => opt.MapFrom(x => EnumDescriptionAttribute.GetEnumDescription((SexStatus)x.Sex)))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(x => EnumDescriptionAttribute.GetEnumDescription((Status)x.Status)))
                 .ForMember(dest => dest.JobStatus, opt => opt.MapFrom(x => EnumDescriptionAttribute.GetEnumDescription((JobStatus)x.JobStatus)));
+            CreateMap<AdminRoute, DtoAdminRoute>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(x => EnumDescriptionAttribute.GetEnumDescription((Status)x.Status)));
         }
     }
 }

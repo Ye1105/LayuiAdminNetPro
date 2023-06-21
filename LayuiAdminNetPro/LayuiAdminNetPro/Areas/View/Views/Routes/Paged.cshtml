@@ -17,6 +17,9 @@
                     <div class="layui-input-wrap layui-inline">
                         <input type="text" name="name" value="" placeholder="名称" class="layui-input" lay-affix="clear">
                     </div>
+                    <div class="layui-input-wrap layui-inline">
+                        <input type="text" name="pId" value="" placeholder="父节点" class="layui-input" lay-affix="clear">
+                    </div>
 
                     <button class="layui-btn" lay-submit lay-filter="table-search">搜索</button>
                 </div>
@@ -109,7 +112,17 @@
                 , { field: 'route', title: '路由' }
                 , { field: 'name', title: '名称' }
                 , { field: 'order', title: '排序' }
-                , { field: 'status', title: '状态' }
+                , {
+                    field: 'status', title: '账号状态', templet: function (d) {
+                        if (d.status === "启用") {
+                            return `<span class="layui-badge  layui-bg-green" > ${d.status} </span>`
+                        } else if (d.status === "禁用")
+                            return `<span class="layui-badge" > ${d.status} </span>`
+                        else {
+                            return `<span class="layui-badge layui-bg-orange" > ${d.status} </span>`
+                        }
+                    }
+                }
                 , {
                     fixed: 'right', minWidth: 142, title: '操作', toolbar: "#cell-operation"
                 }
@@ -148,7 +161,7 @@
                             let formData = iframeWindow.layui.form.val(submitFilter)
                             //console.log(formData)
                             //2.json schema 校验表单数据
-                            let schemas = jsonSchemas.getSchema("route-create")
+                            let schemas = jsonSchemas.getSchema("route-schema")
                             if (schemas.res == false) {
                                 layer.msg(schemas.msg)
                             }
@@ -180,7 +193,7 @@
                     layer.open({
                         title: "编辑路由",
                         type: 2,
-                        area: ['480px', '268px'],
+                        area: ['480px', '480px'],
                         content: `/routes/edit?${params}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
@@ -189,10 +202,11 @@
                                 , submitFilter = 'LAY-route-edit-submit'
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
+                            //console.log(formData)
                             //2.json schema 校验表单数据
                             if (formData != {}) {
-
-                                let schemas = jsonSchemas.getSchema("route-edit")
+                                formData["order"] = formData["order"] !== "" ? Number(formData["order"]) : formData["order"]
+                                let schemas = jsonSchemas.getSchema("route-schema")
                                 if (schemas.res == false) {
                                     layer.msg(schemas.msg)
                                 }
@@ -204,7 +218,7 @@
                                     }
                                     //3.提交表单数据
                                     console.log(formData)
-                                    editroute(formData, index);
+                                    editRoute(formData, index);
                                 });
                             }
                         }
@@ -236,7 +250,7 @@
 
 
         /**
-        * bref fetch 修改角色
+        * bref fetch 修改路由
         * param data json格式的表单参数
         * param iframeIndex 弹窗的 index
         */
@@ -256,7 +270,7 @@
                     if (result.status == 200) {
                         table.reload('ID-table-route');
                         layer.close(iframeIndex); //关闭弹层
-                        layer.msg("编辑角色成功");
+                        layer.msg("编辑路由信息成功");
                     } else {
                         layer.msg(result.uimsg);
                     }
@@ -269,7 +283,7 @@
 
 
         /**
-        * bref fetch 创建角色
+        * bref fetch 创建路由
         * param data
         * param iframeIndex 弹窗的 index
         */
@@ -289,7 +303,7 @@
                     if (result.status == 200) {
                         table.reload('ID-table-route');
                         layer.close(iframeIndex); //关闭弹层
-                        layer.msg("路由添加成功");
+                        layer.msg("添加路由信息成功");
                     } else {
                         layer.msg(result.uimsg);
                     }

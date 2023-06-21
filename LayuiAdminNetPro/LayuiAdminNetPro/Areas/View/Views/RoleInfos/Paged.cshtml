@@ -221,10 +221,10 @@
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
                                 //, submitID = 'LAY-account-create'
-                                , submitFilter = 'LAY-route-edit-submit'
+                                , submitFilter = 'LAY-route'
                             //1.获取表单数据
                             let formData = iframeWindow.layui.form.val(submitFilter)
-
+                            console.log(formData)
                         }
                     })
                     break;

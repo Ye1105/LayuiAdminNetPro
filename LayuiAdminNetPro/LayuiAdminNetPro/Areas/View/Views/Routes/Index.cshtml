@@ -15,7 +15,8 @@
         <div class="layui-fluid">
             <div class="layui-card">
                 <div class="layui-card-body">
-             
+                    <div class="layui-form" id="routes" lay-filter="LAY-route">
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,8 +29,10 @@
         base: '../layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(function(){
+    }).use(function () {
 
+        let $ = layui.$,
+            form = layui.form;
 
         var rId = `@(Model["rId"])`;
 
@@ -43,8 +46,50 @@
                     layer.close(loadIndex);
                     if (result.status == 200) {
                         //解构赋值
-                       console.log(result.data);
+                        let { routes, permissions } = result.data;
 
+                        //顶级节点
+                        let pr = routes.filter(x => x.pId == "00000000-0000-0000-0000-000000000000");
+                        //console.log(pr)
+                        let renderHtml = '';
+                        pr.forEach(x => {
+                            renderHtml += `<div class="layui-form-item"><dl class="permission-list">`
+                           
+                            let prc = permissions.filter(n => n.adminRoute.pId == x.id);
+                            renderHtml += `<dt><input type="checkbox" name="${x.id}_1" title=${x.name} ${prc.length > 0 ? "checked" : ""}></dt>`
+
+                            //当前顶级节点的所有次级节点
+                            let su = routes.filter(v => v.pId == x.id)
+                            //console.log(su)
+
+                            su.forEach(m => {
+                                renderHtml += '<dd style="margin-left:30px">'
+
+                                let suPermission = permissions.filter(n => n.mId == m.id);
+                                //查询
+                                let r = suPermission.filter(n => n.cId == @((sbyte)CrudType.READ)).length
+                                //添加
+                                let c = suPermission.filter(n => n.cId == @((sbyte)CrudType.CREATE)).length
+                                //更新
+                                let u = suPermission.filter(n => n.cId == @((sbyte)CrudType.UPDATE)).length
+                                //删除
+                                let d = suPermission.filter(n => n.cId == @((sbyte)CrudType.DELETE)).length
+
+                                renderHtml += `<input type="checkbox" title="${m.name}" ${suPermission.length > 0 ? "checked" : ""}>`
+
+                                renderHtml += `<input type="checkbox" name="${m.id}_1" title="查询" ${r > 0 ? "checked" : ""}>`
+                                renderHtml += `<input type="checkbox" name="${m.id}_0" title="添加" ${c > 0 ? "checked" : ""}>`
+                                renderHtml += `<input type="checkbox" name="${m.id}_2" title="修改" ${u > 0 ? "checked" : ""}>`
+                                renderHtml += `<input type="checkbox" name="${m.id}_3" title="删除" ${d > 0 ? "checked" : ""}>`
+                                renderHtml += '</dd>'
+                            })
+                            renderHtml += `</dl></div>`
+                        })
+
+
+                        $("#routes").html(renderHtml)
+
+                        form.render();
                     } else {
                         layer.msg(result.uimsg);
                     }

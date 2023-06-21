@@ -32,7 +32,6 @@ namespace LayuiAdminNetService.Services
             throw new NotImplementedException();
         }
 
-
         public async Task<int> DelRangeAsync(List<AdminRoleInfo> list)
         {
             return await _base.DelRangeAsync(list);
@@ -43,7 +42,6 @@ namespace LayuiAdminNetService.Services
             return await _base.FirstOrDefaultAsync(expression, isTrack);
         }
 
-
         public async Task<List<AdminRoleInfo>> QueryAsync(Expression<Func<AdminRoleInfo, bool>> expression, bool isTrack = true, string? orderBy = null)
         {
             return await _base.QueryAsync(expression, isTrack, orderBy);
@@ -52,7 +50,6 @@ namespace LayuiAdminNetService.Services
         public async Task<PagedList<AdminRoleInfo>> QueryPagedAsync(RoleInfoPagedReq req)
         {
             Expression<Func<AdminRoleInfo, bool>> whereLambda = x => true;
-
 
             if (req.RId != null)
             {

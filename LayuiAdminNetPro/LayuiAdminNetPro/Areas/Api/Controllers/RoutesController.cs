@@ -27,12 +27,14 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         private readonly IAdminRouteService _route;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IMapper _mapper;
+        private readonly IAdminRolePermissionService _permission;
 
-        public RoutesController(IMapper mapper, IAdminRouteService route, IWebHostEnvironment webHostEnvironment)
+        public RoutesController(IMapper mapper, IAdminRouteService route, IAdminRolePermissionService permission, IWebHostEnvironment webHostEnvironment)
         {
             _route = route;
             _webHostEnvironment = webHostEnvironment;
             _mapper = mapper;
+            _permission = permission;
         }
 
         #region Get
@@ -43,11 +45,16 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         /// <param name="pId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] Guid pId)
+        public async Task<IActionResult> Index([FromQuery] Guid rId)
         {
-            var list = await _route.QueryAsync(x => x.PId == pId, isTrack: false);
+            //路由列表
+            //角色权限列表
 
-            return Ok(Success(new { list }));
+            var routes = await _route.QueryAsync(x => true, isTrack: false);
+
+            var permissions = await _permission.QueryAsync(x => x.RId == rId, isInculdeModuleInfo: true, isTrack: false);
+
+            return Ok(Success(new { routes, permissions }));
         }
 
         /// <summary>

@@ -50,7 +50,6 @@ namespace LayuiAdminNetService.IServices
         /// <returns></returns>
         Task<int> UpdateRangeAsync(List<T> list);
 
-
         /// <summary>
         /// DelAsync
         /// </summary>

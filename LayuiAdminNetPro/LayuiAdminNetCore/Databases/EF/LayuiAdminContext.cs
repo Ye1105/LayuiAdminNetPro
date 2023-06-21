@@ -18,7 +18,7 @@ namespace LayuiAdminNetCore.Database.EF
             #region 映射
 
             modelBuilder.Entity<AdminRolePermission>()
-            .HasOne(per => per.AdminModuleInfo)
+            .HasOne(per => per.AdminRoute)
             .WithOne(mInfo => mInfo.AdminRolePermission)
             .HasForeignKey<AdminRolePermission>(adminRolePermission => adminRolePermission.MId);
 

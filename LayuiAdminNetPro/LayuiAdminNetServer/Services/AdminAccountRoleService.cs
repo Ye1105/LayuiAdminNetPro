@@ -11,7 +11,6 @@ namespace LayuiAdminNetService.Services
     {
         private readonly IBase _base;
 
-
         public AdminAccountRoleService(IBase baseSevice)
         {
             _base = baseSevice;
@@ -21,7 +20,6 @@ namespace LayuiAdminNetService.Services
         {
             throw new NotImplementedException();
         }
-
 
         public async Task<int> AddRangeAsync(List<AdminAccountRole> list, Guid uId)
         {

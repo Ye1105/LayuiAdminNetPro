@@ -23,5 +23,11 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         {
             return View();
         }
+
+        public override IActionResult Edit()
+        {
+            var param = GetQueryString(HttpContext);
+            return View(param);
+        }
     }
 }

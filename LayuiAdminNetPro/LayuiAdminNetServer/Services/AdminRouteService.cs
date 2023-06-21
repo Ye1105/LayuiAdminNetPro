@@ -68,9 +68,9 @@ namespace LayuiAdminNetService.Services
             return data;
         }
 
-        public Task<int> UpdateAsync(AdminRoute model)
+        public async Task<int> UpdateAsync(AdminRoute model)
         {
-            throw new NotImplementedException();
+            return await _base.UpdateAsync(model);
         }
 
         public Task<int> UpdateRangeAsync(List<AdminRoute> list)

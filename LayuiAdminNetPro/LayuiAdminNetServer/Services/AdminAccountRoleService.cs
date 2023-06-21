@@ -88,9 +88,9 @@ namespace LayuiAdminNetService.Services
             throw new NotImplementedException();
         }
 
-        public Task<int> UpdateAsync(AdminAccountRole model)
+        public async Task<int> UpdateAsync(AdminAccountRole model)
         {
-            throw new NotImplementedException();
+            return await _base.UpdateAsync(model);
         }
 
         public Task<int> UpdateRangeAsync(List<AdminAccountRole> list)

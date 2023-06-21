@@ -69,9 +69,9 @@ namespace LayuiAdminNetService.Services
             return data;
         }
 
-        public Task<int> UpdateAsync(AdminRoleInfo model)
+        public async Task<int> UpdateAsync(AdminRoleInfo model)
         {
-            return _base.UpdateAsync(model);
+            return await _base.UpdateAsync(model);
         }
 
         public Task<int> UpdateRangeAsync(List<AdminRoleInfo> list)

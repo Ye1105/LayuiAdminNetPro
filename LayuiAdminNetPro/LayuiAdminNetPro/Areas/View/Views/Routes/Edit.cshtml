@@ -1,0 +1,82 @@
+﻿@model Dictionary<string,string>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/layui/css/layui.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="~/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="layui-form layui-form-pane form" lay-filter="LAY-route-edit-submit" id="LAY-route-edit-submit">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" autocomplete="off" placeholder="id" class="layui-input" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">PId</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="pId" autocomplete="off" placeholder="pId" class="layui-input" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">路由</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="route" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">排序</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="order" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-block">
+                            <select name="status">
+                                <option value="启用">启用</option>
+                                <option value="禁用">禁用</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.config({
+        base: '../layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(function () {
+
+        let form = layui.form
+
+        form.val("LAY-route-edit-submit", {
+            id: `@(Model["id"])`,
+            pId: `@(Model["pId"])`,
+            route: `@(Model["route"])`,
+            name: `@(Model["name"])`,
+            order: `@(Model["order"])`,
+            status: `@(Model["status"])`,
+        })
+    })
+</script>

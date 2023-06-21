@@ -197,9 +197,8 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
 
         #endregion Reponse
 
-
-
         #region Cookie
+
         /// <summary>
         /// 删除指定的cookie
         /// </summary>
@@ -237,7 +236,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             });
         }
 
-        #endregion
+        #endregion Cookie
     }
 
     /// <summary>

@@ -70,7 +70,7 @@
 
 ## 💻项目进度
 
-> 项目正在重构中，请勿克隆，可以 :star: 关注一下，:pray:谢谢。
+> 可以 `star` :star: 关注一下，:pray:谢谢。
 
 +  [项目进度](./README_SCHEDULE.md)
 

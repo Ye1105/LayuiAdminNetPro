@@ -72,5 +72,32 @@ namespace LayuiAdminNetService.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<int> AddRangeAsync(IEnumerable<AdminRolePermission> collection, Guid rId)
+        {
+            var dic = new Dictionary<object, CrudType>();
+
+            var preList = await _base.QueryAsync<AdminRolePermission>(x => x.RId == rId, isTrack: true, "id desc");
+            if (preList is not null && preList.Any())
+            {
+                foreach (var item in preList)
+                {
+                    dic.Add(item, CrudType.DELETE);
+                }
+            }
+
+            if (collection is not null && collection.Any())
+            {
+                foreach (var item in collection)
+                {
+                    dic.Add(item, CrudType.CREATE);
+                }
+            }
+
+            var res = await _base.BatchTransactionAsync(dic);
+
+            return res;
+
+        }
     }
 }

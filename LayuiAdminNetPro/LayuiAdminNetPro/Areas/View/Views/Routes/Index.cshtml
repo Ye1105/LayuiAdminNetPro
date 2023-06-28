@@ -54,7 +54,7 @@
                         let renderHtml = '';
                         pr.forEach(x => {
                             renderHtml += `<div class="layui-form-item"><dl class="permission-list">`
-                           
+
                             let prc = permissions.filter(n => n.adminRoute.pId == x.id);
                             renderHtml += `<dt><input type="checkbox" lay-filter="c_top" name="${x.id}_${@((sbyte)CrudType.READ)}" title=${x.name} ${prc.length > 0 ? "checked" : ""}></dt>`
 
@@ -100,25 +100,25 @@
                 })
         }
 
-        //$(".permission-list dt input:checkbox").click(function () {
-        //    console.log("111")
-        //    $(this).closest("dl").find("dd input:checkbox").prop("checked", $(this).prop("checked"));
-        //    $(this).closest("dl").find("dd input:checkbox").eq(0).addClass("layui-form-checked");
-        //});
 
+   
+        form.on('checkbox(c_top)', function (data) {
+            let elem = data.elem; // 获得 checkbox 原始 DOM 对象
+            let checked = elem.checked; // 获得 checkbox 选中状态
+            let value = elem.value; // 获得 checkbox 值
+            let othis = data.othis; // 获得 checkbox 元素被替换后的 jQuery 对象
 
-        //form.on('checkbox(c_top)', function (data) {
-        //    let elem = data.elem; // 获得 checkbox 原始 DOM 对象
-        //    let checked = elem.checked; // 获得 checkbox 选中状态
-        //    let value = elem.value; // 获得 checkbox 值
-        //    let othis = data.othis; // 获得 checkbox 元素被替换后的 jQuery 对象
-
-
-
-
-
-        //    //layer.msg('checked 状态: ' + elem.checked+elem.name);
-        //});
+            let res = $(othis).closest("dl").find("dd input:checkbox")
+            for (let i = 0; i < res.length; i++) {
+                let ele = res[i]
+                ele.checked = checked
+                if (checked)
+                    ele.nextSibling.classList.add("layui-form-checked")
+                else
+                    ele.nextSibling.classList.remove("layui-form-checked")
+            }
+            //layer.msg('checked 状态: ' + elem.checked + elem.name);
+        });
 
 
         form.on('checkbox(c_header)', function (data) {
@@ -126,22 +126,19 @@
             let checked = elem.checked; // 获得 checkbox 选中状态
             let value = elem.value; // 获得 checkbox 值
             let othis = data.othis; // 获得 checkbox 元素被替换后的 jQuery 对象
-
             let eles = [`${elem.name}_@((sbyte)CrudType.READ)`, `${elem.name}_@((sbyte)CrudType.CREATE)`, `${elem.name}_@((sbyte)CrudType.UPDATE)`, `${elem.name}_@((sbyte)CrudType.DELETE)`]
-
-            if (checked){
+            if (checked) {
                 eles.map(x => {
-                    document.getElementsByName(x)[0].checked = true
+                    document.getElementsByName(x)[0].checked = checked
                     document.getElementsByName(x)[0].nextSibling.classList.add("layui-form-checked")
                 })
-            }else{
+            } else {
                 eles.map(x => {
-                    document.getElementsByName(x)[0].checked = false
+                    document.getElementsByName(x)[0].checked = checked
                     document.getElementsByName(x)[0].nextSibling.classList.remove("layui-form-checked")
                 })
             }
             //layer.msg('checked 状态: ' + elem.checked+elem.name);
         });
-
     })
 </script>

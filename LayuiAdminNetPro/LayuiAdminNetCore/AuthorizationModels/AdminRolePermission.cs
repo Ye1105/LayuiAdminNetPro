@@ -2,10 +2,10 @@
 
 namespace LayuiAdminNetCore.AuthorizationModels
 {
-    public class AdminRolePermission
+    public class AdminModuleRolePermission
     {
         public List<AdminRoute>? AdminModuleInfos { get; set; }
 
-        public List<AdminModels.AdminRolePermission>? AdminRolePermissions { get; set; }
+        public List<AdminRolePermission>? AdminRolePermissions { get; set; }
     }
 }

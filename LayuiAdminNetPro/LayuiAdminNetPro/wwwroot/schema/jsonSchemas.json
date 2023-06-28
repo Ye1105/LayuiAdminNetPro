@@ -251,5 +251,43 @@
       "order",
       "status"
     ]
+  },
+  "permission-create": {
+    "type": "object",
+    "properties": {
+      "rId": {
+        "type": "string",
+        "title": "角色id"
+      },
+      "permisses": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "cId": {
+              "type": "number",
+              "enum": [
+                0,
+                1,
+                2,
+                3
+              ]
+            },
+            "mId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "cId",
+            "mId"
+          ]
+        },
+        "title": "状态"
+      }
+    },
+    "required": [
+      "rId",
+      "permisses"
+    ]
   }
 }

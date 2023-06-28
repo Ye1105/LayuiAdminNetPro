@@ -1,6 +1,10 @@
 ﻿using LayuiAdminNetCore.AdminModels;
+using LayuiAdminNetCore.AuthorizationModels;
+using LayuiAdminNetCore.Enums;
 using LayuiAdminNetGate.IServices;
 using LayuiAdminNetInfrastructure.IRepositoies;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System.Linq.Expressions;
 
 namespace LayuiAdminNetGate.Services
@@ -26,14 +30,19 @@ namespace LayuiAdminNetGate.Services
         }
 
 
-        public Task<List<AdminAccountRole>> GetAccountRolesAsync(Expression<Func<AdminAccountRole, bool>> express, bool isTrack = true)
+        public async Task<List<AdminAccountRole>> GetAccountRolesAsync(Expression<Func<AdminAccountRole, bool>> express, bool isTrack = true)
         {
-            throw new NotImplementedException();
+            return await _base.QueryAsync(express, isTrack);
         }
 
-        public Task<AdminRolePermission?> GetRolePermissionAsync()
+        public async Task<AdminModuleRolePermission?> GetRolePermissionAsync()
         {
-            throw new NotImplementedException();
+            var data = new AdminModuleRolePermission
+            {
+                AdminRolePermissions = await _base.EntitiesNoTrack<AdminRolePermission>().ToListAsync(),
+                AdminModuleInfos = await _base.EntitiesNoTrack<AdminRoute>().Where(x => x.Status == (sbyte)Status.ENABLE).ToListAsync()
+            };
+            return data;
         }
 
         public async Task<bool> ModifyAccountAsync(AdminAccount account)

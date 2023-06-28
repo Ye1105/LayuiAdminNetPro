@@ -77,9 +77,11 @@
                     layer.close(loadIndex);
                     if (result.status == 200) {
                         //解构赋值
-                        let { list } = result.data;
+                        let { routes:list } = result.data;
                         let renderHtml = `<option value="00000000-0000-0000-0000-000000000000">无</option>`;
                         if (list && list.length > 0) {
+                            list = list.filter(x => x.pId == "00000000-0000-0000-0000-000000000000")
+
                             for (let i = 0; i < list.length; i++) {
                                 renderHtml += `<option value="${list[i].id}">${list[i].name}</option>`
                             }

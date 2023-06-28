@@ -216,7 +216,7 @@
                         title: "编辑权限树",
                         type: 2,
                         area: ['100%', '100%'],
-                        content: `/routes?${params}`,
+                        content: `/rolepermissions?${params}`,
                         btn: ["提交", '取消'],
                         yes: function (index, layero) {
                             var iframeWindow = window['layui-layer-iframe' + index]
@@ -259,7 +259,7 @@
         */
         async function addRolePermission(data, iframeIndex) {
             let loadIndex = layer.load(0);
-            await fetch(`/api/rolepermission`,
+            await fetch(`/api/rolepermissions`,
                 {
                     method: 'post',
                     headers: {

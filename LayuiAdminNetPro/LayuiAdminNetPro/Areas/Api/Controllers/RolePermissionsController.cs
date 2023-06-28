@@ -15,12 +15,12 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
     [Authorize(Policy = Policys.Admin)]
     [Route($"{nameof(Api)}/[controller]")]
     [TypeFilter(typeof(CustomLogAsyncActionFilterAttribute))]
-    public class RolePermissionController : BaseController
+    public class RolePermissionsController : BaseController
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAdminRolePermissionService _permission;
 
-        public RolePermissionController(IWebHostEnvironment webHostEnvironment, IAdminRolePermissionService adminRolePermissionService)
+        public RolePermissionsController(IWebHostEnvironment webHostEnvironment, IAdminRolePermissionService adminRolePermissionService)
         {
             _webHostEnvironment = webHostEnvironment;
             _permission = adminRolePermissionService;

@@ -1,4 +1,5 @@
 ﻿using LayuiAdminNetCore.AdminModels;
+using LayuiAdminNetCore.AuthorizationModels;
 using System.Linq.Expressions;
 
 namespace LayuiAdminNetGate.IServices
@@ -17,7 +18,7 @@ namespace LayuiAdminNetGate.IServices
         /// 获取 role_permission 列表和  module_info 列表
         /// </summary>
         /// <returns></returns>
-        Task<AdminRolePermission?> GetRolePermissionAsync();
+        Task<AdminModuleRolePermission?> GetRolePermissionAsync();
 
         /// <summary>
         /// 获取账号

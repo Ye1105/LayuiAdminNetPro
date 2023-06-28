@@ -1,7 +1,6 @@
 ﻿using LayuiAdminNetCore.AuthorizationModels;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetGate.IServices;
-using LayuiAdminNetGate.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
@@ -100,6 +99,81 @@ namespace LayuiAdminNetGate.Handler
                              * 4. 当前用户的角色对应有权限的的所有 module
                              *
                              */
+
+                            //获取当前的用户角色列表
+                            var aR = await _roleModulePermissionService.GetAccountRolesAsync(x => x.UId == Guid.Parse(dicClaims["uId"]), false);
+                            if (aR == null || !aR.Any())
+                            {
+                                context?.Fail();
+                                return;
+                            }
+
+                            //当前用户的角色 RId 列表
+                            var rList = aR.Select(x => x.RId).ToList();
+
+                            //获取 admin_role_permission 和 admin_module_info 列表
+                            var pR = await _roleModulePermissionService.GetRolePermissionAsync();
+
+                            if (pR == null || pR.AdminRolePermissions == null || pR.AdminModuleInfos == null)
+                            {
+                                context?.Fail();
+                                return;
+                            }
+
+                            //获取当前用户的请求方式
+
+                            var contentType = httpContext?.Request.Method.ToLower();
+
+                            //restful 请求方式 对应 crud 用户的操作行为
+
+                            var cId = CrudType.UNKNOWN;
+
+                            switch (contentType)
+                            {
+                                case "post":
+                                    cId = CrudType.CREATE;
+                                    break;
+
+                                case "get":
+                                    cId = CrudType.READ;
+                                    break;
+
+                                case "put" or "patch":
+                                    cId = CrudType.UPDATE;
+                                    break;
+
+                                case "delete":
+                                    cId = CrudType.DELETE;
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                            if (cId == CrudType.UNKNOWN)
+                            {
+                                context?.Fail();
+                                return;
+                            }
+
+                            var p = path!.Value.ToString().ToLower();
+
+                            var res = (from r in pR.AdminRolePermissions
+                                       join m in pR.AdminModuleInfos
+                                       on r.MId equals m.Id
+                                       where
+                                         rList.Contains(r.RId)
+                                         && p.Contains(m.Route!) && m.Route != "/"
+                                         && r.CId == (sbyte)cId
+                                       select r).ToList();
+
+
+                            if (res is null || !res.Any())
+                            {
+                                context?.Fail();
+                                return;
+                            }
+
 
                             context?.Succeed(requirement);
                             return;

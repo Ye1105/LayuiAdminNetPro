@@ -22,7 +22,7 @@ namespace LayuiAdminNetPro.Utilities.Expansions
                 if (BaseController.IsAjaxRequest(context.Request) || context.Request.Path.Value!.Contains("/api"))
                 {
                     context.Response.StatusCode = (int)HttpStatus.OK;
-                    //new {    Status = HttpStatus.FORBIDDEN }
+
                     await context.Response.WriteAsJsonAsync(BaseController.Res(status: HttpStatus.FORBIDDEN, msg: "权限不足", uimsg: "权限不足"));
 
                     return;
@@ -52,8 +52,8 @@ namespace LayuiAdminNetPro.Utilities.Expansions
                     renderHtml += "</div>";
                     renderHtml += "</body>";
                     renderHtml += "</html>";
-                    await context.Response.WriteAsync(renderHtml);
 
+                    await context.Response.WriteAsync(renderHtml);
 
                     //context.Response.Redirect($"/errors?status={HttpStatus.FORBIDDEN}");
                     return;

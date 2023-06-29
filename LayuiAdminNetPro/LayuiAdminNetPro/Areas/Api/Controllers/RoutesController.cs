@@ -50,7 +50,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             //路由列表
             //角色权限列表
 
-            var routes = await _route.QueryAsync(x => true, isTrack: false);
+            var routes = await _route.QueryAsync(x => x.Status == (sbyte)Status.ENABLE, isTrack: false);
 
             var permissions = await _permission.QueryAsync(x => x.RId == rId, isInculdeModuleInfo: true, isTrack: false);
 
@@ -106,7 +106,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 return Ok(Fail(errorMessages, "参数错误"));
             }
 
-            var exsit = await _route.FirstOrDefaultAsync(x => x.Name == req.Name && x.Route == req.Route, isTrack: false);
+            var exsit = await _route.FirstOrDefaultAsync(x => x.Name == req.Name && x.Route == req.Route && x.Status == (sbyte)Status.ENABLE, isTrack: false);
             if (exsit != null)
             {
                 return Ok(Fail("名称已存在"));

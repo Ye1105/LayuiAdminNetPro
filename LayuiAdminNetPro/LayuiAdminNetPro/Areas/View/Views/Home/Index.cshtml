@@ -146,6 +146,25 @@
         var util = layui.util,
             layer = layui.layer;
 
+        getMenu();
+
+        async function getMenu() {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/home`)
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        //解构赋值
+                        console.log(result)
+                    }
+                 })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
+
         util.on("lay-on", {
             //退出网站
             'logout': function () {   

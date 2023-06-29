@@ -25,7 +25,7 @@
 
 ##  :ghost: 项目图解
 
-![图解](./Images/diagrammatize.png)
+![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/diagrammatize.png)
 
 
 ## 🔖 项目结构

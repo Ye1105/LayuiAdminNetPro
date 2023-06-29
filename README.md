@@ -1,3 +1,4 @@
+
 <h1 align="center" >🐌 LayuiAdminNetPro </h1>  
 
 <div align="center"> 
@@ -21,6 +22,11 @@
 + :pencil: 实现 AOP 捕捉异常和日志记录  
 + :beers: 基于 [Pomelo.EntityFrameworkCore.MySql](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql)   
 + :newspaper: 基于 [Mysql](https://www.mysql.com/cn/) 数据库 ，项目后期解耦仓储层会支持 `SqlServer`  等数据库  
+
+##  :ghost: 项目图解
+
+![图解](./Images/diagrammatize.png)
+
 
 ## 🔖 项目结构
 
@@ -70,7 +76,7 @@
 
 ## 💻项目进度
 
-> 可以 `star` :star: 关注一下，:pray:谢谢。
+> 项目基本完成，可以 `star` :star: 关注一下，:pray:谢谢。
 
 +  [项目进度](./README_SCHEDULE.md)
 

@@ -30,6 +30,11 @@ namespace LayuiAdminNetPro.Utilities.Expansions
                 else
                 {
                     //context.Response.Redirect($"login");
+                    if (context.Request.Path.Value == "/")
+                    {
+                        context.Response.Redirect($"/login");
+                        return;
+                    }
 
                     var renderHtml = "<!DOCTYPE html><html>";
                     renderHtml += "<head>";

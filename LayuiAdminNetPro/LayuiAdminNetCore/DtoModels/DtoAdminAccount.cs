@@ -64,7 +64,7 @@ namespace LayuiAdminNetCore.DtoModels
         public string? JobStatus { get; set; }
 
         /// <summary>
-        /// 0 启用  1 禁用  2 审核中  3 审核失败
+        /// 0 禁用  1 启用  2 审核中  3 审核失败
         /// </summary>
         [JsonProperty("status")]
         public string? Status { get; set; }

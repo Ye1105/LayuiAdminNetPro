@@ -55,7 +55,7 @@
                         pr.forEach(x => {
                             renderHtml += `<div class="layui-form-item"><dl class="permission-list">`
 
-                            let prc = permissions.filter(n => n.adminRoute.pId == x.id);
+                            let prc = permissions.filter(n => n.adminRoute.id == x.id);
                             renderHtml += `<dt><input type="checkbox" lay-filter="c_top" name="${x.id}_${@((sbyte)CrudType.READ)}" title=${x.name} ${prc.length > 0 ? "checked" : ""}></dt>`
 
                             //当前顶级节点的所有次级节点

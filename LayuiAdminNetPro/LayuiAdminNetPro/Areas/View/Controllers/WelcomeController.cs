@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
+    [Route("welcome")]
     [Authorize(Policy = Policys.Admin)]
-    public class WelcomeController : Controller
+    public class WelcomeController : ViewController
     {
         /// <summary>
         /// 欢迎界面【公告、项目版本等展示】
         /// </summary>
         /// <returns></returns>
         //[Route(nameof(Areas.View))]
-        [HttpGet("/welcome")]
-        public IActionResult Index()
+        public override IActionResult Menu()
         {
             return View();
         }

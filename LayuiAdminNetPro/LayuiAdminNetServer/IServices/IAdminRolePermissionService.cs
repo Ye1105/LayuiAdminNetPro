@@ -5,7 +5,7 @@ namespace LayuiAdminNetService.IServices
 {
     public interface IAdminRolePermissionService : IService<AdminRolePermission>
     {
-        Task<List<AdminRolePermission>> QueryAsync(Expression<Func<AdminRolePermission, bool>> expression, bool isInculdeModuleInfo = false, bool isTrack = true);
+        Task<List<AdminRolePermission>> QueryAsync(Expression<Func<AdminRolePermission, bool>> expression, Expression<Func<AdminRolePermission, bool>> expression2, bool isInculdeModuleInfo = false, bool isTrack = true);
 
 
         /// <summary>

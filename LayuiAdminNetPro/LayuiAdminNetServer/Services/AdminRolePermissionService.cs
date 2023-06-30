@@ -46,14 +46,14 @@ namespace LayuiAdminNetService.Services
             return await _base.QueryAsync(expression, isTrack, orderBy);
         }
 
-        public async Task<List<AdminRolePermission>> QueryAsync(Expression<Func<AdminRolePermission, bool>> expression, bool isInculdeModuleInfo = false, bool isTrack = true)
+        public async Task<List<AdminRolePermission>> QueryAsync(Expression<Func<AdminRolePermission, bool>> expression, Expression<Func<AdminRolePermission, bool>> expression2, bool isInculdeModuleInfo = false, bool isTrack = true)
         {
             if (isInculdeModuleInfo)
             {
                 var query = _base.Entities<AdminRolePermission>()
                     .Where(expression)
                     .Include(x => x.AdminRoute)
-                    .Where(t => t.AdminRoute!.Status == (sbyte)Status.ENABLE)
+                    .Where(expression2)
                     .AsQueryable();
 
                 return isTrack ? await query.ToListAsync() : await query.AsNoTracking().ToListAsync();

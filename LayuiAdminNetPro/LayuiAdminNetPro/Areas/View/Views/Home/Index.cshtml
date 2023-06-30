@@ -43,11 +43,11 @@
                     <!-- 基本信息/修改密码/退出-->
                     <li class="layui-nav-item" lay-unselect>
                         <a href="javascript:;">
-                            <cite>layui</cite>
+                            <cite id="account_name"></cite>
                         </a>
                         <dl class="layui-nav-child">
-@*                          <dd><a lay-href="">基本资料</a></dd>
-                            <dd><a lay-href="">修改密码</a></dd>*@
+                            <dd><a href="javascript:;">基本资料</a></dd>
+                            <dd><a href="javascript:;">修改密码</a></dd>
                             <dd style="text-align:center;"><a href="javascript:;" lay-on="logout">退出</a></dd>
                         </dl>
                     </li>
@@ -69,29 +69,7 @@
 
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
                         lay-filter="layadmin-system-side-menu">
-                        <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="主页" lay-direction="1">
-                                <i class="layui-icon layui-icon-home"></i>
-                                <cite>主页</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="server">
-                                    <a lay-href="/welcome">主页信息</a>
-                                </dd>
-                            </dl>
-                        </li>
-
-                        <li data-name="set" class="layui-nav-item">
-                            <a href="javascript:;" lay-tips="设置" lay-direction="2">
-                                <i class="layui-icon layui-icon-set"></i>
-                                <cite>设置</cite>
-                            </a>
-                            <dl class="layui-nav-child">                           
-                                <dd><a lay-href="/accounts/paged">用户管理</a></dd>
-                                <dd><a lay-href="/roleinfos/paged">角色管理</a></dd>
-                                <dd><a lay-href="/routes/paged">路由管理</a></dd>
-                            </dl>
-                        </li>
+                      
                     </ul>
                 </div>
             </div>
@@ -124,7 +102,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="/welcome" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe src="/welcome/menu" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
 
@@ -144,14 +122,74 @@
     }).use(["index", "util", "layer"], function () {
 
         var util = layui.util,
-            layer = layui.layer;
+            layer = layui.layer,
+            element = layui.element,
+            $ = layui.$;
+
+        getMenu();
+
+        async function getMenu() {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/home`)
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        //解构赋值
+                        const { account, menus } = result.data
+                        //console.log(account, menus)
+                        //账号信息赋值
+                        if (account != null) {
+                            $("#account_name").text(account.name)
+                        }
+                        //侧边菜单栏信息赋值
+                        if (menus != null && menus.length > 0) {
+                            //console.log(menus)
+                            let renderHtml = ""
+
+                            //顶级菜单栏
+                            const preMenu = menus.filter(x => x.adminRoute.pId == "00000000-0000-0000-0000-000000000000")
+                            console.log(preMenu)
+                            if (preMenu != null && preMenu.length > 0) {
+                                preMenu.forEach((ele,index) => {
+
+                                    renderHtml += ` <li data-name="${ele.adminRoute.name}" class="layui-nav-item ${index==0?"layui-nav-itemed":""}"> `
+                                    renderHtml += `<a href="javascript:;" lay-tips="${ele.adminRoute.name}" lay-direction="${ele.adminRoute.order}">`
+                                    renderHtml += `<i class= "layui-icon layui-icon-set"> </i>`
+                                    renderHtml += `<cite>${ele.adminRoute.name} </cite>`
+                                    renderHtml += `</a>`
+                                    //获取当前顶级菜单下的菜单列表
+                                    const childMenu = menus.filter(x => x.adminRoute.pId == ele.adminRoute.id)
+                                    if (childMenu != null && childMenu.length > 0) {
+                                        //console.log(childMenu)
+                                        renderHtml += `<dl class="layui-nav-child">`
+                                        childMenu.forEach(elem => {
+                                            renderHtml += `<dd>`
+                                            renderHtml += `<a lay-href="${elem.adminRoute.route}/menu">${elem.adminRoute.name}</a>`
+                                            renderHtml += `</dd>`
+                                        });
+                                        renderHtml += `</dl>`
+                                    }
+                                    renderHtml += `</li>`
+                                });
+                            }
+                            $("#LAY-system-side-menu").html(renderHtml)
+                            element.render('nav', 'layadmin-system-side-menu');
+                        }
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+                })
+        }
 
         util.on("lay-on", {
             //退出网站
-            'logout': function () {   
+            'logout': function () {
                 layer.confirm('确定登出吗?', {
-                    title:false,
-                    btn: ["确定","关闭"],
+                    title: false,
+                    btn: ["确定", "关闭"],
                 }, function () {
 
                     //console.log('用户登出网站')
@@ -161,7 +199,7 @@
                     // 模拟关闭
                     setTimeout(function () {
                         layer.close(loadIndex)
-                        window.location.href = "/";
+                        window.location.href = "/login";
                     }, 1000);
                     //window.location.href = "/login"
                 })

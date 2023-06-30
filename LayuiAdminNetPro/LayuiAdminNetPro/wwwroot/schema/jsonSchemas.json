@@ -298,5 +298,26 @@
       "rId",
       "permisses"
     ]
+  },
+  "person-psd": {
+    "type": "object",
+    "description": "账号 修改密码 参数规则",
+    "properties": {
+      "password": {
+        "type": "string",
+        "title": "密码",
+        "minLength": 6,
+        "maxLength": 12
+      },
+      "cpassword": {
+        "type": "string",
+        "title": "确认密码",
+        "minLength": 6,
+        "maxLength": 12
+      }
+    },
+    "required": [
+      "password"
+    ]
   }
 }

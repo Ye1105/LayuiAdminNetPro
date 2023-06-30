@@ -14,23 +14,23 @@
 
 
 ## :zap: 功能特性
-+ :boom: 实现自定义用户权限配置  
++ :boom: 实现用户权限、菜单栏展示的自定义、可视化动态配置  
 + ⛳ 实现 [JsonSchema](http://json-schema.org/) 统一配置页面和接口参数校验  
 + :palm_tree: 实现 [RESTful API](https://restfulapi.cn/) 自定义路由配置  
 + :sparkles: 实现 [JSON Web Tokens](https://jwt.io/) 认证  
 + :whale: 实现 [ASP.NET Authorization](https://learn.microsoft.com/zh-cn/aspnet/core/security/authorization/policies?view=aspnetcore-6.0) 自定义策略  
-+ :pencil: 实现 AOP 捕捉异常和日志记录  
++ :pencil: 实现 AOP 日志记录和异常捕捉  
 + :beers: 基于 [Pomelo.EntityFrameworkCore.MySql](https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql)   
 + :newspaper: 基于 [Mysql](https://www.mysql.com/cn/) 数据库 ，项目后期解耦仓储层会支持 `SqlServer`  等数据库  
 
 ##  :ghost: 项目图解
 
-![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/diagrammatize.png)
+![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/Diagrammatize.png)
 
 
 ## 🔖 项目结构
 
-> 项目结构目录，后续随着项目重构可能会增加。
+> 项目基础结构目录。`Tips：后续随着项目优化可能会有小的改动`
 
 ```C#
  Project 
@@ -76,15 +76,21 @@
 
 ## 💻项目进度
 
-> 项目基本完成，可以 `star` :star: 关注一下，:pray:谢谢。
+> 项目基础框架基本搭建完成，项目使用说明文档还在跟进，可以 `Star` :star: 关注一下，:pray:谢谢。
 
 +  [项目进度](./README_SCHEDULE.md)
 
 ## 📄项目规范
 
-> 可以在 `apifox` 中查看和调试接口
+> `Clone` 项目后，可以在 `Apifox` 中查看项目中数据接口的请求参数、请求方式和请求规则 `JsonSchema` 等
 
-+  [Apifox API 文档](https://apifox.com/apidoc/shared-a1ef2dce-1084-4da5-8bdb-18aaec8dd93a)
++  [Apifox API 在线文档](https://apifox.com/apidoc/shared-a1ef2dce-1084-4da5-8bdb-18aaec8dd93a)
+
+## :file_folder:数据库文件
+
+> 以 `.sql`  后缀的数据文件 
+
++  [Mysql 项目初始化数据文件](./LayuiAdminNetProSql.sql)
 
 ## :rainbow:免责说明
 

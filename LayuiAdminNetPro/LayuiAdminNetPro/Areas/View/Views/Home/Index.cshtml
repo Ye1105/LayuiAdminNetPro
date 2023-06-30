@@ -46,8 +46,8 @@
                             <cite id="account_name"></cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">基本资料</a></dd>
-                            <dd><a href="javascript:;">修改密码</a></dd>
+                            <dd><a href="javascript:;" lay-on="info">基本资料</a></dd>
+                            <dd><a href="javascript:;" lay-on="psdEdit">修改密码</a></dd>
                             <dd style="text-align:center;"><a href="javascript:;" lay-on="logout">退出</a></dd>
                         </dl>
                     </li>
@@ -111,6 +111,8 @@
     </div>
 </body>
 </html>
+<script type="text/javascript" src="~/schema/ZSchema-browser-min.js"></script>
+<script type="text/javascript" src="~/schema/jsonSchemas.js"></script>
 <script type="text/javascript" src="~/common/docCookies.js"></script>
 <script type="text/javascript" src="~/layuiadmin/layui/layui.js"></script>
 <script type="text/javascript">
@@ -127,6 +129,7 @@
 
         getMenu();
 
+        //首页侧边栏动态展示界面
         async function getMenu() {
             let loadIndex = layer.load(0);
             await fetch(`/api/home`)
@@ -145,10 +148,9 @@
                         if (menus != null && menus.length > 0) {
                             //console.log(menus)
                             let renderHtml = ""
-
                             //顶级菜单栏
                             const preMenu = menus.filter(x => x.adminRoute.pId == "00000000-0000-0000-0000-000000000000")
-                            console.log(preMenu)
+                            //console.log(preMenu)
                             if (preMenu != null && preMenu.length > 0) {
                                 preMenu.forEach((ele, index) => {
 
@@ -212,8 +214,97 @@
                     }, 1000);
                     //window.location.href = "/login"
                 })
+            },
+            //个人信息界面
+            'info': function () {
+                layer.open({
+                    title: "个人信息",
+                    type: 2,
+                    area: ['480px', '480px'],
+                    content: `/persons`,
+                    btn: ['返回'],
+                })
+            },
+            //修改个人信息的密码
+            'psdEdit': function () {
+                console.log("修改密码")
 
+                layer.open({
+                    title: "修改密码",
+                    type: 2,
+                    area: ['480px', '268px'],
+                    content: `/persons/psd`,
+                    btn: ["提交", '取消'],
+                    yes: function (index, layero) {
+                        var iframeWindow = window['layui-layer-iframe' + index]
+                            //, submitID = 'LAY-account-create'
+                            , submitFilter = 'LAY-person-psd-submit'
+                        //1.获取表单数据
+                        let formData = iframeWindow.layui.form.val(submitFilter)
+                        console.log(formData)
+                        //2.json schema 校验表单数据
+                        if (formData != {}) {
+                            let schemas = jsonSchemas.getSchema("person-psd")
+                            if (schemas.res == false) {
+                                layer.msg(schemas.msg)
+                            }
+                            let validator = new ZSchema();
+                            validator.validate(formData, schemas.data, function (err, valid) {
+                                if (!valid) {
+                                    layer.msg(`${err[err.length - 1].title}：${err[err.length - 1].message}`)
+                                    return
+                                }
+                                //判定 password 和 cpassword 的值是否一致
+                                if (formData["password"] !== formData["cpassword"]) {
+                                    layer.msg("两次输入的密码不一致");
+                                    return;
+                                }
+
+                                var param = {
+                                    "method": "修改密码",
+                                    password: formData["password"]
+                                }
+                                //fetch 解锁选中的账户
+                                updatePerson(param, index);
+                            });
+                        }
+                    }
+                })
             }
         })
+
+        /**
+        * bref fetch 修改账号状态
+        * param data json格式的表单参数
+        * param layerIndex 弹窗的 index
+        */
+        async function updatePerson(data, layerIndex) {
+            let loadIndex = layer.load(0);
+            await fetch(`/api/persons`,
+                {
+                    method: 'patch',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    layer.close(loadIndex);
+                    if (result.status == 200) {
+                        layer.close(layerIndex); //关闭弹层
+                        layer.msg("修改密码成功，2秒后跳转到登录界面", { time: 2000 }, function(){
+                            window.location.href = "/login"
+                        });
+                    } else {
+                        layer.msg(result.uimsg);
+                    }
+                })
+                .catch(function (ex) {
+                    layer.close(loadIndex);
+                    console.log('parsing failed', ex);
+
+                })
+        }
     })
 </script>

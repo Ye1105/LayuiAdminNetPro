@@ -30,7 +30,7 @@
 
 ## 🔖 项目结构
 
-> 项目结构目录，后续随着项目重构可能会增加。
+> 项目基础结构目录。`Tips：后续随着项目优化可能会有小的改动`
 
 ```C#
  Project 
@@ -82,9 +82,15 @@
 
 ## 📄项目规范
 
-> `Clone` 项目后，可以在 `Apifox` 中查看项目中数据接口的参数规范、请求方式和请求规则 `JsonSchema`等
+> `Clone` 项目后，可以在 `Apifox` 中查看项目中数据接口的请求参数、请求方式和请求规则 `JsonSchema` 等
 
 +  [Apifox API 在线文档](https://apifox.com/apidoc/shared-a1ef2dce-1084-4da5-8bdb-18aaec8dd93a)
+
+## :file_folder:数据库文件
+
+> 以 `.sql`  后缀的数据文件 
+
++  [Mysql 项目初始化数据文件](./LayuiAdminNetProSql.sql)
 
 ## :rainbow:免责说明
 

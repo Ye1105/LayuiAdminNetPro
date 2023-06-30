@@ -199,7 +199,6 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> Del([FromQuery] Guid id)
         {
-
             var exsit = await _route.FirstOrDefaultAsync(x => x.Id == id);
             if (exsit != null)
             {
@@ -211,6 +210,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 return Ok(Fail("不存在当前id的路由信息"));
             }
         }
-        #endregion
+
+        #endregion Del
     }
 }

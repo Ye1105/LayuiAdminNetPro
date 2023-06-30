@@ -102,7 +102,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe src="/welcome" frameborder="0" class="layadmin-iframe"></iframe>
+                    <iframe src="/welcome/menu" frameborder="0" class="layadmin-iframe"></iframe>
                 </div>
             </div>
 
@@ -165,7 +165,7 @@
                                         renderHtml += `<dl class="layui-nav-child">`
                                         childMenu.forEach(elem => {
                                             renderHtml += `<dd>`
-                                            renderHtml += `<a lay-href="${elem.adminRoute.route}">${elem.adminRoute.name}</a>`
+                                            renderHtml += `<a lay-href="${elem.adminRoute.route}/menu">${elem.adminRoute.name}</a>`
                                             renderHtml += `</dd>`
                                         });
                                         renderHtml += `</dl>`

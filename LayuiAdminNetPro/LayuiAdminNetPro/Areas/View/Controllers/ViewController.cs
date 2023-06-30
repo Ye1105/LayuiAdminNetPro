@@ -21,8 +21,8 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        [HttpGet("paged")]
-        public virtual IActionResult Paged()
+        [HttpGet("menu")]
+        public virtual IActionResult Menu()
         {
             throw new NotImplementedException();
         }

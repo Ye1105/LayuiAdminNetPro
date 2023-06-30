@@ -52,7 +52,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
 
             var routes = await _route.QueryAsync(x => x.Status == (sbyte)Status.ENABLE, isTrack: false);
 
-            var permissions = await _permission.QueryAsync(x => x.RId == rId, isInculdeModuleInfo: true, isTrack: false);
+            var permissions = await _permission.QueryAsync(x => x.RId == rId, t => t.AdminRoute!.Status == (sbyte)Status.ENABLE, isInculdeModuleInfo: true, isTrack: false);
 
             return Ok(Success(new { routes, permissions }));
         }

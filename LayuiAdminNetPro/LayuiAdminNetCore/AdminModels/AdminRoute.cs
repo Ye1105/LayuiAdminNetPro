@@ -37,8 +37,15 @@ namespace LayuiAdminNetCore.AdminModels
         [JsonProperty("order")]
         public int? Order { get; set; } = 0;
 
+
         /// <summary>
-        /// 0 启用  1 禁用  2 审核中  3 审核失败
+        /// 是否是菜单栏界面（默认不是）
+        /// </summary>
+        [JsonProperty("menu")]
+        public sbyte? Menu { get; set; } = (sbyte)Enums.Status.DISABLE;
+
+        /// <summary>
+        /// 0 禁用  1 启用  2 审核中  3 审核失败
         /// </summary>
         [JsonProperty("status")]
         public sbyte Status { get; set; } = (sbyte)Enums.Status.ENABLE;

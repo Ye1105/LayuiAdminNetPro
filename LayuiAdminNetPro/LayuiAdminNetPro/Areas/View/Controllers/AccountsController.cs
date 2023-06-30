@@ -8,7 +8,7 @@ namespace LayuiAdminNetPro.Areas.View.Controllers
     [Authorize(Policy = Policys.Admin)]
     public class AccountsController : ViewController
     {
-        public override IActionResult Paged()
+        public override IActionResult Menu()
         {
             return View();
         }

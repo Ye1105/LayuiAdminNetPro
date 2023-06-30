@@ -51,6 +51,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
             {
                 var menus = await _adminRolePermissionService.QueryAsync(
                       x => rIds.Contains(x.RId) && x.CId == (sbyte)CrudType.READ,
+                      t => t.AdminRoute!.Status == (sbyte)Status.ENABLE && t.AdminRoute!.Menu == (sbyte)Status.ENABLE,
                       isInculdeModuleInfo: true,
                       isTrack: false
                  );

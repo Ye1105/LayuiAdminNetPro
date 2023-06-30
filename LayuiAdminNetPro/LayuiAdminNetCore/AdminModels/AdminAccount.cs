@@ -63,7 +63,7 @@ namespace LayuiAdminNetCore.AdminModels
         public sbyte JobStatus { get; set; } = (sbyte)Enums.JobStatus.ON_JOB;
 
         /// <summary>
-        /// 0 启用  1 禁用  2 审核中  3 审核失败
+        /// 0 禁用  1 启用  2 审核中  3 审核失败
         /// </summary>
         [JsonProperty("status")]
         public sbyte Status { get; set; } = (sbyte)Enums.Status.ENABLE;

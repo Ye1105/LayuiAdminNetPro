@@ -33,5 +33,11 @@ namespace LayuiAdminNetCore.RequstModels
         /// </summary>
         [JsonProperty("status")]
         public string Status { get; set; } = "";
+
+        /// <summary>
+        /// 菜单
+        /// </summary>
+        [JsonProperty("menu")]
+        public string Menu { get; set; } = "";
     }
 }

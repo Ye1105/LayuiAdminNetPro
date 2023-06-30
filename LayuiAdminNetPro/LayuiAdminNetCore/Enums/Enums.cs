@@ -33,6 +33,19 @@ namespace LayuiAdminNetCore.Enums
     }
 
     /// <summary>
+    /// 布尔
+    /// </summary>
+    public enum BoolType
+    {
+        [EnumDescription("否")]
+        FALSE = 0,
+
+        [EnumDescription("是")]
+        TRUE = 1,
+    }
+
+
+    /// <summary>
     /// 行为状态
     /// </summary>
     public enum Status

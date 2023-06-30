@@ -29,9 +29,9 @@ namespace LayuiAdminNetService.Services
             throw new NotImplementedException();
         }
 
-        public Task<int> DelAsync(AdminRoute model)
+        public async Task<int> DelAsync(AdminRoute model)
         {
-            throw new NotImplementedException();
+            return await _base.DelAsync(model);
         }
 
         public Task<int> DelRangeAsync(List<AdminRoute> list)

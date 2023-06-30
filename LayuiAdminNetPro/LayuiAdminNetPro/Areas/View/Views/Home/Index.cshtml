@@ -69,7 +69,6 @@
 
                     <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
                         lay-filter="layadmin-system-side-menu">
-                      
                     </ul>
                 </div>
             </div>
@@ -151,9 +150,9 @@
                             const preMenu = menus.filter(x => x.adminRoute.pId == "00000000-0000-0000-0000-000000000000")
                             console.log(preMenu)
                             if (preMenu != null && preMenu.length > 0) {
-                                preMenu.forEach((ele,index) => {
+                                preMenu.forEach((ele, index) => {
 
-                                    renderHtml += ` <li data-name="${ele.adminRoute.name}" class="layui-nav-item ${index==0?"layui-nav-itemed":""}"> `
+                                    renderHtml += ` <li data-name="${ele.adminRoute.name}" class="layui-nav-item ${ele.adminRoute.name == "主页" ? "layui-nav-itemed" : ""}"> `
                                     renderHtml += `<a href="javascript:;" lay-tips="${ele.adminRoute.name}" lay-direction="${ele.adminRoute.order}">`
                                     renderHtml += `<i class= "layui-icon layui-icon-set"> </i>`
                                     renderHtml += `<cite>${ele.adminRoute.name} </cite>`
@@ -162,13 +161,23 @@
                                     const childMenu = menus.filter(x => x.adminRoute.pId == ele.adminRoute.id)
                                     if (childMenu != null && childMenu.length > 0) {
                                         //console.log(childMenu)
-                                        renderHtml += `<dl class="layui-nav-child">`
-                                        childMenu.forEach(elem => {
-                                            renderHtml += `<dd>`
-                                            renderHtml += `<a lay-href="${elem.adminRoute.route}/menu">${elem.adminRoute.name}</a>`
-                                            renderHtml += `</dd>`
-                                        });
-                                        renderHtml += `</dl>`
+                                        if (ele.adminRoute.name == "主页") {
+                                            renderHtml += `<dl class="layui-nav-child">`
+                                            childMenu.forEach(elem => {
+                                                renderHtml += `<dd>`
+                                                renderHtml += `<a lay-href="${elem.adminRoute.route}/menu" class="layui-this">${elem.adminRoute.name}</a>`
+                                                renderHtml += `</dd>`
+                                            });
+                                            renderHtml += `</dl>`
+                                        } else {
+                                            renderHtml += `<dl class="layui-nav-child">`
+                                            childMenu.forEach(elem => {
+                                                renderHtml += `<dd>`
+                                                renderHtml += `<a lay-href="${elem.adminRoute.route}/menu">${elem.adminRoute.name}</a>`
+                                                renderHtml += `</dd>`
+                                            });
+                                            renderHtml += `</dl>`
+                                        }
                                     }
                                     renderHtml += `</li>`
                                 });

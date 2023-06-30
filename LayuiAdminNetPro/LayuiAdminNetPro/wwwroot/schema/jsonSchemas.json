@@ -242,6 +242,14 @@
           "启用",
           "禁用"
         ]
+      },
+      "menu": {
+        "type": "string",
+        "title": "菜单",
+        "enum": [
+          "是",
+          "否"
+        ]
       }
     },
     "required": [
@@ -249,7 +257,8 @@
       "route",
       "name",
       "order",
-      "status"
+      "status",
+      "menu"
     ]
   },
   "permission-create": {

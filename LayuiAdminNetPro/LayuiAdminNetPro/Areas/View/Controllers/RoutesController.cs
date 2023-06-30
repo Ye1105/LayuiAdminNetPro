@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
+    /// <summary>
+    /// 路由配置管理
+    /// </summary>
     [Route("routes")]
     [Authorize(Policy = Policys.Admin)]
     public class RoutesController : ViewController

@@ -38,6 +38,13 @@ namespace LayuiAdminNetCore.DtoModels
         [JsonProperty("order")]
         public int? Order { get; set; } = 0;
 
+
+        /// <summary>
+        /// 是否是菜单栏界面（默认不是）
+        /// </summary>
+        [JsonProperty("menu")]
+        public string? Menu { get; set; }
+
         /// <summary>
         /// 0 禁用  1 启用  2 审核中  3 审核失败
         /// </summary>

@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LayuiAdminNetPro.Areas.View.Controllers
 {
+    /// <summary>
+    /// 用户角色
+    /// </summary>
     [Route("roleinfos")]
     [Authorize(Policy = Policys.Admin)]
     public class RoleInfosController : ViewController

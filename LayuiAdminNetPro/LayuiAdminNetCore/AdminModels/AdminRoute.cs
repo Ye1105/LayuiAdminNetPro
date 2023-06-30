@@ -42,7 +42,7 @@ namespace LayuiAdminNetCore.AdminModels
         /// 是否是菜单栏界面（默认不是）
         /// </summary>
         [JsonProperty("menu")]
-        public sbyte? Menu { get; set; } = (sbyte)Enums.Status.DISABLE;
+        public sbyte Menu { get; set; } = (sbyte)Enums.Status.DISABLE;
 
         /// <summary>
         /// 0 禁用  1 启用  2 审核中  3 审核失败

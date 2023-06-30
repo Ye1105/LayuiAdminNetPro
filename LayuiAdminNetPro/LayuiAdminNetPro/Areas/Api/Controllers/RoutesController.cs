@@ -119,6 +119,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 Route = req.Route.Trim().ToLower(),
                 Name = req.Name,
                 Order = req.Order,
+                Menu = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<BoolType>(req.Menu),
                 Status = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<Status>(req.Status),
             };
 
@@ -175,6 +176,7 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
                 adminRoute.Name = req.Name;
                 adminRoute.Route = req.Route;
                 adminRoute.Order = req.Order;
+                adminRoute.Menu = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<BoolType>(req.Menu);
                 adminRoute.Status = (sbyte)EnumDescriptionAttribute.GetEnumByDescription<Status>(req.Status);
                 var res = await _route.UpdateAsync(adminRoute);
                 return res > 0 ? Ok(Success()) : Ok(Fail());
@@ -186,5 +188,29 @@ namespace LayuiAdminNetPro.Areas.Api.Controllers
         }
 
         #endregion Put
+
+        #region Del
+
+        /// <summary>
+        /// 删除路由
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> Del([FromQuery] Guid id)
+        {
+
+            var exsit = await _route.FirstOrDefaultAsync(x => x.Id == id);
+            if (exsit != null)
+            {
+                var res = await _route.DelAsync(exsit);
+                return res > 0 ? Ok(Success()) : Ok(Fail());
+            }
+            else
+            {
+                return Ok(Fail("不存在当前id的路由信息"));
+            }
+        }
+        #endregion
     }
 }

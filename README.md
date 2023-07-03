@@ -2,7 +2,7 @@
 <h1 align="center" >🐌 LayuiAdminNetPro </h1>  
 
 <div align="center"> 
-<p> LayuiAdminNetPro  是一个 Iframe  版的 Web 后台解决方案，基于 <a target="_blank" href="http://layui.org.cn/layuiadmin/index.html#get" >Layuiadmin</a> 和 .NET , 支持 .NET 6.0 + 。</p>
+<p> LayuiAdminNetPro  是一个 Iframe  版的 Web 后台解决方案，基于 <a target="_blank" href="http://layui.org.cn/layuiadmin/index.html#get" >Layui</a> 和 .NET , 支持 .NET 6.0 + 。</p>
 </div>
 
 
@@ -14,8 +14,8 @@
 
 
 ## :zap: 功能特性
-+ :boom: 实现用户权限、菜单栏展示的自定义、可视化动态配置  
-+ ⛳ 实现 [JsonSchema](http://json-schema.org/) 统一配置页面和接口参数校验  
++ :boom: 实现用户权限、菜单栏权限自定义配置  
++ ⛳ 实现 [JsonSchema](http://json-schema.org/) 参数校验配置  
 + :palm_tree: 实现 [RESTful API](https://restfulapi.cn/) 自定义路由配置  
 + :sparkles: 实现 [JSON Web Tokens](https://jwt.io/) 认证  
 + :whale: 实现 [ASP.NET Authorization](https://learn.microsoft.com/zh-cn/aspnet/core/security/authorization/policies?view=aspnetcore-6.0) 自定义策略  
@@ -25,7 +25,12 @@
 
 ##  :ghost: 项目图解
 
-![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/render.png)
+![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/github/render.png)
+
+
+##  :camera: 项目界面
+
++ [基础界面展示(登录界面、主界面、用户管理界面、角色管理界面、路由管理界面等等)](./README_IMAGES.md)
 
 
 ## 🔖 项目结构
@@ -35,7 +40,7 @@
 ```C#
  Project 
     ├── LayuiAdminNetPro                     //主项目程序
-    |   ├── wwwroot                           	//静态资源（Layuiadmin、schema、common等等）  
+    |   ├── wwwroot                           	//静态资源（Layui、Layuiadmin、schema、common等等）  
     |   ├── Areas                           	//区域    
     |   |   ├── Api                                //接口模块
     |   |   |   ├── JsonSchemas                       //数据处理接口参数校验
@@ -76,13 +81,13 @@
 
 ## 💻项目进度
 
-> 项目基础框架基本搭建完成，项目使用说明文档还在跟进，可以 `Star` :star: 关注一下，:pray:谢谢。
+> 项目基础框架基本搭建完成，可以 `Star` :star: 关注一下，:pray:谢谢。
 
 +  [项目进度](./README_SCHEDULE.md)
 
 ## 📄项目规范
 
-> `Clone` 项目后，可以在 `Apifox` 中查看项目中数据接口的请求参数、请求方式和请求规则 `JsonSchema` 等
+> `Clone` 项目后，可以在 `Apifox` 中查看项目中数据接口的请求参数、请求方式和请求规则 `JsonSchema` 等等
 
 +  [Apifox API 在线文档](https://apifox.com/apidoc/shared-a1ef2dce-1084-4da5-8bdb-18aaec8dd93a)
 

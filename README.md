@@ -25,7 +25,7 @@
 
 ##  :ghost: 项目图解
 
-![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/Render.png)
+![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/render.png)
 
 
 ## 🔖 项目结构

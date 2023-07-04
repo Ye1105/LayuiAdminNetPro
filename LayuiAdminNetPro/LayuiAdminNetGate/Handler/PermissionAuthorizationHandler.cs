@@ -114,7 +114,7 @@ namespace LayuiAdminNetGate.Handler
                             //获取 admin_role_permission 和 admin_module_info 列表
                             var pR = await _roleModulePermissionService.GetRolePermissionAsync();
 
-                            if (pR == null || pR.AdminRolePermissions == null || pR.AdminModuleInfos == null)
+                            if (pR == null || pR.AdminRolePermissions == null || pR.AdminRoutes == null)
                             {
                                 context?.Fail();
                                 return;
@@ -159,7 +159,7 @@ namespace LayuiAdminNetGate.Handler
                             var p = path!.Value.ToString().ToLower();
 
                             var res = (from r in pR.AdminRolePermissions
-                                       join m in pR.AdminModuleInfos
+                                       join m in pR.AdminRoutes
                                        on r.MId equals m.Id
                                        where
                                          rList.Contains(r.RId)

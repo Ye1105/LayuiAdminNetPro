@@ -1,5 +1,6 @@
 ﻿using LayuiAdminNetCore.AdminModels;
 using LayuiAdminNetCore.AuthorizationModels;
+using LayuiAdminNetCore.Constants;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetGate.IServices;
 using LayuiAdminNetInfrastructure.IRepositoies;
@@ -12,9 +13,11 @@ namespace LayuiAdminNetGate.Services
     public class RoleModulePermissionService : IRoleModulePermissionService
     {
         private readonly IBase _base;
-        public RoleModulePermissionService(IBase baseService)
+        private readonly IMemoryCache _cache;
+        public RoleModulePermissionService(IBase baseService, IMemoryCache memoryCache)
         {
             _base = baseService;
+            _cache = memoryCache;
         }
 
         public async Task<AdminAccount?> AccountFirstOrDefaultAsync(Expression<Func<AdminAccount, bool>> expression, bool isTrack = true)
@@ -37,12 +40,33 @@ namespace LayuiAdminNetGate.Services
 
         public async Task<AdminModuleRolePermission?> GetRolePermissionAsync()
         {
-            var data = new AdminModuleRolePermission
-            {
-                AdminRolePermissions = await _base.EntitiesNoTrack<AdminRolePermission>().ToListAsync(),
-                AdminModuleInfos = await _base.EntitiesNoTrack<AdminRoute>().Where(x => x.Status == (sbyte)Status.ENABLE).ToListAsync()
-            };
-            return data;
+            //var data = new AdminModuleRolePermission
+            //{
+            //    AdminRolePermissions = await _base.EntitiesNoTrack<AdminRolePermission>().ToListAsync(),
+            //    AdminModuleInfos = await _base.EntitiesNoTrack<AdminRoute>().Where(x => x.Status == (sbyte)Status.ENABLE).ToListAsync()
+            //};
+            //return data;
+
+
+            var res = await _cache.GetOrCreateAsync(Constants.ROLE_PERMISSION_CACHE,
+              async e =>
+              {
+                  //滑动过期时间
+                  e.SetSlidingExpiration(TimeSpan.FromHours(1));
+
+                  //绝对过期时间
+                  e.SetAbsoluteExpiration(TimeSpan.FromDays(1));
+
+                  var data = new AdminModuleRolePermission
+                  {
+                      AdminRolePermissions = await _base.EntitiesNoTrack<AdminRolePermission>().ToListAsync(),
+                      AdminRoutes = await _base.EntitiesNoTrack<AdminRoute>().Where(x => x.Status == (sbyte)Status.ENABLE).ToListAsync()
+                  };
+
+                  return await Task.FromResult(data);
+              });
+
+            return res;
         }
 
         public async Task<bool> ModifyAccountAsync(AdminAccount account)

@@ -7,7 +7,6 @@ namespace LayuiAdminNetService.IServices
     {
         Task<List<AdminRolePermission>> QueryAsync(Expression<Func<AdminRolePermission, bool>> expression, Expression<Func<AdminRolePermission, bool>> expression2, bool isInculdeModuleInfo = false, bool isTrack = true);
 
-
         /// <summary>
         /// AddRangeAsync
         /// </summary>

@@ -25,7 +25,7 @@
 
 ##  :ghost: 项目图解
 
-![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/github/render.png)
+![图解](https://luoqiublog2-1302273318.cos.ap-nanjing.myqcloud.com/github/ren.jpg)
 
 
 ##  :camera: 项目界面

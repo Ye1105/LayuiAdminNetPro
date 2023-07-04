@@ -1,11 +1,11 @@
 ﻿using CodeHelper.Common;
 using LayuiAdminNetCore.AdminModels;
+using LayuiAdminNetCore.Constants;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetCore.Pages;
 using LayuiAdminNetCore.RequstModels;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using LayuiAdminNetService.IServices;
-using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace LayuiAdminNetService.Services
@@ -13,15 +13,20 @@ namespace LayuiAdminNetService.Services
     public class AdminRouteService : IAdminRouteService
     {
         private readonly IBase _base;
+        private readonly IMemoryService _cache;
 
-        public AdminRouteService(IBase baseService)
+        public AdminRouteService(IBase baseService, IMemoryService memoryService)
         {
             _base = baseService;
+            _cache = memoryService;
         }
 
         public async Task<int> AddAsync(AdminRoute model)
         {
-            return await _base.AddAsync(model);
+            var res = await _base.AddAsync(model);
+            //清缓存
+            _cache.Remove(res > 0, Constants.ROLE_PERMISSION_CACHE);
+            return res;
         }
 
         public Task<int> AddRangeAsync(List<AdminRoute> list, Guid uId)
@@ -31,7 +36,10 @@ namespace LayuiAdminNetService.Services
 
         public async Task<int> DelAsync(AdminRoute model)
         {
-            return await _base.DelAsync(model);
+            var res = await _base.DelAsync(model);
+            //清缓存
+            _cache.Remove(res > 0, Constants.ROLE_PERMISSION_CACHE);
+            return res;
         }
 
         public Task<int> DelRangeAsync(List<AdminRoute> list)
@@ -74,7 +82,10 @@ namespace LayuiAdminNetService.Services
 
         public async Task<int> UpdateAsync(AdminRoute model)
         {
-            return await _base.UpdateAsync(model);
+            var res = await _base.UpdateAsync(model);
+            //清缓存
+            _cache.Remove(res > 0, Constants.ROLE_PERMISSION_CACHE);
+            return res;
         }
 
         public Task<int> UpdateRangeAsync(List<AdminRoute> list)

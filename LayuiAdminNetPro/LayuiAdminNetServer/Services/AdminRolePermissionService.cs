@@ -1,4 +1,5 @@
 ﻿using LayuiAdminNetCore.AdminModels;
+using LayuiAdminNetCore.Constants;
 using LayuiAdminNetCore.Enums;
 using LayuiAdminNetInfrastructure.IRepositoies;
 using LayuiAdminNetService.IServices;
@@ -10,10 +11,12 @@ namespace LayuiAdminNetService.Services
     public class AdminRolePermissionService : IAdminRolePermissionService
     {
         private readonly IBase _base;
+        private readonly IMemoryService _cache;
 
-        public AdminRolePermissionService(IBase baseSevice)
+        public AdminRolePermissionService(IBase baseSevice, IMemoryService memoryService)
         {
             _base = baseSevice;
+            _cache = memoryService;
         }
 
         public Task<int> AddAsync(AdminRolePermission model)
@@ -62,7 +65,6 @@ namespace LayuiAdminNetService.Services
                 return await _base.QueryAsync(expression, isTrack);
         }
 
-
         public Task<int> UpdateAsync(AdminRolePermission model)
         {
             throw new NotImplementedException();
@@ -96,8 +98,10 @@ namespace LayuiAdminNetService.Services
 
             var res = await _base.BatchTransactionAsync(dic);
 
-            return res;
+            //清缓存
+            _cache.Remove(res > 0, Constants.ROLE_PERMISSION_CACHE);
 
+            return res;
         }
     }
 }

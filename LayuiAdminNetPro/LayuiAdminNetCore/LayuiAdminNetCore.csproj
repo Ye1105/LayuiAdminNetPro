@@ -7,14 +7,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CodeHelper.Common" Version="1.0.2" />
 		<PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.5" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.2" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\..\..\CodeHelper.Common\CodeHelper.Common\CodeHelper.Common\CodeHelper.Common.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -8,8 +8,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetPro", "LayuiAd
 		{0F337B40-2243-4585-8125-8F1D95049C46} = {0F337B40-2243-4585-8125-8F1D95049C46}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeHelper.Common", "..\..\CodeHelper.Common\CodeHelper.Common\CodeHelper.Common\CodeHelper.Common.csproj", "{7D68FC10-05C5-490C-9D9C-642371C42695}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetCore", "LayuiAdminNetCore\LayuiAdminNetCore.csproj", "{FBD73D12-3F87-4AC3-99A5-B01CF570083D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayuiAdminNetInfrastructure", "LayuiAdminNetInfrastructure\LayuiAdminNetInfrastructure.csproj", "{2CBA7439-0E7C-40A3-809D-6D3AF7C41FF2}"
@@ -28,10 +26,6 @@ Global
 		{26B14F6A-3279-420B-9114-66036A548C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26B14F6A-3279-420B-9114-66036A548C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26B14F6A-3279-420B-9114-66036A548C1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D68FC10-05C5-490C-9D9C-642371C42695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D68FC10-05C5-490C-9D9C-642371C42695}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D68FC10-05C5-490C-9D9C-642371C42695}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D68FC10-05C5-490C-9D9C-642371C42695}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FBD73D12-3F87-4AC3-99A5-B01CF570083D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FBD73D12-3F87-4AC3-99A5-B01CF570083D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBD73D12-3F87-4AC3-99A5-B01CF570083D}.Release|Any CPU.ActiveCfg = Release|Any CPU
